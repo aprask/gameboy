@@ -59,7 +59,7 @@ typedef struct {
     Byte bg_palette; // BGP - 0xFF47
     Byte obj_palette_0; // OBP0 - 0xFF48
     Byte obj_palette_1; // OBP1 - 0xFF49
-    Byte boot_disable; // Non-zero if boot ROM is disabled - 0xFF50
+    Byte boot_disable; // BANK - 0xFF50
     Byte ir_communications; // RP - 0xFF56
 
     // HRAM - 0xFF80 - 0xFFFE
