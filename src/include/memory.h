@@ -1,6 +1,8 @@
-#include <stdio.h>
+#ifndef MEMORY_H
+#define MEMORY_H
+
+#include <stddef.h>
 #include <stdint.h>
-#include "memory.h"
 
 using Byte = uint8_t; // 8 bits
 using Word = uint16_t; // 16 bits
@@ -56,3 +58,5 @@ class Memory {
             }
         }
 };
+
+#endif // MEMORY_H

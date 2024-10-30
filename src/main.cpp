@@ -1,44 +1,44 @@
 #include <iostream>
-#include "cpu.cpp" // This is a hack, but it works for now.
+#include "include/cpu.h" 
+#include "include/memory.h"
+#include "include/bus.h"
+
+using Byte = uint8_t; // 8 bits
+using Word = uint16_t; // 16 bits
 
 int main() {
-
-    // Basic bus unit test
     Memory memory;
-    Registers registers;
+    Bus bus(memory);
+    CPU cpu(bus);
 
-    // Write on writeable memory
-    Byte data = 0x48; 
-    access(0x8000, false, &data);
+    Byte input = 0x48;
 
-    // Read from writeable memory
-    access(0x8000, true, &data);
-    std::cout << "Data at writeable memory: " << std::hex << (int)data << std::endl;
+    // Basic test
 
-    // Write to read only memory
-    access(0x0000, false, &data);
+    // Writing to RAM
+    cpu.write(0x8000, input);
+    // Reading from RAM
+    Byte output = cpu.read(0x8000);
+    std::cout << "RAM Output: " << std::hex << output << std::endl; // Should be 48
 
-    // Read from read only memory
-    access(0x0000, true, &data);
-    std::cout << "Data at ROM: " << std::hex << (int)data << std::endl;
+    // Writing to ROM
+    cpu.write(0x0000, input);
+    // Reading from ROM
+    output = cpu.read(0x0000);
+    std::cout << "Rom Output: " << std::hex << output << std::endl; // Should be 00
 
-    // Write to echo memory
-    data = 0x12;
-    access(0xE000, false, &data);
-
-    // Read from echo memory
-    access(0xE000, true, &data);
-    std::cout << "Data at echo memory (E000): " << std::hex << (int)data << std::endl;
-
-    // Read from copy of echo memory
-    access(0xC000, true, &data);
-    std::cout << "Data at work RAM (C000): " << std::hex << (int)data << std::endl;
+    // Write to Echo RAM
+    cpu.write(0xE000, input);
+    // Read from Echo RAM
+    output = cpu.read(0xE000);
+    std::cout << "Echo Output (E000): " << std::hex << output << std::endl; // Should be 48
+    std::cout << "Echo Output (C000): " << std::hex << cpu.read(0xC000) << std::endl; // Should be 48
 
     // Write to forbidden memory
-    access(0xFEA0, false, &data);
-
+    cpu.write(0xFEA0, input);
     // Read from forbidden memory
-    access(0xFEA0, true, &data);
-    std::cout << "Data at forbidden memory: (technically forbidden memory is supposed to crash the emulator... right now it should just ignore any read/write) " << std::hex << (int)data << std::endl;
+    output = cpu.read(0xFEA0); // Should not return anything
+    std::cout << "Forbidden Memory Output: " << std::hex << output << std::endl;
 
+    return 0;
 }
