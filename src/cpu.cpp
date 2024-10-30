@@ -1,20 +1,24 @@
-#include <stdlib.h>
-#include <stdint.h>
+#include "include/cpu.h"
 
-using Byte = uint8_t; // 8 bits
-using Word = uint16_t; // 16 bits
+class CPU {
+    public:
+        Registers registers;
+        Bus bus;
 
-typedef struct {
-    Word program_counter; 
-    Word stack_pointer;
+        CPU(Bus& bus) : bus(bus) {
+        }
 
-    // Special purpose registers
-    Byte instruction_register;
-    Byte interrupt_enable;
+        void reset() {
+        }
 
-    // General purpose registers
-    Byte af_registers[2];
-    Byte bc_registers[2];
-    Byte de_registers[2];
-    Byte hl_registers[2];
-} RegisterMap;
+        void cycle() {
+        }
+
+        void write(Word address, Byte data) {
+            bus.write(address, data);
+        }
+
+        Byte read(Word address) {
+            return bus.read(address);
+        }
+};
