@@ -1,17 +1,9 @@
-#include <stdio.h>
-#include <stdint.h>
-#include "memory.h"
+#include "include/memory.h"
 
-using Byte = uint8_t; // 8 bits
-using Word = uint16_t; // 16 bits
+Memory::Memory() {
+}
 
-class Memory {
-    public:
-        Byte memory[65536]; // 64KB of memory
-
-        Memory() {}
-
-        void access(Word address, bool rw, Byte* data) {
+void Memory::access(Word address, bool rw, Byte* data) {
             switch (address) {
                 case 0x8000 ... 0x9FFF: // VRAM
                 case 0xA000 ... 0xBFFF: // External RAM (this is stored in the cartridge and can return garbage if not present)
@@ -55,4 +47,3 @@ class Memory {
                     break;
             }
         }
-};

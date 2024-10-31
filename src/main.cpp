@@ -2,6 +2,8 @@
 #include "include/cpu.h" 
 #include "include/memory.h"
 #include "include/bus.h"
+#include "include/InstructionSet.h"
+#include "include/ControlInstructionSet.h"
 
 using Byte = uint8_t; // 8 bits
 using Word = uint16_t; // 16 bits
@@ -39,6 +41,16 @@ int main() {
     // Read from forbidden memory
     output = cpu.read(0xFEA0); // Should not return anything
     std::cout << "Forbidden Memory Output: " << std::hex << output << std::endl;
+
+    // testing ControlSetInstruction
+    ControlInstructionSet control_instr;
+    uint8_t opcode_test_1 = 0x10; // STOP
+    if (control_instr.execute(opcode_test_1, cpu)) {
+        std::cout << "Found memory match" << std::endl;
+    } else {
+        std::cout << "Could not find memory location in Instruction Set" << std::endl;
+    }
+    
 
     return 0;
 }
