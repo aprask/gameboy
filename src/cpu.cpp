@@ -1,24 +1,18 @@
 #include "include/cpu.h"
 
-class CPU {
-    public:
-        Registers registers;
-        Bus bus;
+CPU::CPU(Bus& bus) : bus(bus) {
+}
 
-        CPU(Bus& bus) : bus(bus) {
-        }
+void CPU::reset() {
+}
 
-        void reset() {
-        }
+void CPU::cycle() {
+}
 
-        void cycle() {
-        }
+void CPU::write(Word address, Byte data) {
+    bus.write(address, data);
+}
 
-        void write(Word address, Byte data) {
-            bus.write(address, data);
-        }
-
-        Byte read(Word address) {
-            return bus.read(address);
-        }
-};
+Byte CPU::read(Word address) {
+    return bus.read(address);
+}
