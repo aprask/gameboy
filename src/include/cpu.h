@@ -17,7 +17,8 @@ typedef struct {
     Byte interrupt_enable;
 
     // General purpose registers
-    Byte af_registers[2];
+    Byte a_register;
+    Byte flag_register; // Four least-significant bits will ALWAYS be zero. 
     Byte bc_registers[2];
     Byte de_registers[2];
     Byte hl_registers[2];
