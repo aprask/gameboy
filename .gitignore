@@ -5,3 +5,7 @@ roms/
 .vscode/
 
 *.exe
+
+cmake-build-debug/
+
+.idea/
