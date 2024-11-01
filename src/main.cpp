@@ -4,6 +4,7 @@
 #include "include/bus.h"
 #include "include/InstructionSet.h"
 #include "include/ControlInstructionSet.h"
+#include "include/JumpInstructionSet.h"
 
 using Byte = uint8_t; // 8 bits
 using Word = uint16_t; // 16 bits
@@ -46,6 +47,15 @@ int main() {
     ControlInstructionSet control_instr;
     uint8_t opcode_test_1 = 0x10; // STOP
     if (control_instr.execute(opcode_test_1, cpu)) {
+        std::cout << "Found memory match" << std::endl;
+    } else {
+        std::cout << "Could not find memory location in Instruction Set" << std::endl;
+    }
+
+    // testing JumpInstructionSet
+    JumpInstructionSet jump_instr;
+    uint8_t opcode_test_2 = 0xC3; // JP a16
+    if (jump_instr.execute(opcode_test_2, cpu)) {
         std::cout << "Found memory match" << std::endl;
     } else {
         std::cout << "Could not find memory location in Instruction Set" << std::endl;
