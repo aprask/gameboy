@@ -5,6 +5,7 @@
 #include "include/InstructionSet.h"
 #include "include/ControlInstructionSet.h"
 #include "include/JumpInstructionSet.h"
+#include "include/8bitLoadInstructionSet.h"
 
 using Byte = uint8_t; // 8 bits
 using Word = uint16_t; // 16 bits
@@ -61,6 +62,14 @@ int main() {
         std::cout << "Could not find memory location in Instruction Set" << std::endl;
     }
     
+    // testing EightBitLoadInstructionSet
+    EightBitLoadInstructionSet eight_bit_load_instr;
+    uint8_t opcode_test_3 = 0x06; // LD B, n8
+    if (eight_bit_load_instr.execute(opcode_test_3, cpu)) {
+        std::cout << "Found memory match" << std::endl;
+    } else {
+        std::cout << "Could not find memory location in Instruction Set" << std::endl;
+    }
 
     return 0;
 }
