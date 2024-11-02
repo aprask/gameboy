@@ -239,6 +239,24 @@ bool EightBitLoadInstructionSet::execute(uint8_t opcode, CPU& cpu) {
         case LD_A_A:
             ld_a_a(cpu);
             return true;
+        case LDH_a8_A:
+            ldh_a8_a(cpu);
+            return true;
+        case LD__C_A:
+            ld__c_a(cpu);
+            return true;
+        case LD_a16_A:
+            ld_a16_a(cpu);
+            return true;
+        case LDH_A_a8:
+            ldh_a_a8(cpu);
+            return true;
+        case LD_A__C:
+            ld_a__c(cpu);
+            return true;
+        case LD_A_a16:
+            ld_a_a16(cpu);
+            return true;
         default:
             return false; // Opcode not handled by EightBitLoadInstructionSet
     }

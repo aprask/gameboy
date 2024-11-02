@@ -5,20 +5,20 @@
 #include "cpu.h"
 
 #define LD_BC_A 0x02
-#define LD_B_n8 0x06
+#define LD_B_n8 0x06 
 #define LD_A_BC 0x0A
 #define LD_C_n8 0x0E
 #define LD_DE_A 0x12
 #define LD_D_n8 0x16
 #define LD_A_DE 0x1A
 #define LD_E_n8 0x1E
-#define LD_HL_INC_A 0x22
+#define LD_HL_INC_A 0x22 // LD (HL+), A = LD (HLI), A = LDI (HL), A
 #define LD_H_n8 0x26
-#define LD_A_HL_INC 0x2A
+#define LD_A_HL_INC 0x2A // LD A, (HL+) = LD A, (HLI) = LDI A, (HL)
 #define LD_L_n8 0x2E
-#define LD_HL_DEC_A 0x32
+#define LD_HL_DEC_A 0x32 // LD (HL-), A = LD (HLD), A = LDD (HL), A
 #define LD_HL_n8 0x36
-#define LD_A_HL_DEC 0x3A
+#define LD_A_HL_DEC 0x3A // LD A, (HL-) = LD A, (HLD) = LDD A, (HL)
 #define LD_A_n8 0x3E
 #define LD_B_B 0x40
 #define LD_B_C 0x41
@@ -83,11 +83,11 @@
 #define LD_A_L 0x7D
 #define LD_A_HL 0x7E
 #define LD_A_A 0x7F
-#define LDH_a8_A 0xE0
-#define LD__C_A 0xE2 // LD (C), A? What is the difference?
+#define LDH_a8_A 0xE0 // LDH (a8), A = LD (FF00 + a8), A
+#define LD__C_A 0xE2 // LD (C), A = LD (FF00 + C), A
 #define LD_a16_A 0xEA
-#define LDH_A_a8 0xF0
-#define LD_A__C 0xF2 // LD A, (C)
+#define LDH_A_a8 0xF0 // LD A, (a8) = LD A, (FF00 + a8)
+#define LD_A__C 0xF2 // LD A, (C) = LD A, (FF00 + C)
 #define LD_A_a16 0xFA
 
 class EightBitLoadInstructionSet : public InstructionSet {
