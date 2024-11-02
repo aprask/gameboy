@@ -29,8 +29,8 @@ bool JumpInstructionSet::execute(uint8_t opcode, CPU& cpu) {
         case CALL_NZ_a16:
             call_nz_a16(cpu);
             return true;
-        case RST_00:
-            rst_00(cpu);
+        case RST_00H:
+            rst_00H(cpu);
             return true;
         case RET_Z:
             ret_z(cpu);
@@ -47,8 +47,8 @@ bool JumpInstructionSet::execute(uint8_t opcode, CPU& cpu) {
         case CALL_a16:
             call_a16(cpu);
             return true;
-        case RST_08:
-            rst_08(cpu);
+        case RST_08H:
+            rst_08H(cpu);
             return true;
         case RET_NC:
             ret_nc(cpu);
@@ -59,8 +59,8 @@ bool JumpInstructionSet::execute(uint8_t opcode, CPU& cpu) {
         case CALL_NC_a16:
             call_nc_a16(cpu);
             return true;
-        case RST_10:
-            rst_10(cpu);
+        case RST_10H:
+            rst_10H(cpu);
             return true;
         case RET_C:
             ret_c(cpu);
@@ -74,23 +74,23 @@ bool JumpInstructionSet::execute(uint8_t opcode, CPU& cpu) {
         case CALL_C_a16:
             call_c_a16(cpu);
             return true;
-        case RST_18:
-            rst_18(cpu);
+        case RST_18H:
+            rst_18H(cpu);
             return true;
-        case RST_20:
-            rst_20(cpu);
+        case RST_20H:
+            rst_20H(cpu);
             return true;
         case JP_HL:
             jp_hl(cpu);
             return true;
-        case RST_28:
-            rst_28(cpu);
+        case RST_28H:
+            rst_28H(cpu);
             return true;
-        case RST_30:    
-            rst_30(cpu);
+        case RST_30H:    
+            rst_30H(cpu);
             return true;
-        case RST_38:    
-            rst_38(cpu);
+        case RST_38H:    
+            rst_38H(cpu);
             return true;
         default:
             return false; // Opcode not handled by JumpInstructionSet
@@ -142,7 +142,7 @@ void JumpInstructionSet::call_nz_a16(CPU& cpu) {
     // Example: cpu.call_nz_a16();
 }
 
-void JumpInstructionSet::rst_00(CPU& cpu) {
+void JumpInstructionSet::rst_00H(CPU& cpu) {
     // Placeholder for RST 00 functionality
     // Example: cpu.rst_00();
 }
@@ -172,7 +172,7 @@ void JumpInstructionSet::call_a16(CPU& cpu) {
     // Example: cpu.call_a16();
 }
 
-void JumpInstructionSet::rst_08(CPU& cpu) {
+void JumpInstructionSet::rst_08H(CPU& cpu) {
     // Placeholder for RST 08 functionality
     // Example: cpu.rst_08();
 }
@@ -192,7 +192,7 @@ void JumpInstructionSet::call_nc_a16(CPU& cpu) {
     // Example: cpu.call_nc_a16();
 }
 
-void JumpInstructionSet::rst_10(CPU& cpu) {
+void JumpInstructionSet::rst_10H(CPU& cpu) {
     // Placeholder for RST 10 functionality
     // Example: cpu.rst_10();
 }
@@ -217,12 +217,12 @@ void JumpInstructionSet::call_c_a16(CPU& cpu) {
     // Example: cpu.call_c_a16();
 }
 
-void JumpInstructionSet::rst_18(CPU& cpu) {
+void JumpInstructionSet::rst_18H(CPU& cpu) {
     // Placeholder for RST 18 functionality
     // Example: cpu.rst_18();
 }
 
-void JumpInstructionSet::rst_20(CPU& cpu) {
+void JumpInstructionSet::rst_20H(CPU& cpu) {
     // Placeholder for RST 20 functionality
     // Example: cpu.rst_20();
 }
@@ -232,17 +232,17 @@ void JumpInstructionSet::jp_hl(CPU& cpu) {
     // Example: cpu.jp_hl();
 }
 
-void JumpInstructionSet::rst_28(CPU& cpu) {
+void JumpInstructionSet::rst_28H(CPU& cpu) {
     // Placeholder for RST 28 functionality
     // Example: cpu.rst_28();
 }
 
-void JumpInstructionSet::rst_30(CPU& cpu) {
+void JumpInstructionSet::rst_30H(CPU& cpu) {
     // Placeholder for RST 30 functionality
     // Example: cpu.rst_30();
 }
 
-void JumpInstructionSet::rst_38(CPU& cpu) {
+void JumpInstructionSet::rst_38H(CPU& cpu) {
     // Placeholder for RST 38 functionality
     // Example: cpu.rst_38();
 }
