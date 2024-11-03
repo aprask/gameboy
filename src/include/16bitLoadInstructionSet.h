@@ -1,0 +1,5 @@
+#include "InstructionSet.h"
+#include "cpu.h"
+#ifndef SIXTEEN_BIT_LOAD_INSTRUCTION_SET_H
+#define SIXTEEN_BIT_LOAD_INSTRUCTION_SET_H
+#endif // SIXTEEN_BIT_LOAD_INSTRUCTION_SET_H
