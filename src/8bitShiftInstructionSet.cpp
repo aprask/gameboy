@@ -5,14 +5,14 @@ bool EightBitShiftInstructionSet::execute(uint8_t opcode, CPU& cpu) {
         case RLCA:
             rlca(cpu);
             return true;
-        case RRC_A:
-            rrc_a(cpu);
+        case RRCA:
+            rrca(cpu);
             return true;
-        case RR_A:
-            rr_a(cpu);
+        case RRA:
+            rra(cpu);
             return true;
-        case RL_A:
-            rl_a(cpu);
+        case RLA:
+            rla(cpu);
             return true;
         default:
             return false;
@@ -23,6 +23,15 @@ bool EightBitShiftInstructionSet::execute_prefix(uint16_t opcode, CPU& cpu) {
     switch (opcode) {
         case RLC_B:
             rlc_b(cpu);
+            return true;
+        case RL_A:
+            rl_a(cpu);
+            return true;
+        case RR_A:
+            rr_a(cpu);
+            return true;
+        case RRC_A:
+            rrc_a(cpu);
             return true;
         case RLC_C:
             rlc_c(cpu);
@@ -782,6 +791,8 @@ bool EightBitShiftInstructionSet::execute_prefix(uint16_t opcode, CPU& cpu) {
     }
 }
 
+void EightBitShiftInstructionSet::rla(CPU& cpu) { /* Placeholder for RLA functionality */ }
+void EightBitShiftInstructionSet::rrca(CPU& cpu) { /* Placeholder for RRCA functionality */ }
 void EightBitShiftInstructionSet::rlca(CPU& cpu) { /* Placeholder for RLC_A functionality */ }
 void EightBitShiftInstructionSet::rlc_a(CPU& cpu) { /* Placeholder for RLC_A functionality */ }
 void EightBitShiftInstructionSet::rlc_b(CPU& cpu) { /* Placeholder for RLC_B functionality */ }
@@ -807,6 +818,7 @@ void EightBitShiftInstructionSet::rl_e(CPU& cpu) { /* Placeholder for RL_E funct
 void EightBitShiftInstructionSet::rl_h(CPU& cpu) { /* Placeholder for RL_H functionality */ }
 void EightBitShiftInstructionSet::rl_l(CPU& cpu) { /* Placeholder for RL_L functionality */ }
 void EightBitShiftInstructionSet::rl_hl(CPU& cpu) { /* Placeholder for RL_HL functionality */ }
+void EightBitShiftInstructionSet::rra(CPU& cpu) { /* Placeholder for RRA functionality */ }
 void EightBitShiftInstructionSet::rr_a(CPU& cpu) { /* Placeholder for RR_A functionality */ }
 void EightBitShiftInstructionSet::rr_b(CPU& cpu) { /* Placeholder for RR_B functionality */ }
 void EightBitShiftInstructionSet::rr_c(CPU& cpu) { /* Placeholder for RR_C functionality */ }

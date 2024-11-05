@@ -86,11 +86,11 @@ int main() {
     EightBitShiftInstructionSet eight_bit_shift_instr;
     uint16_t opcode_test5 = 0xCB01;
     uint8_t opcode_test6 = 0x17;
-    // if (eight_bit_shift_instr.execute_prefix(opcode_test5, cpu)) {
-    //     std::cout << "Found memory match" << std::endl;
-    // } else {
-    //     std::cout << "Could not find memory location in Instruction Set" << std::endl;
-    // }
+    if (eight_bit_shift_instr.execute_prefix(opcode_test5, cpu)) {
+        std::cout << "Found memory match" << std::endl;
+    } else {
+        std::cout << "Could not find memory location in Instruction Set" << std::endl;
+    }
     if (eight_bit_shift_instr.execute(opcode_test6, cpu)) {
         std::cout << "Found memory match" << std::endl;
     } else {

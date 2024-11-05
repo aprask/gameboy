@@ -3,7 +3,6 @@
 
 #include "InstructionSet.h"
 #include "cpu.h"
-
 #define RLCA 0x07
 #define RRCA 0x0F
 #define RRA 0x1F
@@ -280,6 +279,7 @@ private:
     void rlc_h(CPU& cpu);
     void rlc_l(CPU& cpu);
     void rlc_hl(CPU& cpu);
+    void rrca(CPU& cpu);
     void rrc_a(CPU& cpu);
     void rrc_b(CPU& cpu);
     void rrc_c(CPU& cpu);
@@ -288,6 +288,7 @@ private:
     void rrc_h(CPU& cpu);
     void rrc_l(CPU& cpu);
     void rrc_hl(CPU& cpu);
+    void rla(CPU& cpu);
     void rl_a(CPU& cpu);
     void rl_b(CPU& cpu);
     void rl_c(CPU& cpu);
@@ -297,6 +298,7 @@ private:
     void rl_l(CPU& cpu);
     void rl_hl(CPU& cpu);
     void rr_a(CPU& cpu);
+    void rra(CPU& cpu);
     void rr_b(CPU& cpu);
     void rr_c(CPU& cpu);
     void rr_d(CPU& cpu);
