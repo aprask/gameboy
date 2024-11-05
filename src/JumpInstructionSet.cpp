@@ -1,5 +1,9 @@
 #include "include/JumpInstructionSet.h"
 
+bool JumpInstructionSet::execute_prefix(uint16_t opcode, CPU& cpu) {
+        return false;
+}
+
 bool JumpInstructionSet::execute(uint8_t opcode, CPU& cpu) {
     switch (opcode) {
         case JR_e8:

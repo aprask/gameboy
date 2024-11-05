@@ -1,5 +1,9 @@
 #include "include/16bitLoadInstructionSet.h"
 
+bool SixteenBitLoadInstructionSet::execute_prefix(uint16_t opcode, CPU& cpu) {
+        return false;
+}
+
 bool SixteenBitLoadInstructionSet::execute(uint8_t opcode, CPU& cpu) {
     switch (opcode) {
         case LD_BC_n16:

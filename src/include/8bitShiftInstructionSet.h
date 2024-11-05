@@ -4,7 +4,7 @@
 #include "InstructionSet.h"
 #include "cpu.h"
 
-#define RLC_A 0x07
+#define RLCA 0x07
 #define RRCA 0x0F
 #define RRA 0x1F
 #define RLA 0x17
@@ -268,9 +268,98 @@
 class EightBitShiftInstructionSet : public InstructionSet {
 public:
     bool execute(uint8_t opcode, CPU& cpu) override;
+    bool execute_prefix(uint16_t opcode, CPU& cpu) override;
 
 private:
+    void rlca(CPU& cpu);
     void rlc_a(CPU& cpu);
+    void rlc_b(CPU& cpu);
+    void rlc_c(CPU& cpu);
+    void rlc_d(CPU& cpu);
+    void rlc_e(CPU& cpu);
+    void rlc_h(CPU& cpu);
+    void rlc_l(CPU& cpu);
+    void rlc_hl(CPU& cpu);
+    void rrc_a(CPU& cpu);
+    void rrc_b(CPU& cpu);
+    void rrc_c(CPU& cpu);
+    void rrc_d(CPU& cpu);
+    void rrc_e(CPU& cpu);
+    void rrc_h(CPU& cpu);
+    void rrc_l(CPU& cpu);
+    void rrc_hl(CPU& cpu);
+    void rl_a(CPU& cpu);
+    void rl_b(CPU& cpu);
+    void rl_c(CPU& cpu);
+    void rl_d(CPU& cpu);
+    void rl_e(CPU& cpu);
+    void rl_h(CPU& cpu);
+    void rl_l(CPU& cpu);
+    void rl_hl(CPU& cpu);
+    void rr_a(CPU& cpu);
+    void rr_b(CPU& cpu);
+    void rr_c(CPU& cpu);
+    void rr_d(CPU& cpu);
+    void rr_e(CPU& cpu);
+    void rr_h(CPU& cpu);
+    void rr_l(CPU& cpu);
+    void rr_hl(CPU& cpu);
+    void sla_a(CPU& cpu);
+    void sla_b(CPU& cpu);
+    void sla_c(CPU& cpu);
+    void sla_d(CPU& cpu);
+    void sla_e(CPU& cpu);
+    void sla_h(CPU& cpu);
+    void sla_l(CPU& cpu);
+    void sla_hl(CPU& cpu);
+    void sra_a(CPU& cpu);
+    void sra_b(CPU& cpu);
+    void sra_c(CPU& cpu);
+    void sra_d(CPU& cpu);
+    void sra_e(CPU& cpu);
+    void sra_h(CPU& cpu);
+    void sra_l(CPU& cpu);
+    void sra_hl(CPU& cpu);
+    void swap_a(CPU& cpu);
+    void swap_b(CPU& cpu);
+    void swap_c(CPU& cpu);
+    void swap_d(CPU& cpu);
+    void swap_e(CPU& cpu);
+    void swap_h(CPU& cpu);
+    void swap_l(CPU& cpu);
+    void swap_hl(CPU& cpu);
+    void srl_a(CPU& cpu);
+    void srl_b(CPU& cpu);
+    void srl_c(CPU& cpu);
+    void srl_d(CPU& cpu);
+    void srl_e(CPU& cpu);
+    void srl_h(CPU& cpu);
+    void srl_l(CPU& cpu);
+    void srl_hl(CPU& cpu);
+    void bit_n_b(uint8_t bit, CPU& cpu);
+    void bit_n_c(uint8_t bit, CPU& cpu);
+    void bit_n_d(uint8_t bit, CPU& cpu);
+    void bit_n_e(uint8_t bit, CPU& cpu);
+    void bit_n_h(uint8_t bit, CPU& cpu);
+    void bit_n_l(uint8_t bit, CPU& cpu);
+    void bit_n_hl(uint8_t bit, CPU& cpu);
+    void bit_n_a(uint8_t bit, CPU& cpu);
+    void res_n_b(uint8_t bit, CPU& cpu);
+    void res_n_c(uint8_t bit, CPU& cpu);
+    void res_n_d(uint8_t bit, CPU& cpu);
+    void res_n_e(uint8_t bit, CPU& cpu);
+    void res_n_h(uint8_t bit, CPU& cpu);
+    void res_n_l(uint8_t bit, CPU& cpu);
+    void res_n_hl(uint8_t bit, CPU& cpu);
+    void res_n_a(uint8_t bit, CPU& cpu);
+    void set_n_b(uint8_t bit, CPU& cpu);
+    void set_n_c(uint8_t bit, CPU& cpu);
+    void set_n_d(uint8_t bit, CPU& cpu);
+    void set_n_e(uint8_t bit, CPU& cpu);
+    void set_n_h(uint8_t bit, CPU& cpu);
+    void set_n_l(uint8_t bit, CPU& cpu);
+    void set_n_hl(uint8_t bit, CPU& cpu);
+    void set_n_a(uint8_t bit, CPU& cpu);
 };
 
 #endif

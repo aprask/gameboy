@@ -7,6 +7,7 @@
 #include "include/JumpInstructionSet.h"
 #include "include/8bitLoadInstructionSet.h"
 #include "include/16bitLoadInstructionSet.h"
+#include "include/8bitShiftInstructionSet.h"
 
 using Byte = uint8_t; // 8 bits
 using Word = uint16_t; // 16 bits
@@ -81,5 +82,19 @@ int main() {
         std::cout << "Could not find memory location in Instruction Set" << std::endl;
     }
 
+    // testing EightBitShiftInstructionSet
+    EightBitShiftInstructionSet eight_bit_shift_instr;
+    uint16_t opcode_test5 = 0xCB01;
+    uint8_t opcode_test6 = 0x17;
+    // if (eight_bit_shift_instr.execute_prefix(opcode_test5, cpu)) {
+    //     std::cout << "Found memory match" << std::endl;
+    // } else {
+    //     std::cout << "Could not find memory location in Instruction Set" << std::endl;
+    // }
+    if (eight_bit_shift_instr.execute(opcode_test6, cpu)) {
+        std::cout << "Found memory match" << std::endl;
+    } else {
+        std::cout << "Could not find memory location in Instruction Set" << std::endl;
+    }
     return 0;
 }

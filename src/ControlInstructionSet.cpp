@@ -1,5 +1,9 @@
 #include "include/ControlInstructionSet.h"
 
+bool ControlInstructionSet::execute_prefix(uint16_t opcode, CPU& cpu) {
+        return false;
+}
+
 bool ControlInstructionSet::execute(uint8_t opcode, CPU& cpu) {
     switch (opcode) {
         case NOP:
