@@ -17,7 +17,8 @@ src/cpu.cpp
 src/memory.cpp 
 src/bus.cpp
 src/16bitLoadInstructionSet.cpp
-src/8bitALUInstructionSet.cpp)
+src/8bitALUInstructionSet.cpp
+src/16bitALUInstructionSet.cpp)
 
 # Include directories
 include_directories(${PROJECT_SOURCE_DIR}/include)

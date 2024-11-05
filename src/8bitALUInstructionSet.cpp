@@ -44,10 +44,10 @@ bool EightBitALUInstructionSet::execute(uint8_t opcode, CPU& cpu) {
         case CPL:
             cpl(cpu);
             return true;
-        case INC_HL:
+        case INC_HL_PTR:
             inc_hl(cpu);
             return true;
-        case DEC_HL:
+        case DEC_HL_PTR:
             dec_hl(cpu);
             return true;
         case SCF:

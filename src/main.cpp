@@ -8,6 +8,7 @@
 #include "include/8bitLoadInstructionSet.h"
 #include "include/16bitLoadInstructionSet.h"
 #include "include/8bitALUInstructionSet.h"
+#include "include/16bitALUInstructionSet.h"
 
 using Byte = uint8_t; // 8 bits
 using Word = uint16_t; // 16 bits
@@ -86,6 +87,15 @@ int main() {
     EightBitALUInstructionSet eight_bit_alu_instr;
     uint8_t opcode_test5 = 0x80; // ADD A, B
     if (eight_bit_alu_instr.execute(opcode_test5, cpu)) {
+        std::cout << "Found memory match" << std::endl;
+    } else {
+        std::cout << "Could not find memory location in Instruction Set" << std::endl;
+    }
+
+    // testing SixteenBitALUInstructionSet
+    SixteenBitALUInstructionSet sixteen_bit_alu_instr;
+    uint8_t opcode_test6 = 0x03; // INC BC
+    if (sixteen_bit_alu_instr.execute(opcode_test6, cpu)) {
         std::cout << "Found memory match" << std::endl;
     } else {
         std::cout << "Could not find memory location in Instruction Set" << std::endl;
