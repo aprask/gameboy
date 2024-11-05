@@ -680,6 +680,26 @@ void EightBitALUInstructionSet::cp_a_e(CPU& cpu) {
     // Example: cpu.cp_a_e();
 }
 
+void EightBitALUInstructionSet::cp_a_h(CPU& cpu) {
+    // Placeholder: Call the cp_a_h function on the CPU
+    // Example: cpu.cp_a_h();
+}
+
+void EightBitALUInstructionSet::cp_a_l(CPU& cpu) {
+    // Placeholder: Call the cp_a_l function on the CPU
+    // Example: cpu.cp_a_l();
+}
+
+void EightBitALUInstructionSet::cp_a_hl(CPU& cpu) {
+    // Placeholder: Call the cp_a_hl function on the CPU
+    // Example: cpu.cp_a_hl();
+}
+
+void EightBitALUInstructionSet::cp_a_a(CPU& cpu) {
+    // Placeholder: Call the cp_a_a function on the CPU
+    // Example: cpu.cp_a_a();
+}
+
 void EightBitALUInstructionSet::add_a_n8(CPU& cpu) {
     // Placeholder: Call the add_a_n8 function on the CPU
     // Example: cpu.add_a_n8();
@@ -688,6 +708,11 @@ void EightBitALUInstructionSet::add_a_n8(CPU& cpu) {
 void EightBitALUInstructionSet::sub_a_n8(CPU& cpu) {
     // Placeholder: Call the sub_a_n8 function on the CPU
     // Example: cpu.sub_a_n8();
+}
+
+void EightBitALUInstructionSet::adc_a_n8(CPU& cpu) {
+    // Placeholder: Call the adc_a_n8 function on the CPU
+    // Example: cpu.adc_a_n8();
 }
 
 void EightBitALUInstructionSet::sbc_a_n8(CPU& cpu) {
