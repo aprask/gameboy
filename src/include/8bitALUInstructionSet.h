@@ -18,8 +18,8 @@
 #define INC_L 0x2C
 #define DEC_L 0x2D
 #define CPL 0x2F
-#define INC_HL 0x34
-#define DEC_HL 0x35
+#define INC_HL_PTR 0x34 // INC (HL) not INC HL 
+#define DEC_HL_PTR 0x35 // DEC (HL) not DEC HL
 #define SCF 0x37
 #define INC_A 0x3C
 #define DEC_A 0x3D
