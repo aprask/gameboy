@@ -21,6 +21,7 @@
 class SixteenBitALUInstructionSet : public InstructionSet {
 public:
     bool execute(uint8_t opcode, CPU& cpu) override;
+    bool execute_prefix(uint16_t opcode, CPU& cpu) override;
 
 private:
     void inc_bc(CPU& cpu);

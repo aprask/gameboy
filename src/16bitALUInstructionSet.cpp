@@ -1,5 +1,9 @@
 #include "include/16bitALUInstructionSet.h"
 
+bool SixteenBitALUInstructionSet::execute_prefix(uint16_t opcode, CPU& cpu) {
+        return false;
+}
+
 bool SixteenBitALUInstructionSet::execute(uint8_t opcode, CPU& cpu) {
     switch (opcode) {
         case INC_BC:

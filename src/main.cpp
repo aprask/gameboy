@@ -9,6 +9,7 @@
 #include "include/16bitLoadInstructionSet.h"
 #include "include/8bitALUInstructionSet.h"
 #include "include/16bitALUInstructionSet.h"
+#include "include/8bitShiftInstructionSet.h"
 
 using Byte = uint8_t; // 8 bits
 using Word = uint16_t; // 16 bits
@@ -83,10 +84,25 @@ int main() {
         std::cout << "Could not find memory location in Instruction Set" << std::endl;
     }
 
+    // testing EightBitShiftInstructionSet
+    EightBitShiftInstructionSet eight_bit_shift_instr;
+    uint16_t opcode_test5A = 0xCB01;
+    uint8_t opcode_test6A = 0x17;
+    if (eight_bit_shift_instr.execute(opcode_test6A, cpu)) {
+        std::cout << "Found memory match" << std::endl;
+    } else {
+        std::cout << "Could not find memory location in Instruction Set" << std::endl;
+    }
+    if (eight_bit_shift_instr.execute_prefix(opcode_test5A, cpu)) {
+        std::cout << "Found memory match" << std::endl;
+    } else {
+        std::cout << "Could not find memory location in Instruction Set" << std::endl;
+    }
+
     // testing EightBitALUInstructionSet
     EightBitALUInstructionSet eight_bit_alu_instr;
-    uint8_t opcode_test5 = 0x80; // ADD A, B
-    if (eight_bit_alu_instr.execute(opcode_test5, cpu)) {
+    uint8_t opcode_test5B = 0x80; // ADD A, B
+    if (eight_bit_alu_instr.execute(opcode_test5B, cpu)) {
         std::cout << "Found memory match" << std::endl;
     } else {
         std::cout << "Could not find memory location in Instruction Set" << std::endl;
@@ -100,6 +116,5 @@ int main() {
     } else {
         std::cout << "Could not find memory location in Instruction Set" << std::endl;
     }
-
     return 0;
 }

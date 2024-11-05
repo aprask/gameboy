@@ -1,5 +1,9 @@
 #include "include/8bitLoadInstructionSet.h"
 
+bool EightBitLoadInstructionSet::execute_prefix(uint16_t opcode, CPU& cpu) {
+        return false;
+}
+
 bool EightBitLoadInstructionSet::execute(uint8_t opcode, CPU& cpu) {
     switch (opcode) {
         case LD_BC_A:
@@ -260,6 +264,8 @@ bool EightBitLoadInstructionSet::execute(uint8_t opcode, CPU& cpu) {
         default:
             return false; // Opcode not handled by EightBitLoadInstructionSet
     }
+
+    
 };
 
 // Is this the best way to do this? It will be painful when we get to shifts!

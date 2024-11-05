@@ -1,5 +1,9 @@
 #include "include/8bitALUInstructionSet.h"
 
+bool EightBitALUInstructionSet::execute_prefix(uint16_t opcode, CPU& cpu) {
+        return false;
+}
+
 bool EightBitALUInstructionSet::execute(uint8_t opcode, CPU& cpu) {
     switch (opcode) {
         case INC_B:
