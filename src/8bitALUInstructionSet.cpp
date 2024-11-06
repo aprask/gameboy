@@ -282,11 +282,27 @@ bool EightBitALUInstructionSet::execute(uint8_t opcode, CPU& cpu) {
         default:
             return false; // Opcode not handled by EightBitALUInstructionSet
     }
+
+    cpu.registers.instruction_register = cpu.bus.read(cpu.registers.program_counter); // Read the next byte from memory)
+    cpu.registers.program_counter++; // Increment program counter
 }
 
 void EightBitALUInstructionSet::inc_b(CPU& cpu) {
-    // Placeholder: Call the inc_b function on the CPU
-    // Example: cpu.inc_b();
+    cpu.registers.bc_registers[0]++; // Increment B register
+    if (cpu.registers.bc_registers[0] == 0) {
+        cpu.registers.set_flag(FLAG_ZER0, true);
+    } else {
+        cpu.registers.set_flag(FLAG_ZER0, false);
+    }
+
+    cpu.registers.set_flag(FLAG_SUBTRACT, false);
+
+    // Half carry flag is set if there is a carry from the 3rd bit
+    if ((cpu.registers.bc_registers[0] & 0x0F) == 0) {
+        cpu.registers.set_flag(FLAG_HALF_CARRY, true);
+    } else {
+        cpu.registers.set_flag(FLAG_HALF_CARRY, false);
+    }
 }
 
 void EightBitALUInstructionSet::dec_b(CPU& cpu) {
