@@ -18,8 +18,8 @@
 #define INC_L 0x2C
 #define DEC_L 0x2D
 #define CPL 0x2F
-#define INC_HL_PTR 0x34 // INC (HL) not INC HL 
-#define DEC_HL_PTR 0x35 // DEC (HL) not DEC HL
+#define INC_HL_INDIRECT 0x34 // INC (HL) not INC HL 
+#define DEC_HL_INDIRECT 0x35 // DEC (HL) not DEC HL
 #define SCF 0x37
 #define INC_A 0x3C
 #define DEC_A 0x3D
@@ -103,34 +103,16 @@ public:
     bool execute_prefix(uint16_t opcode, CPU& cpu) override;
 
 private:
-    void inc_b(CPU& cpu);
-    void dec_b(CPU& cpu);
-    void inc_c(CPU& cpu);
-    void dec_c(CPU& cpu);
-    void inc_d(CPU& cpu);
-    void dec_d(CPU& cpu);
-    void inc_e(CPU& cpu);
-    void dec_e(CPU& cpu);
-    void inc_h(CPU& cpu);
-    void dec_h(CPU& cpu);
+    void inc_r(CPU& cpu, Byte& reg);
+    void dec_r(CPU& cpu, Byte& reg);
+    void inc_hl_indirect(CPU& cpu);
+    void dec_hl_indirect(CPU& cpu);
     void daa(CPU& cpu);
-    void inc_l(CPU& cpu);
-    void dec_l(CPU& cpu);
     void cpl(CPU& cpu);
-    void inc_hl(CPU& cpu);
-    void dec_hl(CPU& cpu);
     void scf(CPU& cpu);
-    void inc_a(CPU& cpu);
-    void dec_a(CPU& cpu);
     void ccf(CPU& cpu);
-    void add_a_b(CPU& cpu);
-    void add_a_c(CPU& cpu);
-    void add_a_d(CPU& cpu);
-    void add_a_e(CPU& cpu);
-    void add_a_h(CPU& cpu);
-    void add_a_l(CPU& cpu);
-    void add_a_hl(CPU& cpu);
-    void add_a_a(CPU& cpu);
+    void add_r(CPU& cpu, Byte& reg);
+    void add_hl_indirect(CPU& cpu);
     void adc_a_b(CPU& cpu);
     void adc_a_c(CPU& cpu);
     void adc_a_d(CPU& cpu);
