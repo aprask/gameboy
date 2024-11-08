@@ -28,7 +28,8 @@ typedef struct {
     Byte c_register;
     Byte d_register;
     Byte e_register;
-    Byte hl_registers[2]; // High and low registers
+    Byte h_register; // High register
+    Byte l_register; // Low register
 
     void set_flag(Byte flag, bool value) {
         if (value) {

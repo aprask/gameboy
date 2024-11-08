@@ -31,19 +31,19 @@ bool EightBitALUInstructionSet::execute(uint8_t opcode, CPU& cpu) {
             dec_r(cpu, cpu.registers.e_register);
             return true;
         case INC_H:
-            inc_r(cpu, cpu.registers.hl_registers[0]);
+            inc_r(cpu, cpu.registers.h_register);
             return true;
         case DEC_H:
-            dec_r(cpu, cpu.registers.hl_registers[0]);
+            dec_r(cpu, cpu.registers.h_register);
             return true;
         case DAA:
             daa(cpu);
             return true;
         case INC_L:
-            inc_r(cpu, cpu.registers.hl_registers[1]);
+            inc_r(cpu, cpu.registers.l_register);
             return true;
         case DEC_L:
-            dec_r(cpu, cpu.registers.hl_registers[1]);
+            dec_r(cpu, cpu.registers.l_register);
             return true;
         case CPL:
             cpl(cpu);
@@ -79,10 +79,10 @@ bool EightBitALUInstructionSet::execute(uint8_t opcode, CPU& cpu) {
             add_r(cpu, cpu.registers.e_register);
             return true;
         case ADD_A_H:
-            add_r(cpu, cpu.registers.hl_registers[0]);
+            add_r(cpu, cpu.registers.h_register);
             return true;
         case ADD_A_L:
-            add_r(cpu, cpu.registers.hl_registers[1]);
+            add_r(cpu, cpu.registers.l_register);
             return true;
         case ADD_A_HL:
             add_hl_indirect(cpu);
@@ -103,10 +103,10 @@ bool EightBitALUInstructionSet::execute(uint8_t opcode, CPU& cpu) {
             adc_r(cpu, cpu.registers.e_register);
             return true;
         case ADC_A_H:
-            adc_r(cpu, cpu.registers.hl_registers[0]);
+            adc_r(cpu, cpu.registers.h_register);
             return true;
         case ADC_A_L:
-            adc_r(cpu, cpu.registers.hl_registers[1]);
+            adc_r(cpu, cpu.registers.l_register);
             return true;
         case ADC_A_HL:
             adc_hl_indirect(cpu);
@@ -127,10 +127,10 @@ bool EightBitALUInstructionSet::execute(uint8_t opcode, CPU& cpu) {
             sub_r(cpu, cpu.registers.e_register);
             return true;
         case SUB_A_H:
-            sub_r(cpu, cpu.registers.hl_registers[0]);
+            sub_r(cpu, cpu.registers.h_register);
             return true;
         case SUB_A_L:
-            sub_r(cpu, cpu.registers.hl_registers[1]);
+            sub_r(cpu, cpu.registers.l_register);
             return true;
         case SUB_A_HL:
             sub_hl_indirect(cpu);
@@ -151,10 +151,10 @@ bool EightBitALUInstructionSet::execute(uint8_t opcode, CPU& cpu) {
             sbc_r(cpu, cpu.registers.e_register);
             return true;
         case SBC_A_H:
-            sbc_r(cpu, cpu.registers.hl_registers[0]);
+            sbc_r(cpu, cpu.registers.h_register);
             return true;
         case SBC_A_L:
-            sbc_r(cpu, cpu.registers.hl_registers[1]);
+            sbc_r(cpu, cpu.registers.l_register);
             return true;
         case SBC_A_HL:
             sbc_hl_indirect(cpu);
@@ -175,10 +175,10 @@ bool EightBitALUInstructionSet::execute(uint8_t opcode, CPU& cpu) {
             and_r(cpu, cpu.registers.e_register);
             return true;
         case AND_A_H:
-            and_r(cpu, cpu.registers.hl_registers[0]);
+            and_r(cpu, cpu.registers.h_register);
             return true;
         case AND_A_L:
-            and_r(cpu, cpu.registers.hl_registers[1]);
+            and_r(cpu, cpu.registers.l_register);
             return true;
         case AND_A_HL:
             and_hl_indirect(cpu);
@@ -199,10 +199,10 @@ bool EightBitALUInstructionSet::execute(uint8_t opcode, CPU& cpu) {
             xor_r(cpu, cpu.registers.e_register);
             return true;
         case XOR_A_H:
-            xor_r(cpu, cpu.registers.hl_registers[0]);
+            xor_r(cpu, cpu.registers.h_register);
             return true;
         case XOR_A_L:
-            xor_r(cpu, cpu.registers.hl_registers[1]);
+            xor_r(cpu, cpu.registers.l_register);
             return true;
         case XOR_A_HL:
             xor_hl_indirect(cpu);
@@ -364,10 +364,10 @@ void EightBitALUInstructionSet::cpl(CPU& cpu) {
 
 void EightBitALUInstructionSet::inc_hl_indirect(CPU& cpu) {
     // hl is an array with two eight bit elements, so we shift the first element 8 bits to the left and OR it with the second element to get the 16 bit address
-    Byte data = cpu.bus.read(cpu.registers.hl_registers[0] << 8 | cpu.registers.hl_registers[1]);
+    Byte data = cpu.bus.read(cpu.registers.h_register << 8 | cpu.registers.l_register);
     data++; // Increment data
 
-    cpu.bus.write(cpu.registers.hl_registers[0] << 8 | cpu.registers.hl_registers[1], data); // address, data
+    cpu.bus.write(cpu.registers.h_register << 8 | cpu.registers.l_register, data); // address, data
 
     if (data == 0) {
         cpu.registers.set_flag(FLAG_ZERO, true);
@@ -385,10 +385,10 @@ void EightBitALUInstructionSet::inc_hl_indirect(CPU& cpu) {
 }
 
 void EightBitALUInstructionSet::dec_hl_indirect(CPU& cpu) {
-    Byte data = cpu.bus.read(cpu.registers.hl_registers[0] << 8 | cpu.registers.hl_registers[1]);
+    Byte data = cpu.bus.read(cpu.registers.h_register << 8 | cpu.registers.l_register);
     data--; // Increment data
 
-    cpu.bus.write(cpu.registers.hl_registers[0] << 8 | cpu.registers.hl_registers[1], data); // address, data
+    cpu.bus.write(cpu.registers.h_register << 8 | cpu.registers.l_register, data); // address, data
 
     if (data == 0) {
         cpu.registers.set_flag(FLAG_ZERO, true);
@@ -444,7 +444,7 @@ void EightBitALUInstructionSet::add_r(CPU& cpu, Byte& reg) {
 }
 
 void EightBitALUInstructionSet::add_hl_indirect(CPU& cpu) {
-    Byte data = cpu.bus.read(cpu.registers.hl_registers[0] << 8 | cpu.registers.hl_registers[1]);
+    Byte data = cpu.bus.read(cpu.registers.h_register << 8 | cpu.registers.l_register);
     add_r(cpu, data);
 }
 
@@ -475,7 +475,7 @@ void EightBitALUInstructionSet::adc_r(CPU& cpu, Byte& reg) {
 }
 
 void EightBitALUInstructionSet::adc_hl_indirect(CPU& cpu) {
-    Byte data = cpu.bus.read(cpu.registers.hl_registers[0] << 8 | cpu.registers.hl_registers[1]);
+    Byte data = cpu.bus.read(cpu.registers.h_register << 8 | cpu.registers.l_register);
     adc_r(cpu, data);
 }
 
@@ -505,7 +505,7 @@ void EightBitALUInstructionSet::sub_r(CPU& cpu, Byte& reg) {
 }
 
 void EightBitALUInstructionSet::sub_hl_indirect(CPU& cpu) {
-    Byte data = cpu.bus.read(cpu.registers.hl_registers[0] << 8 | cpu.registers.hl_registers[1]);
+    Byte data = cpu.bus.read(cpu.registers.h_register << 8 | cpu.registers.l_register);
     sub_r(cpu, data);
 }
 
@@ -536,7 +536,7 @@ void EightBitALUInstructionSet::sbc_r(CPU& cpu, Byte& reg) {
 }
 
 void EightBitALUInstructionSet::sbc_hl_indirect(CPU& cpu) {
-    Byte data = cpu.bus.read(cpu.registers.hl_registers[0] << 8 | cpu.registers.hl_registers[1]);
+    Byte data = cpu.bus.read(cpu.registers.h_register << 8 | cpu.registers.l_register);
     sbc_r(cpu, data);
 }
 
@@ -555,7 +555,7 @@ void EightBitALUInstructionSet::and_r(CPU& cpu, Byte& reg) {
 }
 
 void EightBitALUInstructionSet::and_hl_indirect(CPU& cpu) {
-    Byte data = cpu.bus.read(cpu.registers.hl_registers[0] << 8 | cpu.registers.hl_registers[1]);
+    Byte data = cpu.bus.read(cpu.registers.h_register << 8 | cpu.registers.l_register);
     and_r(cpu, data);
 }
 
@@ -574,7 +574,7 @@ void EightBitALUInstructionSet::xor_r(CPU& cpu, Byte& reg) {
 }
 
 void EightBitALUInstructionSet::xor_hl_indirect(CPU& cpu) {
-    Byte data = cpu.bus.read(cpu.registers.hl_registers[0] << 8 | cpu.registers.hl_registers[1]);
+    Byte data = cpu.bus.read(cpu.registers.h_register << 8 | cpu.registers.l_register);
     xor_r(cpu, data);
 }
 
