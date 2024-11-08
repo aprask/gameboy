@@ -31,19 +31,19 @@ bool EightBitALUInstructionSet::execute(uint8_t opcode, CPU& cpu) {
             dec_r(cpu, cpu.registers.e_register);
             return true;
         case INC_H:
-            inc_r(cpu, cpu.registers.hl_registers[0]);
+            inc_r(cpu, cpu.registers.h_register);
             return true;
         case DEC_H:
-            dec_r(cpu, cpu.registers.hl_registers[0]);
+            dec_r(cpu, cpu.registers.h_register);
             return true;
         case DAA:
             daa(cpu);
             return true;
         case INC_L:
-            inc_r(cpu, cpu.registers.hl_registers[1]);
+            inc_r(cpu, cpu.registers.l_register);
             return true;
         case DEC_L:
-            dec_r(cpu, cpu.registers.hl_registers[1]);
+            dec_r(cpu, cpu.registers.l_register);
             return true;
         case CPL:
             cpl(cpu);
@@ -79,10 +79,10 @@ bool EightBitALUInstructionSet::execute(uint8_t opcode, CPU& cpu) {
             add_r(cpu, cpu.registers.e_register);
             return true;
         case ADD_A_H:
-            add_r(cpu, cpu.registers.hl_registers[0]);
+            add_r(cpu, cpu.registers.h_register);
             return true;
         case ADD_A_L:
-            add_r(cpu, cpu.registers.hl_registers[1]);
+            add_r(cpu, cpu.registers.l_register);
             return true;
         case ADD_A_HL:
             add_hl_indirect(cpu);
@@ -91,193 +91,193 @@ bool EightBitALUInstructionSet::execute(uint8_t opcode, CPU& cpu) {
             add_r(cpu, cpu.registers.a_register);
             return true;
         case ADC_A_B:
-            adc_a_b(cpu);
+            adc_r(cpu, cpu.registers.b_register);
             return true;
         case ADC_A_C:
-            adc_a_c(cpu);
+            adc_r(cpu, cpu.registers.c_register);
             return true;
         case ADC_A_D:
-            adc_a_d(cpu);
+            adc_r(cpu, cpu.registers.d_register);
             return true;
         case ADC_A_E:
-            adc_a_e(cpu);
+            adc_r(cpu, cpu.registers.e_register);
             return true;
         case ADC_A_H:
-            adc_a_h(cpu);
+            adc_r(cpu, cpu.registers.h_register);
             return true;
         case ADC_A_L:
-            adc_a_l(cpu);
+            adc_r(cpu, cpu.registers.l_register);
             return true;
         case ADC_A_HL:
-            adc_a_hl(cpu);
+            adc_hl_indirect(cpu);
             return true;
         case ADC_A_A:
-            adc_a_a(cpu);
+            adc_r(cpu, cpu.registers.a_register);
             return true;
         case SUB_A_B:
-            sub_a_b(cpu);
+            sub_r(cpu, cpu.registers.b_register);
             return true;
         case SUB_A_C:
-            sub_a_c(cpu);
+            sub_r(cpu, cpu.registers.c_register);
             return true;
         case SUB_A_D:
-            sub_a_d(cpu);
+            sub_r(cpu, cpu.registers.d_register);
             return true;  
         case SUB_A_E:
-            sub_a_e(cpu);
+            sub_r(cpu, cpu.registers.e_register);
             return true;
         case SUB_A_H:
-            sub_a_h(cpu);
+            sub_r(cpu, cpu.registers.h_register);
             return true;
         case SUB_A_L:
-            sub_a_l(cpu);
+            sub_r(cpu, cpu.registers.l_register);
             return true;
         case SUB_A_HL:
-            sub_a_hl(cpu);
+            sub_hl_indirect(cpu);
             return true;
         case SUB_A_A:
-            sub_a_a(cpu);
+            sub_r(cpu, cpu.registers.a_register);
             return true;
         case SBC_A_B:
-            sbc_a_b(cpu);
+            sbc_r(cpu, cpu.registers.b_register);
             return true;
         case SBC_A_C:
-            sbc_a_c(cpu);
+            sbc_r(cpu, cpu.registers.c_register);
             return true;
         case SBC_A_D:
-            sbc_a_d(cpu);
+            sbc_r(cpu, cpu.registers.d_register);
             return true;
         case SBC_A_E:
-            sbc_a_e(cpu);
+            sbc_r(cpu, cpu.registers.e_register);
             return true;
         case SBC_A_H:
-            sbc_a_h(cpu);
+            sbc_r(cpu, cpu.registers.h_register);
             return true;
         case SBC_A_L:
-            sbc_a_l(cpu);
+            sbc_r(cpu, cpu.registers.l_register);
             return true;
         case SBC_A_HL:
-            sbc_a_hl(cpu);
+            sbc_hl_indirect(cpu);
             return true;
         case SBC_A_A:
-            sbc_a_a(cpu);
+            sbc_r(cpu, cpu.registers.a_register);
             return true;
         case AND_A_B:
-            and_a_b(cpu);
+            and_r(cpu, cpu.registers.b_register);
             return true;
         case AND_A_C:
-            and_a_c(cpu);
+            and_r(cpu, cpu.registers.c_register);
             return true;
         case AND_A_D:
-            and_a_d(cpu);
+            and_r(cpu, cpu.registers.d_register);
             return true;
         case AND_A_E:
-            and_a_e(cpu);
+            and_r(cpu, cpu.registers.e_register);
             return true;
         case AND_A_H:
-            and_a_h(cpu);
+            and_r(cpu, cpu.registers.h_register);
             return true;
         case AND_A_L:
-            and_a_l(cpu);
+            and_r(cpu, cpu.registers.l_register);
             return true;
         case AND_A_HL:
-            and_a_hl(cpu);
+            and_hl_indirect(cpu);
             return true;
         case AND_A_A:
-            and_a_a(cpu);
+            and_r(cpu, cpu.registers.a_register);
             return true;
         case XOR_A_B:
-            xor_a_b(cpu);
+            xor_r(cpu, cpu.registers.b_register);
             return true;
         case XOR_A_C:
-            xor_a_c(cpu);
+            xor_r(cpu, cpu.registers.c_register);
             return true;
         case XOR_A_D:
-            xor_a_d(cpu);
+            xor_r(cpu, cpu.registers.d_register);
             return true;
         case XOR_A_E:
-            xor_a_e(cpu);
+            xor_r(cpu, cpu.registers.e_register);
             return true;
         case XOR_A_H:
-            xor_a_h(cpu);
+            xor_r(cpu, cpu.registers.h_register);
             return true;
         case XOR_A_L:
-            xor_a_l(cpu);
+            xor_r(cpu, cpu.registers.l_register);
             return true;
         case XOR_A_HL:
-            xor_a_hl(cpu);
+            xor_hl_indirect(cpu);
             return true;
         case XOR_A_A:
-            xor_a_a(cpu);
+            xor_r(cpu, cpu.registers.a_register);
             return true;
         case OR_A_B:
-            or_a_b(cpu);
+            or_r(cpu, cpu.registers.b_register);
             return true;
         case OR_A_C:
-            or_a_c(cpu);
+            or_r(cpu, cpu.registers.c_register);
             return true;
         case OR_A_D:
-            or_a_d(cpu);
+            or_r(cpu, cpu.registers.d_register);
             return true;
         case OR_A_E:
-            or_a_e(cpu);
+            or_r(cpu, cpu.registers.e_register);
             return true;
         case OR_A_H:
-            or_a_h(cpu);
+            or_r(cpu, cpu.registers.h_register);
             return true;
         case OR_A_L:
-            or_a_l(cpu);
+            or_r(cpu, cpu.registers.l_register);
             return true;
         case OR_A_HL:
-            or_a_hl(cpu);
+            or_hl_indirect(cpu);
             return true;
         case OR_A_A:
-            or_a_a(cpu);
+            or_r(cpu, cpu.registers.a_register);
             return true;
         case CP_A_B:
-            cp_a_b(cpu);
+            cp_r(cpu, cpu.registers.b_register);
             return true;
         case CP_A_C:
-            cp_a_c(cpu);
+            cp_r(cpu, cpu.registers.c_register);
             return true;
         case CP_A_D:
-            cp_a_d(cpu);
+            cp_r(cpu, cpu.registers.d_register);
             return true;
         case CP_A_E:
-            cp_a_e(cpu);
+            cp_r(cpu, cpu.registers.e_register);
             return true;
         case CP_A_H:
-            cp_a_h(cpu);
+            cp_r(cpu, cpu.registers.h_register);
             return true;
         case CP_A_L:
-            cp_a_l(cpu);
+            cp_r(cpu, cpu.registers.l_register);
             return true;
         case CP_A_HL:
-            cp_a_hl(cpu);
+            cp_hl_indirect(cpu);
             return true;
         case CP_A_A:
-            cp_a_a(cpu);
+            cp_r(cpu, cpu.registers.a_register);
             return true;
         case ADD_A_n8:
-            add_a_n8(cpu);
+            add_n8(cpu);
             return true;
         case SUB_A_n8:
-            sub_a_n8(cpu);
+            sub_n8(cpu);
             return true;
         case SBC_A_n8:
-            sbc_a_n8(cpu);
+            sbc_n8(cpu);
             return true;
         case AND_A_n8:
-            and_a_n8(cpu);
+            and_n8(cpu);
             return true;
         case XOR_A_n8:
-            xor_a_n8(cpu);
+            xor_n8(cpu);
             return true;
         case OR_A_n8:
-            or_a_n8(cpu);
+            or_n8(cpu);
             return true;
         case CP_A_n8:
-            cp_a_n8(cpu);
+            cp_n8(cpu);
             return true;
         default:
             return false; // Opcode not handled by EightBitALUInstructionSet
@@ -324,7 +324,7 @@ void EightBitALUInstructionSet::dec_r(CPU& cpu, Byte& reg) {
 }
 
 void EightBitALUInstructionSet::daa(CPU& cpu) {
-    // DAA arithmetic operation was hardcoded into the gameboy. I don't know exactly how this works.
+    // DAA arithmetic operation was hardcoded into the gameboy. I don't exactly know how this works.
     // Source - https://ehaskins.com/2018-01-30%20Z80%20DAA/
 
     Byte a = cpu.registers.a_register; 
@@ -358,16 +358,17 @@ void EightBitALUInstructionSet::daa(CPU& cpu) {
 }
 
 void EightBitALUInstructionSet::cpl(CPU& cpu) {
-    // Placeholder: Call the cpl function on the CPU
-    // Example: cpu.cpl();
+    cpu.registers.a_register = ~cpu.registers.a_register;
+    cpu.registers.set_flag(FLAG_SUBTRACT, true);
+    cpu.registers.set_flag(FLAG_HALF_CARRY, true);
 }
 
 void EightBitALUInstructionSet::inc_hl_indirect(CPU& cpu) {
-    // hl is an array with two eight bit elements, so we shift the first element 8 bits to the left and OR it with the second element to get the 16 bit address
-    Byte data = cpu.bus.read(cpu.registers.hl_registers[0] << 8 | cpu.registers.hl_registers[1]);
+    // hl is a 16-bit register with two eight bit elements, so we shift the first element 8 bits to the left and OR it with the second element to get the 16 bit address
+    Byte data = cpu.bus.read(cpu.registers.h_register << 8 | cpu.registers.l_register);
     data++; // Increment data
 
-    cpu.bus.write(cpu.registers.hl_registers[0] << 8 | cpu.registers.hl_registers[1], data); // address, data
+    cpu.bus.write(cpu.registers.h_register << 8 | cpu.registers.l_register, data); // address, data
 
     if (data == 0) {
         cpu.registers.set_flag(FLAG_ZERO, true);
@@ -385,10 +386,10 @@ void EightBitALUInstructionSet::inc_hl_indirect(CPU& cpu) {
 }
 
 void EightBitALUInstructionSet::dec_hl_indirect(CPU& cpu) {
-    Byte data = cpu.bus.read(cpu.registers.hl_registers[0] << 8 | cpu.registers.hl_registers[1]);
+    Byte data = cpu.bus.read(cpu.registers.h_register << 8 | cpu.registers.l_register);
     data--; // Increment data
 
-    cpu.bus.write(cpu.registers.hl_registers[0] << 8 | cpu.registers.hl_registers[1], data); // address, data
+    cpu.bus.write(cpu.registers.h_register << 8 | cpu.registers.l_register, data); // address, data
 
     if (data == 0) {
         cpu.registers.set_flag(FLAG_ZERO, true);
@@ -406,13 +407,16 @@ void EightBitALUInstructionSet::dec_hl_indirect(CPU& cpu) {
 }
 
 void EightBitALUInstructionSet::scf(CPU& cpu) {
-    // Placeholder: Call the scf function on the CPU
-    // Example: cpu.scf();
+    // Set carry flag
+    cpu.registers.set_flag(FLAG_SUBTRACT, false);
+    cpu.registers.set_flag(FLAG_HALF_CARRY, false);
+    cpu.registers.set_flag(FLAG_CARRY, true);
 }
 
 void EightBitALUInstructionSet::ccf(CPU& cpu) {
-    // Placeholder: Call the ccf function on the CPU
-    // Example: cpu.ccf();
+    cpu.registers.set_flag(FLAG_SUBTRACT, false);
+    cpu.registers.set_flag(FLAG_HALF_CARRY, false);
+    cpu.registers.set_flag(FLAG_CARRY, !cpu.registers.flag_register & FLAG_CARRY);
 }
 
 void EightBitALUInstructionSet::add_r(CPU& cpu, Byte& reg) {
@@ -441,326 +445,240 @@ void EightBitALUInstructionSet::add_r(CPU& cpu, Byte& reg) {
 }
 
 void EightBitALUInstructionSet::add_hl_indirect(CPU& cpu) {
-    Byte data = cpu.bus.read(cpu.registers.hl_registers[0] << 8 | cpu.registers.hl_registers[1]);
+    Byte data = cpu.bus.read(cpu.registers.h_register << 8 | cpu.registers.l_register);
     add_r(cpu, data);
 }
 
-void EightBitALUInstructionSet::adc_a_b(CPU& cpu) {
-    // Placeholder: Call the adc_a_b function on the CPU
-    // Example: cpu.adc_a_b();
+void EightBitALUInstructionSet::adc_r(CPU& cpu, Byte& reg) {
+    bool carry = cpu.registers.flag_register & 0x10;
+    Byte result = cpu.registers.a_register + carry;
+    cpu.registers.a_register = result;
+
+    if (result == 0) {
+        cpu.registers.set_flag(FLAG_ZERO, true);
+    } else {
+        cpu.registers.set_flag(FLAG_ZERO, false);
+    }
+
+    cpu.registers.set_flag(FLAG_SUBTRACT, false);
+
+    if (result & 0x08 == 0) {
+        cpu.registers.set_flag(FLAG_HALF_CARRY, false);
+    } else {
+        cpu.registers.set_flag(FLAG_HALF_CARRY, true);
+    }
+
+    if (result & 0x80 == 0) {
+        cpu.registers.set_flag(FLAG_CARRY, false);
+    } else {
+        cpu.registers.set_flag(FLAG_CARRY, true);
+    }    
 }
 
-void EightBitALUInstructionSet::adc_a_c(CPU& cpu) {
-    // Placeholder: Call the adc_a_c function on the CPU
-    // Example: cpu.adc_a_c();
+void EightBitALUInstructionSet::adc_hl_indirect(CPU& cpu) {
+    Byte data = cpu.bus.read(cpu.registers.h_register << 8 | cpu.registers.l_register);
+    adc_r(cpu, data);
 }
 
-void EightBitALUInstructionSet::adc_a_d(CPU& cpu) {
-    // Placeholder: Call the adc_a_d function on the CPU
-    // Example: cpu.adc_a_d();
+void EightBitALUInstructionSet::sub_r(CPU& cpu, Byte& reg) {
+    Byte result = cpu.registers.a_register - reg;
+    cpu.registers.a_register = result;
+
+    if (result == 0) {
+        cpu.registers.set_flag(FLAG_ZERO, true);
+    } else {
+        cpu.registers.set_flag(FLAG_ZERO, false);
+    }
+
+    cpu.registers.set_flag(FLAG_SUBTRACT, true);
+
+    if (result & 0x08 == 0) {
+        cpu.registers.set_flag(FLAG_HALF_CARRY, false);
+    } else {
+        cpu.registers.set_flag(FLAG_HALF_CARRY, true);
+    }
+
+    if (result & 0x80 == 0) {
+        cpu.registers.set_flag(FLAG_CARRY, false);
+    } else {
+        cpu.registers.set_flag(FLAG_CARRY, true);
+    }
 }
 
-void EightBitALUInstructionSet::adc_a_e(CPU& cpu) {
-    // Placeholder: Call the adc_a_e function on the CPU
-    // Example: cpu.adc_a_e();
+void EightBitALUInstructionSet::sub_hl_indirect(CPU& cpu) {
+    Byte data = cpu.bus.read(cpu.registers.h_register << 8 | cpu.registers.l_register);
+    sub_r(cpu, data);
 }
 
-void EightBitALUInstructionSet::adc_a_h(CPU& cpu) {
-    // Placeholder: Call the adc_a_h function on the CPU
-    // Example: cpu.adc_a_h();
+void EightBitALUInstructionSet::sbc_r(CPU& cpu, Byte& reg) {
+    bool carry = cpu.registers.flag_register & 0x10;
+    Byte result = cpu.registers.a_register - reg - carry;
+    cpu.registers.a_register = result;
+
+    if (result == 0) {
+        cpu.registers.set_flag(FLAG_ZERO, true);
+    } else {
+        cpu.registers.set_flag(FLAG_ZERO, false);
+    }
+
+    cpu.registers.set_flag(FLAG_SUBTRACT, true);
+
+    if (result & 0x08 == 0) {
+        cpu.registers.set_flag(FLAG_HALF_CARRY, false);
+    } else {
+        cpu.registers.set_flag(FLAG_HALF_CARRY, true);
+    }
+
+    if (result & 0x80 == 0) {
+        cpu.registers.set_flag(FLAG_CARRY, false);
+    } else {
+        cpu.registers.set_flag(FLAG_CARRY, true);
+    }
 }
 
-void EightBitALUInstructionSet::adc_a_l(CPU& cpu) {
-    // Placeholder: Call the adc_a_l function on the CPU
-    // Example: cpu.adc_a_l();
+void EightBitALUInstructionSet::sbc_hl_indirect(CPU& cpu) {
+    Byte data = cpu.bus.read(cpu.registers.h_register << 8 | cpu.registers.l_register);
+    sbc_r(cpu, data);
 }
 
-void EightBitALUInstructionSet::adc_a_hl(CPU& cpu) {
-    // Placeholder: Call the adc_a_hl function on the CPU
-    // Example: cpu.adc_a_hl();
+void EightBitALUInstructionSet::and_r(CPU& cpu, Byte& reg) {
+    cpu.registers.a_register &= reg;
+
+    if (cpu.registers.a_register == 0) {
+        cpu.registers.set_flag(FLAG_ZERO, true);
+    } else {
+        cpu.registers.set_flag(FLAG_ZERO, false);
+    }
+
+    cpu.registers.set_flag(FLAG_SUBTRACT, false);
+    cpu.registers.set_flag(FLAG_HALF_CARRY, true);
+    cpu.registers.set_flag(FLAG_CARRY, false);
 }
 
-void EightBitALUInstructionSet::adc_a_a(CPU& cpu) {
-    // Placeholder: Call the adc_a_a function on the CPU
-    // Example: cpu.adc_a_a();
+void EightBitALUInstructionSet::and_hl_indirect(CPU& cpu) {
+    Byte data = cpu.bus.read(cpu.registers.h_register << 8 | cpu.registers.l_register);
+    and_r(cpu, data);
 }
 
-void EightBitALUInstructionSet::sub_a_b(CPU& cpu) {
-    // Placeholder: Call the sub_a_b function on the CPU
-    // Example: cpu.sub_a_b();
+void EightBitALUInstructionSet::xor_r(CPU& cpu, Byte& reg) {
+    cpu.registers.a_register ^= reg;
+
+    if (cpu.registers.a_register == 0) {
+        cpu.registers.set_flag(FLAG_ZERO, true);
+    } else {
+        cpu.registers.set_flag(FLAG_ZERO, false);
+    }
+
+    cpu.registers.set_flag(FLAG_SUBTRACT, false);
+    cpu.registers.set_flag(FLAG_HALF_CARRY, false);
+    cpu.registers.set_flag(FLAG_CARRY, false);
 }
 
-void EightBitALUInstructionSet::sub_a_c(CPU& cpu) {
-    // Placeholder: Call the sub_a_c function on the CPU
-    // Example: cpu.sub_a_c();
+void EightBitALUInstructionSet::xor_hl_indirect(CPU& cpu) {
+    Byte data = cpu.bus.read(cpu.registers.h_register << 8 | cpu.registers.l_register);
+    xor_r(cpu, data);
 }
 
-void EightBitALUInstructionSet::sub_a_d(CPU& cpu) {
-    // Placeholder: Call the sub_a_d function on the CPU
-    // Example: cpu.sub_a_d();
+void EightBitALUInstructionSet::or_r(CPU& cpu, Byte& reg) {
+    cpu.registers.a_register |= reg;
+
+    if (cpu.registers.a_register == 0) {
+        cpu.registers.set_flag(FLAG_ZERO, true);
+    } else {
+        cpu.registers.set_flag(FLAG_ZERO, false);
+    }
+
+    cpu.registers.set_flag(FLAG_SUBTRACT, false);
+    cpu.registers.set_flag(FLAG_HALF_CARRY, false);
+    cpu.registers.set_flag(FLAG_CARRY, false);
 }
 
-void EightBitALUInstructionSet::sub_a_e(CPU& cpu) {
-    // Placeholder: Call the sub_a_e function on the CPU
-    // Example: cpu.sub_a_e();
+void EightBitALUInstructionSet::or_hl_indirect(CPU& cpu) {
+    Byte data = cpu.bus.read(cpu.registers.h_register << 8 | cpu.registers.l_register);
+    or_r(cpu, data);
 }
 
-void EightBitALUInstructionSet::sub_a_h(CPU& cpu) {
-    // Placeholder: Call the sub_a_h function on the CPU
-    // Example: cpu.sub_a_h();
+void EightBitALUInstructionSet::cp_r(CPU& cpu, Byte& reg) {
+    Byte result = cpu.registers.a_register - reg;
+
+    if (result == 0) {
+        cpu.registers.set_flag(FLAG_ZERO, true);
+    } else {
+        cpu.registers.set_flag(FLAG_ZERO, false);
+    }
+
+    cpu.registers.set_flag(FLAG_SUBTRACT, true);
+
+    if (result & 0x08 == 0) {
+        cpu.registers.set_flag(FLAG_HALF_CARRY, false);
+    } else {
+        cpu.registers.set_flag(FLAG_HALF_CARRY, true);
+    }
+
+    if (result & 0x80 == 0) {
+        cpu.registers.set_flag(FLAG_CARRY, false);
+    } else {
+        cpu.registers.set_flag(FLAG_CARRY, true);
+    }
 }
 
-void EightBitALUInstructionSet::sub_a_l(CPU& cpu) {
-    // Placeholder: Call the sub_a_l function on the CPU
-    // Example: cpu.sub_a_l();
+void EightBitALUInstructionSet::cp_hl_indirect(CPU& cpu) {
+    Byte data = cpu.bus.read(cpu.registers.h_register << 8 | cpu.registers.l_register);
+    cp_r(cpu, data);
 }
 
-void EightBitALUInstructionSet::sub_a_hl(CPU& cpu) {
-    // Placeholder: Call the sub_a_hl function on the CPU
-    // Example: cpu.sub_a_hl();
+void EightBitALUInstructionSet::add_n8(CPU& cpu) {
+    Byte data = cpu.bus.read(cpu.registers.program_counter); // The immediate value is stored in the next byte
+    cpu.registers.program_counter++; // Increment program counter
+
+    add_r(cpu, data);
 }
 
-void EightBitALUInstructionSet::sub_a_a(CPU& cpu) {
-    // Placeholder: Call the sub_a_a function on the CPU
-    // Example: cpu.sub_a_a();
+void EightBitALUInstructionSet::sub_n8(CPU& cpu) {
+    Byte data = cpu.bus.read(cpu.registers.program_counter); 
+    cpu.registers.program_counter++; 
+
+    sub_r(cpu, data);
 }
 
-void EightBitALUInstructionSet::sbc_a_b(CPU& cpu) {
-    // Placeholder: Call the sbc_a_b function on the CPU
-    // Example: cpu.sbc_a_b();
+void EightBitALUInstructionSet::adc_n8(CPU& cpu) {
+    Byte data = cpu.bus.read(cpu.registers.program_counter); 
+    cpu.registers.program_counter++;
+
+    adc_r(cpu, data);
 }
 
-void EightBitALUInstructionSet::sbc_a_c(CPU& cpu) {
-    // Placeholder: Call the sbc_a_c function on the CPU
-    // Example: cpu.sbc_a_c();
+void EightBitALUInstructionSet::sbc_n8(CPU& cpu) {
+    Byte data = cpu.bus.read(cpu.registers.program_counter);
+    cpu.registers.program_counter++;
+
+    sbc_r(cpu, data);
 }
 
-void EightBitALUInstructionSet::sbc_a_d(CPU& cpu) {
-    // Placeholder: Call the sbc_a_d function on the CPU
-    // Example: cpu.sbc_a_d();
+void EightBitALUInstructionSet::and_n8(CPU& cpu) {
+    Byte data = cpu.bus.read(cpu.registers.program_counter);
+    cpu.registers.program_counter++;
+
+    and_r(cpu, data);
 }
 
-void EightBitALUInstructionSet::sbc_a_e(CPU& cpu) {
-    // Placeholder: Call the sbc_a_e function on the CPU
-    // Example: cpu.sbc_a_e();
+void EightBitALUInstructionSet::xor_n8(CPU& cpu) {
+    Byte data = cpu.bus.read(cpu.registers.program_counter);
+    cpu.registers.program_counter++;
+
+    xor_r(cpu, data);
 }
 
-void EightBitALUInstructionSet::sbc_a_h(CPU& cpu) {
-    // Placeholder: Call the sbc_a_h function on the CPU
-    // Example: cpu.sbc_a_h();
+void EightBitALUInstructionSet::or_n8(CPU& cpu) {
+    Byte data = cpu.bus.read(cpu.registers.program_counter);
+    cpu.registers.program_counter++;
+
+    or_r(cpu, data);
 }
 
-void EightBitALUInstructionSet::sbc_a_l(CPU& cpu) {
-    // Placeholder: Call the sbc_a_l function on the CPU
-    // Example: cpu.sbc_a_l();
-}
+void EightBitALUInstructionSet::cp_n8(CPU& cpu) {
+    Byte data = cpu.bus.read(cpu.registers.program_counter);
+    cpu.registers.program_counter++;
 
-void EightBitALUInstructionSet::sbc_a_hl(CPU& cpu) {
-    // Placeholder: Call the sbc_a_hl function on the CPU
-    // Example: cpu.sbc_a_hl();
-}
-
-void EightBitALUInstructionSet::sbc_a_a(CPU& cpu) {
-    // Placeholder: Call the sbc_a_a function on the CPU
-    // Example: cpu.sbc_a_a();
-}
-
-void EightBitALUInstructionSet::and_a_b(CPU& cpu) {
-    // Placeholder: Call the and_a_b function on the CPU
-    // Example: cpu.and_a_b();
-}
-
-void EightBitALUInstructionSet::and_a_c(CPU& cpu) {
-    // Placeholder: Call the and_a_c function on the CPU
-    // Example: cpu.and_a_c();
-}
-
-void EightBitALUInstructionSet::and_a_d(CPU& cpu) {
-    // Placeholder: Call the and_a_d function on the CPU
-    // Example: cpu.and_a_d();
-}
-
-void EightBitALUInstructionSet::and_a_e(CPU& cpu) {
-    // Placeholder: Call the and_a_e function on the CPU
-    // Example: cpu.and_a_e();
-}
-
-void EightBitALUInstructionSet::and_a_h(CPU& cpu) {
-    // Placeholder: Call the and_a_h function on the CPU
-    // Example: cpu.and_a_h();
-}
-
-void EightBitALUInstructionSet::and_a_l(CPU& cpu) {
-    // Placeholder: Call the and_a_l function on the CPU
-    // Example: cpu.and_a_l();
-}
-
-void EightBitALUInstructionSet::and_a_hl(CPU& cpu) {
-    // Placeholder: Call the and_a_hl function on the CPU
-    // Example: cpu.and_a_hl();
-}
-
-void EightBitALUInstructionSet::and_a_a(CPU& cpu) {
-    // Placeholder: Call the and_a_a function on the CPU
-    // Example: cpu.and_a_a();
-}
-
-void EightBitALUInstructionSet::xor_a_b(CPU& cpu) {
-    // Placeholder: Call the xor_a_b function on the CPU
-    // Example: cpu.xor_a_b();
-}
-
-void EightBitALUInstructionSet::xor_a_c(CPU& cpu) {
-    // Placeholder: Call the xor_a_c function on the CPU
-    // Example: cpu.xor_a_c();
-}
-
-void EightBitALUInstructionSet::xor_a_d(CPU& cpu) {
-    // Placeholder: Call the xor_a_d function on the CPU
-    // Example: cpu.xor_a_d();
-}
-
-void EightBitALUInstructionSet::xor_a_e(CPU& cpu) {
-    // Placeholder: Call the xor_a_e function on the CPU
-    // Example: cpu.xor_a_e();
-}
-
-void EightBitALUInstructionSet::xor_a_h(CPU& cpu) {
-    // Placeholder: Call the xor_a_h function on the CPU
-    // Example: cpu.xor_a_h();
-}
-
-void EightBitALUInstructionSet::xor_a_l(CPU& cpu) {
-    // Placeholder: Call the xor_a_l function on the CPU
-    // Example: cpu.xor_a_l();
-}
-
-void EightBitALUInstructionSet::xor_a_hl(CPU& cpu) {
-    // Placeholder: Call the xor_a_hl function on the CPU
-    // Example: cpu.xor_a_hl();
-}
-
-void EightBitALUInstructionSet::xor_a_a(CPU& cpu) {
-    // Placeholder: Call the xor_a_a function on the CPU
-    // Example: cpu.xor_a_a();
-}
-
-void EightBitALUInstructionSet::or_a_b(CPU& cpu) {
-    // Placeholder: Call the or_a_b function on the CPU
-    // Example: cpu.or_a_b();
-}
-
-void EightBitALUInstructionSet::or_a_c(CPU& cpu) {
-    // Placeholder: Call the or_a_c function on the CPU
-    // Example: cpu.or_a_c();
-}
-
-void EightBitALUInstructionSet::or_a_d(CPU& cpu) {
-    // Placeholder: Call the or_a_d function on the CPU
-    // Example: cpu.or_a_d();
-}
-
-void EightBitALUInstructionSet::or_a_e(CPU& cpu) {
-    // Placeholder: Call the or_a_e function on the CPU
-    // Example: cpu.or_a_e();
-}
-
-void EightBitALUInstructionSet::or_a_h(CPU& cpu) {
-    // Placeholder: Call the or_a_h function on the CPU
-    // Example: cpu.or_a_h();
-}
-
-void EightBitALUInstructionSet::or_a_l(CPU& cpu) {
-    // Placeholder: Call the or_a_l function on the CPU
-    // Example: cpu.or_a_l();
-}
-
-void EightBitALUInstructionSet::or_a_hl(CPU& cpu) {
-    // Placeholder: Call the or_a_hl function on the CPU
-    // Example: cpu.or_a_hl();
-}
-
-void EightBitALUInstructionSet::or_a_a(CPU& cpu) {
-    // Placeholder: Call the or_a_a function on the CPU
-    // Example: cpu.or_a_a();
-}
-
-void EightBitALUInstructionSet::cp_a_b(CPU& cpu) {
-    // Placeholder: Call the cp_a_b function on the CPU
-    // Example: cpu.cp_a_b();
-}
-
-void EightBitALUInstructionSet::cp_a_c(CPU& cpu) {
-    // Placeholder: Call the cp_a_c function on the CPU
-    // Example: cpu.cp_a_c();
-}
-
-void EightBitALUInstructionSet::cp_a_d(CPU& cpu) {
-    // Placeholder: Call the cp_a_d function on the CPU
-    // Example: cpu.cp_a_d();
-}
-
-void EightBitALUInstructionSet::cp_a_e(CPU& cpu) {
-    // Placeholder: Call the cp_a_e function on the CPU
-    // Example: cpu.cp_a_e();
-}
-
-void EightBitALUInstructionSet::cp_a_h(CPU& cpu) {
-    // Placeholder: Call the cp_a_h function on the CPU
-    // Example: cpu.cp_a_h();
-}
-
-void EightBitALUInstructionSet::cp_a_l(CPU& cpu) {
-    // Placeholder: Call the cp_a_l function on the CPU
-    // Example: cpu.cp_a_l();
-}
-
-void EightBitALUInstructionSet::cp_a_hl(CPU& cpu) {
-    // Placeholder: Call the cp_a_hl function on the CPU
-    // Example: cpu.cp_a_hl();
-}
-
-void EightBitALUInstructionSet::cp_a_a(CPU& cpu) {
-    // Placeholder: Call the cp_a_a function on the CPU
-    // Example: cpu.cp_a_a();
-}
-
-void EightBitALUInstructionSet::add_a_n8(CPU& cpu) {
-    // Placeholder: Call the add_a_n8 function on the CPU
-    // Example: cpu.add_a_n8();
-}
-
-void EightBitALUInstructionSet::sub_a_n8(CPU& cpu) {
-    // Placeholder: Call the sub_a_n8 function on the CPU
-    // Example: cpu.sub_a_n8();
-}
-
-void EightBitALUInstructionSet::adc_a_n8(CPU& cpu) {
-    // Placeholder: Call the adc_a_n8 function on the CPU
-    // Example: cpu.adc_a_n8();
-}
-
-void EightBitALUInstructionSet::sbc_a_n8(CPU& cpu) {
-    // Placeholder: Call the sbc_a_n8 function on the CPU
-    // Example: cpu.sbc_a_n8();
-}
-
-void EightBitALUInstructionSet::and_a_n8(CPU& cpu) {
-    // Placeholder: Call the and_a_n8 function on the CPU
-    // Example: cpu.and_a_n8();
-}
-
-void EightBitALUInstructionSet::xor_a_n8(CPU& cpu) {
-    // Placeholder: Call the xor_a_n8 function on the CPU
-    // Example: cpu.xor_a_n8();
-}
-
-void EightBitALUInstructionSet::or_a_n8(CPU& cpu) {
-    // Placeholder: Call the or_a_n8 function on the CPU
-    // Example: cpu.or_a_n8();
-}
-
-void EightBitALUInstructionSet::cp_a_n8(CPU& cpu) {
-    // Placeholder: Call the cp_a_n8 function on the CPU
-    // Example: cpu.cp_a_n8();
+    cp_r(cpu, data);
 }
