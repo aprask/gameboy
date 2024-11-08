@@ -19,7 +19,9 @@ src/bus.cpp
 src/16bitLoadInstructionSet.cpp
 src/8bitShiftInstructionSet.cpp
 src/8bitALUInstructionSet.cpp
-src/16bitALUInstructionSet.cpp)
+src/16bitALUInstructionSet.cpp
+src/testing/8bitALUTesting.cpp
+src/testing/Testing.cpp)
 
 # Include directories
 include_directories(${PROJECT_SOURCE_DIR}/include)
