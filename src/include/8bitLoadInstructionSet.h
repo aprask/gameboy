@@ -96,6 +96,10 @@ public:
     bool execute_prefix(uint16_t opcode, CPU& cpu) override;
 
 private:
+    void ld_r_r(CPU& cpu, Byte& source, Byte& destination);
+    void ld_r_n(CPU& cpu, Byte& destination);
+    void ld_r_hl(CPU& cpu, Byte& destination);
+
     void ld_bc_a(CPU& cpu);
     void ld_b_n8(CPU& cpu);
     void ld_a_bc(CPU& cpu);

@@ -268,7 +268,21 @@ bool EightBitLoadInstructionSet::execute(uint8_t opcode, CPU& cpu) {
     
 };
 
-// Is this the best way to do this? It will be painful when we get to shifts!
+
+void EightBitLoadInstructionSet::ld_r_r(CPU& cpu, Byte& source, Byte& destination) {
+    source = destination;
+}
+
+void EightBitLoadInstructionSet::ld_r_n(CPU& cpu, Byte& destination) {
+    Byte data = cpu.bus.read(cpu.registers.program_counter);
+    destination = data;
+}
+
+void ld_r_hl(CPU& cpu, Byte& destination) {
+    destination = cpu.bus.read(cpu.registers.h_register << 8 | cpu.registers.l_register);
+}
+
+
 
 void EightBitLoadInstructionSet::ld_bc_a(CPU& cpu) {
     // Placeholder for LD_BC_A functionality
