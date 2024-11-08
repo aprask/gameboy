@@ -261,6 +261,9 @@ bool EightBitALUInstructionSet::execute(uint8_t opcode, CPU& cpu) {
         case ADD_A_n8:
             add_n8(cpu);
             return true;
+        case ADC_A_n8:
+            adc_n8(cpu);
+            return true;
         case SUB_A_n8:
             sub_n8(cpu);
             return true;
@@ -416,7 +419,7 @@ void EightBitALUInstructionSet::scf(CPU& cpu) {
 void EightBitALUInstructionSet::ccf(CPU& cpu) {
     cpu.registers.set_flag(FLAG_SUBTRACT, false);
     cpu.registers.set_flag(FLAG_HALF_CARRY, false);
-    cpu.registers.set_flag(FLAG_CARRY, !cpu.registers.flag_register & FLAG_CARRY);
+    cpu.registers.set_flag(FLAG_CARRY, ~cpu.registers.flag_register & FLAG_CARRY);
 }
 
 void EightBitALUInstructionSet::add_r(CPU& cpu, Byte& reg) {
@@ -451,7 +454,7 @@ void EightBitALUInstructionSet::add_hl_indirect(CPU& cpu) {
 
 void EightBitALUInstructionSet::adc_r(CPU& cpu, Byte& reg) {
     bool carry = cpu.registers.flag_register & 0x10;
-    Byte result = cpu.registers.a_register + carry;
+    Byte result = cpu.registers.a_register + reg + carry;
     cpu.registers.a_register = result;
 
     if (result == 0) {
