@@ -75,6 +75,12 @@ int main() {
         std::cout << "Could not find memory location in Instruction Set" << std::endl;
     }
 
+    uint8_t opcode_test_3b = 0xF0;
+    std::cout << "PC: " << cpu.registers.program_counter << std::endl;
+    if (eight_bit_load_instr.execute(opcode_test_3b, cpu)) {
+        std::cout << "PC: " << cpu.registers.program_counter << std::endl;
+    }
+
     // testing SixteenBitLoadInstructionSet
     SixteenBitLoadInstructionSet sixteen_bit_load_instr;
     uint8_t opcode_test4 = 0xC1; // POP_BC
