@@ -7,31 +7,31 @@ bool SixteenBitALUInstructionSet::execute_prefix(uint16_t opcode, CPU& cpu) {
 bool SixteenBitALUInstructionSet::execute(uint8_t opcode, CPU& cpu) {
     switch (opcode) {
         case INC_BC:
-            inc_bc(cpu);
+            inc_rr(cpu, cpu.registers.b_register, cpu.registers.c_register);
             return true;
         case ADD_HL_BC:
-            add_hl_bc(cpu);
+            add_hl_rr(cpu, cpu.registers.b_register, cpu.registers.c_register);
             return true;
         case DEC_BC:
-            dec_bc(cpu);
+            dec_rr(cpu, cpu.registers.b_register, cpu.registers.c_register);
             return true;
         case INC_DE:
-            inc_de(cpu);
+            inc_rr(cpu, cpu.registers.d_register, cpu.registers.e_register);
             return true;
         case ADD_HL_DE:
-            add_hl_de(cpu);
+            add_hl_rr(cpu, cpu.registers.d_register, cpu.registers.e_register);
             return true;
         case DEC_DE:
-            dec_de(cpu);
+            dec_rr(cpu, cpu.registers.d_register, cpu.registers.e_register);
             return true;
         case INC_HL:
-            inc_hl(cpu);
+            inc_rr(cpu, cpu.registers.h_register, cpu.registers.l_register);
             return true;
         case ADD_HL_HL:
-            add_hl_hl(cpu);
+            add_hl_rr(cpu, cpu.registers.h_register, cpu.registers.l_register);
             return true;
         case DEC_HL:
-            dec_hl(cpu);
+            dec_rr(cpu, cpu.registers.h_register, cpu.registers.l_register);
             return true;
         case INC_SP:
             inc_sp(cpu);
@@ -50,67 +50,77 @@ bool SixteenBitALUInstructionSet::execute(uint8_t opcode, CPU& cpu) {
     }
 }
 
-void SixteenBitALUInstructionSet::inc_bc(CPU& cpu) {
-    // Placeholder: Call the inc_bc function on the CPU
-    // Example: cpu.inc_bc();
+void SixteenBitALUInstructionSet::inc_rr(CPU& cpu, Byte& reg1, Byte& reg2) {
+    Word reg = reg1 << 8 | reg2;
+    reg++;
+    reg2 = reg & 0xFF; // Lower byte
+    reg1 = reg >> 8; // Upper byte
 }
 
-void SixteenBitALUInstructionSet::add_hl_bc(CPU& cpu) {
-    // Placeholder: Call the add_hl_bc function on the CPU
-    // Example: cpu.add_hl_bc();
+void SixteenBitALUInstructionSet::dec_rr(CPU& cpu, Byte& reg1, Byte& reg2) {
+    Word reg = reg1 << 8 | reg2;
+    reg--;
+    reg2 = reg & 0xFF;
+    reg1 = reg >> 8;
 }
 
-void SixteenBitALUInstructionSet::dec_bc(CPU& cpu) {
-    // Placeholder: Call the dec_bc function on the CPU
-    // Example: cpu.dec_bc();
-}
+void SixteenBitALUInstructionSet::add_hl_rr(CPU& cpu, Byte& reg1, Byte& reg2) {
+    Word hl = cpu.registers.h_register << 8 | cpu.registers.l_register;
+    Word reg = reg1 << 8 | reg2;
+    Word result = hl + reg;
 
-void SixteenBitALUInstructionSet::inc_de(CPU& cpu) {
-    // Placeholder: Call the inc_de function on the CPU
-    // Example: cpu.inc_de();
-}
+    cpu.registers.l_register = result & 0xFF;
+    cpu.registers.h_register = result >> 8;
 
-void SixteenBitALUInstructionSet::add_hl_de(CPU& cpu) {
-    // Placeholder: Call the add_hl_de function on the CPU
-    // Example: cpu.add_hl_de();
-}
+    cpu.registers.set_flag(FLAG_SUBTRACT, false);
 
-void SixteenBitALUInstructionSet::dec_de(CPU& cpu) {
-    // Placeholder: Call the dec_de function on the CPU
-    // Example: cpu.dec_de();
-}
+    if (result & 0x8000 == 0) {
+        cpu.registers.set_flag(FLAG_CARRY, false);
+    } else {
+        cpu.registers.set_flag(FLAG_CARRY, true);
+    }
 
-void SixteenBitALUInstructionSet::inc_hl(CPU& cpu) {
-    // Placeholder: Call the inc_hl function on the CPU
-    // Example: cpu.inc_hl();
-}
-
-void SixteenBitALUInstructionSet::add_hl_hl(CPU& cpu) {
-    // Placeholder: Call the add_hl_hl function on the CPU
-    // Example: cpu.add_hl_hl();
-}
-
-void SixteenBitALUInstructionSet::dec_hl(CPU& cpu) {
-    // Placeholder: Call the dec_hl function on the CPU
-    // Example: cpu.dec_hl();
+    if (result & 0x0080 == 0) {
+        cpu.registers.set_flag(FLAG_HALF_CARRY, false);
+    } else {
+        cpu.registers.set_flag(FLAG_HALF_CARRY, true);
+    }
 }
 
 void SixteenBitALUInstructionSet::inc_sp(CPU& cpu) {
-    // Placeholder: Call the inc_sp function on the CPU
-    // Example: cpu.inc_sp();
+    cpu.registers.stack_pointer++;
 }
 
 void SixteenBitALUInstructionSet::add_hl_sp(CPU& cpu) {
-    // Placeholder: Call the add_hl_sp function on the CPU
-    // Example: cpu.add_hl_sp();
+    Word hl = cpu.registers.h_register << 8 | cpu.registers.l_register;
+    hl += cpu.registers.stack_pointer;
+    cpu.registers.l_register = hl & 0xFF;
+    cpu.registers.h_register = hl >> 8;
 }
 
 void SixteenBitALUInstructionSet::dec_sp(CPU& cpu) {
-    // Placeholder: Call the dec_sp function on the CPU
-    // Example: cpu.dec_sp();
+    cpu.registers.stack_pointer--;
 }
 
 void SixteenBitALUInstructionSet::add_sp_e8(CPU& cpu) {
-    // Placeholder: Call the add_sp_e8 function on the CPU
-    // Example: cpu.add_sp_e8();
+    int8_t data = cpu.bus.read(cpu.registers.program_counter); // The SIGNED immediate value is stored in the next byte
+    cpu.registers.program_counter++; // Increment program counter
+
+    Word result = cpu.registers.stack_pointer; + data;
+    cpu.registers.stack_pointer = result;
+
+    cpu.registers.set_flag(FLAG_ZERO, false);
+    cpu.registers.set_flag(FLAG_SUBTRACT, false);
+
+    if (result & 0x8000 == 0) {
+        cpu.registers.set_flag(FLAG_CARRY, false);
+    } else {
+        cpu.registers.set_flag(FLAG_CARRY, true);
+    }
+
+    if (result & 0x0080 == 0) {
+        cpu.registers.set_flag(FLAG_HALF_CARRY, false);
+    } else {
+        cpu.registers.set_flag(FLAG_HALF_CARRY, true);
+    }
 }
