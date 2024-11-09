@@ -103,10 +103,10 @@ void SixteenBitALUInstructionSet::dec_sp(CPU& cpu) {
 }
 
 void SixteenBitALUInstructionSet::add_sp_e8(CPU& cpu) {
-    int8_t data = cpu.bus.read(cpu.registers.program_counter); // The SIGNED immediate value is stored in the next byte
+    int8_t data = (int8_t) cpu.bus.read(cpu.registers.program_counter); // The SIGNED immediate value is stored in the next byte
     cpu.registers.program_counter++; // Increment program counter
 
-    Word result = cpu.registers.stack_pointer; + data;
+    Word result = cpu.registers.stack_pointer + data;
     cpu.registers.stack_pointer = result;
 
     cpu.registers.set_flag(FLAG_ZERO, false);

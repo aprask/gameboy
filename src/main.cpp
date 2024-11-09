@@ -10,6 +10,7 @@
 #include "include/16bitALUInstructionSet.h"
 #include "include/8bitShiftInstructionSet.h"
 #include "testing/include/8bitALUTesting.h"
+#include "testing/include/16bitALUTesting.h"
 
 using Byte = uint8_t; // 8 bits
 using Word = uint16_t; // 16 bits
@@ -111,4 +112,8 @@ int main() {
     // testing 8bitALUTesting
     EightBitALUTesting eight_bit_alu_test;
     eight_bit_alu_test.run(cpu);
+
+    // testing 16bitALUTesting
+    SixteenBitALUTesting sixteen_bit_alu_test;
+    sixteen_bit_alu_test.run(cpu);
 }
