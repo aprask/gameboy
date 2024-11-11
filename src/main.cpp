@@ -8,8 +8,8 @@
 #include "include/8bitLoadInstructionSet.h"
 #include "include/16bitLoadInstructionSet.h"
 #include "include/16bitALUInstructionSet.h"
-#include "include/8bitShiftInstructionSet.h"
 #include "testing/include/8bitALUTesting.h"
+#include "testing/include/8bitShiftTesting.h"
 
 using Byte = uint8_t; // 8 bits
 using Word = uint16_t; // 16 bits
@@ -84,21 +84,6 @@ int main() {
         std::cout << "Could not find memory location in Instruction Set" << std::endl;
     }
 
-    // testing EightBitShiftInstructionSet
-    EightBitShiftInstructionSet eight_bit_shift_instr;
-    uint16_t opcode_test5A = 0xCB01;
-    uint8_t opcode_test6A = 0x17;
-    if (eight_bit_shift_instr.execute(opcode_test6A, cpu)) {
-        std::cout << "Found memory match" << std::endl;
-    } else {
-        std::cout << "Could not find memory location in Instruction Set" << std::endl;
-    }
-    if (eight_bit_shift_instr.execute_prefix(opcode_test5A, cpu)) {
-        std::cout << "Found memory match" << std::endl;
-    } else {
-        std::cout << "Could not find memory location in Instruction Set" << std::endl;
-    }
-
     // testing SixteenBitALUInstructionSet
     SixteenBitALUInstructionSet sixteen_bit_alu_instr;
     uint8_t opcode_test6 = 0x03; // INC BC
@@ -111,4 +96,8 @@ int main() {
     // testing 8bitALUTesting
     EightBitALUTesting eight_bit_alu_test;
     eight_bit_alu_test.run(cpu);
+
+    // testing 8bitShiftTesting
+    EightBitShiftTesting eight_bit_shift_test;
+    eight_bit_shift_test.run(cpu);
 }

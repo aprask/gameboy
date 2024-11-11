@@ -1037,7 +1037,7 @@ void EightBitShiftInstructionSet::srl_hl_indirect(CPU& cpu) {
 }
 
 void EightBitShiftInstructionSet::bit_n_r(uint8_t n, CPU& cpu, Byte& reg) {
-    if (reg & (1 << n)) { // Complement of specified bit
+    if ((reg & (1 << n))) {
         cpu.registers.set_flag(FLAG_ZERO, false);
     } else {
         cpu.registers.set_flag(FLAG_ZERO, true);
