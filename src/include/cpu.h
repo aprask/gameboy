@@ -48,11 +48,7 @@ typedef struct {
 
     // TO BE REMOVED -- THIS IS SO EVERYTHING CAN STILL WORK
     void set_flag(Byte flag, bool value) {
-        if (value) {
-            set_bit(flag_register, flag);
-        } else {
-            res_bit(flag_register, flag);
-        }
+        set_bit(flag_register, flag, value);
     }
 
     Word get_pair(Byte high, Byte low) {
@@ -68,12 +64,12 @@ typedef struct {
         return (reg >> bit) & 1;
     }
 
-    void set_bit(Byte& reg, Byte bit) {
-        reg |= (1 << bit);
-    }
-
-    void res_bit(Byte& reg, Byte bit) {
-        reg &= ~(1 << bit);
+    void set_bit(Byte& reg, Byte bit, bool value) {
+        if (value) {
+            reg |= (1 << bit);
+        } else {
+            reg &= ~(1 << bit);
+        }
     }
 } Registers;
 
