@@ -12,6 +12,7 @@ add_executable(Gameboy
 src/main.cpp 
 src/ControlInstructionSet.cpp 
 src/8bitALUInstructionSet.cpp
+src/8bitLoadInstructionSet.cpp
 src/cpu.cpp 
 src/memory.cpp 
 src/bus.cpp)

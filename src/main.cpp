@@ -21,4 +21,11 @@ int main() {
     cpu.registers.b_register = 0x01;
     cpu.execute(0x04); // INC B
     std::cout << "B register: " << std::hex << (int) cpu.registers.b_register << std::endl;
+
+    // 8bitLoadInstructionSet tests
+    cpu.write(0xC000, 0x01);
+    cpu.registers.program_counter = 0xC000;
+    cpu.registers.b_register = 0x00;
+    cpu.execute(0x06); // LD B, n8
+    std::cout << "B register: " << std::hex << (int) cpu.registers.b_register << std::endl;
 }

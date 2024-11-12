@@ -4,6 +4,7 @@
 void ControlInstructionSet::initializeInstructionTable(CPU& cpu) {
     // I now have an appreciation for the power of lambdas
     // I was angry, but now I see that this is the way to go
+    // lest not forget the hours I poured into these 6 lines of code :(
     cpu.addInstruction(0x00, [this, &cpu] { this->nop(cpu); });
     cpu.addInstruction(0x76, [this, &cpu] { this->halt(cpu); });
     cpu.addInstruction(0x10, [this, &cpu] { this->stop(cpu); });
