@@ -1,4 +1,7 @@
 #include "include/cpu.h"
+#include "include/ControlInstructionSet.h"
+
+ControlInstructionSet control_instruction_set;
 
 CPU::CPU(Bus& bus) : bus(bus) {
 }
@@ -17,12 +20,20 @@ Byte CPU::read(Word address) {
     return bus.read(address);
 }
 
-void CPU::initializeInstructionTable() {
-    // This is where we are going to have each InstructionSet class add their own instructions to the table
-    // The goal is modularity, this will be called on startup... not much overhead once the table is initialized... I hope.
+void CPU::addInstruction(Word opcode, Instruction instruction) {
+    instruction_table[opcode] = instruction;
 }
 
-bool CPU::executeInstruction(Word opcode) {
-    // This is where we will look up the opcode in the table and execute the instruction
-    return false;
+void CPU::initializeInstructionTable() {
+    control_instruction_set.initializeInstructionTable(*this);
+}
+
+bool CPU::execute(Word opcode) {
+    if (instruction_table.find(opcode) == instruction_table.end()) {
+        return false;
+    }
+
+    auto instruction = instruction_table.find(opcode);
+    instruction->second();
+    return true;
 }

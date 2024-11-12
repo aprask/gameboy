@@ -17,16 +17,16 @@
 #define FLAG_SUBTRACT 0b01000000
 #define FLAG_HALF_CARRY 0b00100000
 #define FLAG_CARRY 0b00010000
+// TO BE REMOVED -- THIS IS SO EVERYTHING CAN STILL WORK
 
+typedef struct { // I think I found a way to not have to do this? Massive W
+    Byte& reg;
+    bool bit;
+} InstructionParameters;
+
+using Instruction = std::function<void()>;
 using Byte = uint8_t; // 8 bits
 using Word = uint16_t; // 16 bits
-using InstructionHandler = std::function<void(InstructionContext)>;
-
-typedef struct {
-    CPU* cpu;
-    Byte* reg;
-    bool bit;
-} InstructionContext;
 
 typedef struct {
     Word program_counter;
@@ -50,6 +50,7 @@ typedef struct {
     void set_flag(Byte flag, bool value) {
         set_bit(flag_register, flag, value);
     }
+    // TO BE REMOVED -- THIS IS SO EVERYTHING CAN STILL WORK
 
     Word get_pair(Byte high, Byte low) {
         return (high << 8) | low;
@@ -84,11 +85,12 @@ public:
     void write(Word address, Byte data);
     Byte read(Word address);
 
+    void addInstruction(Word opcode, Instruction instruction);
     void initializeInstructionTable();
-    bool executeInstruction(Word opcode);
+    bool execute(Word opcode);
 
 private:
-    std::unordered_map<Word, InstructionHandler> instructionTable;
+    std::unordered_map<Word, Instruction> instruction_table;
 };
 
 #endif // CPU_H

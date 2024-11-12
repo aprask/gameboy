@@ -10,19 +10,10 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 # Add the executable
 add_executable(Gameboy 
 src/main.cpp 
-src/8bitLoadInstructionSet.cpp 
-src/JumpInstructionSet.cpp 
 src/ControlInstructionSet.cpp 
 src/cpu.cpp 
 src/memory.cpp 
-src/bus.cpp
-src/16bitLoadInstructionSet.cpp
-src/8bitShiftInstructionSet.cpp
-src/8bitALUInstructionSet.cpp
-src/16bitALUInstructionSet.cpp
-src/testing/8bitALUTesting.cpp
-src/testing/8bitShiftTesting.cpp
-src/testing/Testing.cpp)
+src/bus.cpp)
 
 # Include directories
 include_directories(${PROJECT_SOURCE_DIR}/include)
