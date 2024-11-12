@@ -1,326 +1,112 @@
 #include "include/8bitALUInstructionSet.h"
 
-bool EightBitALUInstructionSet::execute_prefix(uint16_t opcode, CPU& cpu) {
-        return false;
-}
-
-bool EightBitALUInstructionSet::execute(uint8_t opcode, CPU& cpu) {
-    switch (opcode) {
-        case INC_B:
-            inc_r(cpu, cpu.registers.b_register);
-            return true;
-        case DEC_B:
-            dec_r(cpu, cpu.registers.b_register);
-            return true;
-        case INC_C:
-            inc_r(cpu, cpu.registers.c_register);
-            return true;
-        case DEC_C:
-            dec_r(cpu, cpu.registers.c_register);
-            return true;
-        case INC_D:
-            inc_r(cpu, cpu.registers.d_register);
-            return true;
-        case DEC_D:
-            dec_r(cpu, cpu.registers.d_register);
-            return true;
-        case INC_E:
-            inc_r(cpu, cpu.registers.e_register);
-            return true;
-        case DEC_E:
-            dec_r(cpu, cpu.registers.e_register);
-            return true;
-        case INC_H:
-            inc_r(cpu, cpu.registers.h_register);
-            return true;
-        case DEC_H:
-            dec_r(cpu, cpu.registers.h_register);
-            return true;
-        case DAA:
-            daa(cpu);
-            return true;
-        case INC_L:
-            inc_r(cpu, cpu.registers.l_register);
-            return true;
-        case DEC_L:
-            dec_r(cpu, cpu.registers.l_register);
-            return true;
-        case CPL:
-            cpl(cpu);
-            return true;
-        case INC_HL_INDIRECT:
-            inc_hl_indirect(cpu);
-            return true;
-        case DEC_HL_INDIRECT:
-            dec_hl_indirect(cpu);
-            return true;
-        case SCF:
-            scf(cpu);
-            return true;
-        case INC_A:
-            inc_r(cpu, cpu.registers.a_register);
-            return true;
-        case DEC_A:
-            dec_r(cpu, cpu.registers.a_register);
-            return true;
-        case CCF:
-            ccf(cpu);
-            return true;
-        case ADD_A_B:
-            add_r(cpu, cpu.registers.b_register);
-            return true;
-        case ADD_A_C:
-            add_r(cpu, cpu.registers.c_register);
-            return true;
-        case ADD_A_D:
-            add_r(cpu, cpu.registers.d_register);
-            return true;
-        case ADD_A_E:
-            add_r(cpu, cpu.registers.e_register);
-            return true;
-        case ADD_A_H:
-            add_r(cpu, cpu.registers.h_register);
-            return true;
-        case ADD_A_L:
-            add_r(cpu, cpu.registers.l_register);
-            return true;
-        case ADD_A_HL:
-            add_hl_indirect(cpu);
-            return true;
-        case ADD_A_A:
-            add_r(cpu, cpu.registers.a_register);
-            return true;
-        case ADC_A_B:
-            adc_r(cpu, cpu.registers.b_register);
-            return true;
-        case ADC_A_C:
-            adc_r(cpu, cpu.registers.c_register);
-            return true;
-        case ADC_A_D:
-            adc_r(cpu, cpu.registers.d_register);
-            return true;
-        case ADC_A_E:
-            adc_r(cpu, cpu.registers.e_register);
-            return true;
-        case ADC_A_H:
-            adc_r(cpu, cpu.registers.h_register);
-            return true;
-        case ADC_A_L:
-            adc_r(cpu, cpu.registers.l_register);
-            return true;
-        case ADC_A_HL:
-            adc_hl_indirect(cpu);
-            return true;
-        case ADC_A_A:
-            adc_r(cpu, cpu.registers.a_register);
-            return true;
-        case SUB_A_B:
-            sub_r(cpu, cpu.registers.b_register);
-            return true;
-        case SUB_A_C:
-            sub_r(cpu, cpu.registers.c_register);
-            return true;
-        case SUB_A_D:
-            sub_r(cpu, cpu.registers.d_register);
-            return true;  
-        case SUB_A_E:
-            sub_r(cpu, cpu.registers.e_register);
-            return true;
-        case SUB_A_H:
-            sub_r(cpu, cpu.registers.h_register);
-            return true;
-        case SUB_A_L:
-            sub_r(cpu, cpu.registers.l_register);
-            return true;
-        case SUB_A_HL:
-            sub_hl_indirect(cpu);
-            return true;
-        case SUB_A_A:
-            sub_r(cpu, cpu.registers.a_register);
-            return true;
-        case SBC_A_B:
-            sbc_r(cpu, cpu.registers.b_register);
-            return true;
-        case SBC_A_C:
-            sbc_r(cpu, cpu.registers.c_register);
-            return true;
-        case SBC_A_D:
-            sbc_r(cpu, cpu.registers.d_register);
-            return true;
-        case SBC_A_E:
-            sbc_r(cpu, cpu.registers.e_register);
-            return true;
-        case SBC_A_H:
-            sbc_r(cpu, cpu.registers.h_register);
-            return true;
-        case SBC_A_L:
-            sbc_r(cpu, cpu.registers.l_register);
-            return true;
-        case SBC_A_HL:
-            sbc_hl_indirect(cpu);
-            return true;
-        case SBC_A_A:
-            sbc_r(cpu, cpu.registers.a_register);
-            return true;
-        case AND_A_B:
-            and_r(cpu, cpu.registers.b_register);
-            return true;
-        case AND_A_C:
-            and_r(cpu, cpu.registers.c_register);
-            return true;
-        case AND_A_D:
-            and_r(cpu, cpu.registers.d_register);
-            return true;
-        case AND_A_E:
-            and_r(cpu, cpu.registers.e_register);
-            return true;
-        case AND_A_H:
-            and_r(cpu, cpu.registers.h_register);
-            return true;
-        case AND_A_L:
-            and_r(cpu, cpu.registers.l_register);
-            return true;
-        case AND_A_HL:
-            and_hl_indirect(cpu);
-            return true;
-        case AND_A_A:
-            and_r(cpu, cpu.registers.a_register);
-            return true;
-        case XOR_A_B:
-            xor_r(cpu, cpu.registers.b_register);
-            return true;
-        case XOR_A_C:
-            xor_r(cpu, cpu.registers.c_register);
-            return true;
-        case XOR_A_D:
-            xor_r(cpu, cpu.registers.d_register);
-            return true;
-        case XOR_A_E:
-            xor_r(cpu, cpu.registers.e_register);
-            return true;
-        case XOR_A_H:
-            xor_r(cpu, cpu.registers.h_register);
-            return true;
-        case XOR_A_L:
-            xor_r(cpu, cpu.registers.l_register);
-            return true;
-        case XOR_A_HL:
-            xor_hl_indirect(cpu);
-            return true;
-        case XOR_A_A:
-            xor_r(cpu, cpu.registers.a_register);
-            return true;
-        case OR_A_B:
-            or_r(cpu, cpu.registers.b_register);
-            return true;
-        case OR_A_C:
-            or_r(cpu, cpu.registers.c_register);
-            return true;
-        case OR_A_D:
-            or_r(cpu, cpu.registers.d_register);
-            return true;
-        case OR_A_E:
-            or_r(cpu, cpu.registers.e_register);
-            return true;
-        case OR_A_H:
-            or_r(cpu, cpu.registers.h_register);
-            return true;
-        case OR_A_L:
-            or_r(cpu, cpu.registers.l_register);
-            return true;
-        case OR_A_HL:
-            or_hl_indirect(cpu);
-            return true;
-        case OR_A_A:
-            or_r(cpu, cpu.registers.a_register);
-            return true;
-        case CP_A_B:
-            cp_r(cpu, cpu.registers.b_register);
-            return true;
-        case CP_A_C:
-            cp_r(cpu, cpu.registers.c_register);
-            return true;
-        case CP_A_D:
-            cp_r(cpu, cpu.registers.d_register);
-            return true;
-        case CP_A_E:
-            cp_r(cpu, cpu.registers.e_register);
-            return true;
-        case CP_A_H:
-            cp_r(cpu, cpu.registers.h_register);
-            return true;
-        case CP_A_L:
-            cp_r(cpu, cpu.registers.l_register);
-            return true;
-        case CP_A_HL:
-            cp_hl_indirect(cpu);
-            return true;
-        case CP_A_A:
-            cp_r(cpu, cpu.registers.a_register);
-            return true;
-        case ADD_A_n8:
-            add_n8(cpu);
-            return true;
-        case SUB_A_n8:
-            sub_n8(cpu);
-            return true;
-        case SBC_A_n8:
-            sbc_n8(cpu);
-            return true;
-        case AND_A_n8:
-            and_n8(cpu);
-            return true;
-        case XOR_A_n8:
-            xor_n8(cpu);
-            return true;
-        case OR_A_n8:
-            or_n8(cpu);
-            return true;
-        case CP_A_n8:
-            cp_n8(cpu);
-            return true;
-        default:
-            return false; // Opcode not handled by EightBitALUInstructionSet
-    }
-
-    cpu.registers.instruction_register = cpu.bus.read(cpu.registers.program_counter); // Read the next byte from memory)
-    cpu.registers.program_counter++; // Increment program counter
+void EightBitALUInstructionSet::initializeInstructionTable(CPU& cpu) {
+    cpu.addInstruction(0x04, [this, &cpu] { inc_r(cpu, cpu.registers.b_register); });
+    cpu.addInstruction(0x05, [this, &cpu] { dec_r(cpu, cpu.registers.b_register); });
+    cpu.addInstruction(0x0C, [this, &cpu] { inc_r(cpu, cpu.registers.c_register); });
+    cpu.addInstruction(0x0D, [this, &cpu] { dec_r(cpu, cpu.registers.c_register); });
+    cpu.addInstruction(0x14, [this, &cpu] { inc_r(cpu, cpu.registers.d_register); });
+    cpu.addInstruction(0x15, [this, &cpu] { dec_r(cpu, cpu.registers.d_register); });
+    cpu.addInstruction(0x1C, [this, &cpu] { inc_r(cpu, cpu.registers.e_register); });
+    cpu.addInstruction(0x1D, [this, &cpu] { dec_r(cpu, cpu.registers.e_register); });
+    cpu.addInstruction(0x24, [this, &cpu] { inc_r(cpu, cpu.registers.h_register); });
+    cpu.addInstruction(0x25, [this, &cpu] { dec_r(cpu, cpu.registers.h_register); });
+    cpu.addInstruction(0x27, [this, &cpu] { daa(cpu); });
+    cpu.addInstruction(0x2C, [this, &cpu] { inc_r(cpu, cpu.registers.l_register); });
+    cpu.addInstruction(0x2D, [this, &cpu] { dec_r(cpu, cpu.registers.l_register); });
+    cpu.addInstruction(0x2F, [this, &cpu] { cpl(cpu); });
+    cpu.addInstruction(0x34, [this, &cpu] { inc_hl_indirect(cpu); });
+    cpu.addInstruction(0x35, [this, &cpu] { dec_hl_indirect(cpu); });
+    cpu.addInstruction(0x37, [this, &cpu] { scf(cpu); });
+    cpu.addInstruction(0x3C, [this, &cpu] { inc_r(cpu, cpu.registers.a_register); });
+    cpu.addInstruction(0x3D, [this, &cpu] { dec_r(cpu, cpu.registers.a_register); });
+    cpu.addInstruction(0x3F, [this, &cpu] { ccf(cpu); });
+    cpu.addInstruction(0x80, [this, &cpu] { add_r(cpu, cpu.registers.b_register); });
+    cpu.addInstruction(0x81, [this, &cpu] { add_r(cpu, cpu.registers.c_register); });
+    cpu.addInstruction(0x82, [this, &cpu] { add_r(cpu, cpu.registers.d_register); });
+    cpu.addInstruction(0x83, [this, &cpu] { add_r(cpu, cpu.registers.e_register); });
+    cpu.addInstruction(0x84, [this, &cpu] { add_r(cpu, cpu.registers.h_register); });
+    cpu.addInstruction(0x85, [this, &cpu] { add_r(cpu, cpu.registers.l_register); });
+    cpu.addInstruction(0x86, [this, &cpu] { add_hl_indirect(cpu); });
+    cpu.addInstruction(0x87, [this, &cpu] { add_r(cpu, cpu.registers.a_register); });
+    cpu.addInstruction(0x88, [this, &cpu] { adc_r(cpu, cpu.registers.b_register); });
+    cpu.addInstruction(0x89, [this, &cpu] { adc_r(cpu, cpu.registers.c_register); });
+    cpu.addInstruction(0x8A, [this, &cpu] { adc_r(cpu, cpu.registers.d_register); });
+    cpu.addInstruction(0x8B, [this, &cpu] { adc_r(cpu, cpu.registers.e_register); });
+    cpu.addInstruction(0x8C, [this, &cpu] { adc_r(cpu, cpu.registers.h_register); });
+    cpu.addInstruction(0x8D, [this, &cpu] { adc_r(cpu, cpu.registers.l_register); });
+    cpu.addInstruction(0x8E, [this, &cpu] { adc_hl_indirect(cpu); });
+    cpu.addInstruction(0x8F, [this, &cpu] { adc_r(cpu, cpu.registers.a_register); });
+    cpu.addInstruction(0x90, [this, &cpu] { sub_r(cpu, cpu.registers.b_register); });
+    cpu.addInstruction(0x91, [this, &cpu] { sub_r(cpu, cpu.registers.c_register); });
+    cpu.addInstruction(0x92, [this, &cpu] { sub_r(cpu, cpu.registers.d_register); });
+    cpu.addInstruction(0x93, [this, &cpu] { sub_r(cpu, cpu.registers.e_register); });
+    cpu.addInstruction(0x94, [this, &cpu] { sub_r(cpu, cpu.registers.h_register); });
+    cpu.addInstruction(0x95, [this, &cpu] { sub_r(cpu, cpu.registers.l_register); });
+    cpu.addInstruction(0x96, [this, &cpu] { sub_hl_indirect(cpu); });
+    cpu.addInstruction(0x97, [this, &cpu] { sub_r(cpu, cpu.registers.a_register); });
+    cpu.addInstruction(0x98, [this, &cpu] { sbc_r(cpu, cpu.registers.b_register); });
+    cpu.addInstruction(0x99, [this, &cpu] { sbc_r(cpu, cpu.registers.c_register); });
+    cpu.addInstruction(0x9A, [this, &cpu] { sbc_r(cpu, cpu.registers.d_register); });
+    cpu.addInstruction(0x9B, [this, &cpu] { sbc_r(cpu, cpu.registers.e_register); });
+    cpu.addInstruction(0x9C, [this, &cpu] { sbc_r(cpu, cpu.registers.h_register); });
+    cpu.addInstruction(0x9D, [this, &cpu] { sbc_r(cpu, cpu.registers.l_register); });
+    cpu.addInstruction(0x9E, [this, &cpu] { sbc_hl_indirect(cpu); });
+    cpu.addInstruction(0x9F, [this, &cpu] { sbc_r(cpu, cpu.registers.a_register); });
+    cpu.addInstruction(0xA0, [this, &cpu] { and_r(cpu, cpu.registers.b_register); });
+    cpu.addInstruction(0xA1, [this, &cpu] { and_r(cpu, cpu.registers.c_register); });
+    cpu.addInstruction(0xA2, [this, &cpu] { and_r(cpu, cpu.registers.d_register); });
+    cpu.addInstruction(0xA3, [this, &cpu] { and_r(cpu, cpu.registers.e_register); });
+    cpu.addInstruction(0xA4, [this, &cpu] { and_r(cpu, cpu.registers.h_register); });
+    cpu.addInstruction(0xA5, [this, &cpu] { and_r(cpu, cpu.registers.l_register); });
+    cpu.addInstruction(0xA6, [this, &cpu] { and_hl_indirect(cpu); });
+    cpu.addInstruction(0xA7, [this, &cpu] { and_r(cpu, cpu.registers.a_register); });
+    cpu.addInstruction(0xA8, [this, &cpu] { xor_r(cpu, cpu.registers.b_register); });
+    cpu.addInstruction(0xA9, [this, &cpu] { xor_r(cpu, cpu.registers.c_register); });
+    cpu.addInstruction(0xAA, [this, &cpu] { xor_r(cpu, cpu.registers.d_register); });
+    cpu.addInstruction(0xAB, [this, &cpu] { xor_r(cpu, cpu.registers.e_register); });
+    cpu.addInstruction(0xAC, [this, &cpu] { xor_r(cpu, cpu.registers.h_register); });
+    cpu.addInstruction(0xAD, [this, &cpu] { xor_r(cpu, cpu.registers.l_register); });
+    cpu.addInstruction(0xAE, [this, &cpu] { xor_hl_indirect(cpu); });
+    cpu.addInstruction(0xAF, [this, &cpu] { xor_r(cpu, cpu.registers.a_register); });
+    cpu.addInstruction(0xB0, [this, &cpu] { or_r(cpu, cpu.registers.b_register); });
+    cpu.addInstruction(0xB1, [this, &cpu] { or_r(cpu, cpu.registers.c_register); });
+    cpu.addInstruction(0xB2, [this, &cpu] { or_r(cpu, cpu.registers.d_register); });
+    cpu.addInstruction(0xB3, [this, &cpu] { or_r(cpu, cpu.registers.e_register); });
+    cpu.addInstruction(0xB4, [this, &cpu] { or_r(cpu, cpu.registers.h_register); });
+    cpu.addInstruction(0xB5, [this, &cpu] { or_r(cpu, cpu.registers.l_register); });
+    cpu.addInstruction(0xB6, [this, &cpu] { or_hl_indirect(cpu); });
+    cpu.addInstruction(0xB7, [this, &cpu] { or_r(cpu, cpu.registers.a_register); });
+    cpu.addInstruction(0xB8, [this, &cpu] { cp_r(cpu, cpu.registers.b_register); });
+    cpu.addInstruction(0xB9, [this, &cpu] { cp_r(cpu, cpu.registers.c_register); });
+    cpu.addInstruction(0xBA, [this, &cpu] { cp_r(cpu, cpu.registers.d_register); });
+    cpu.addInstruction(0xBB, [this, &cpu] { cp_r(cpu, cpu.registers.e_register); });
+    cpu.addInstruction(0xBC, [this, &cpu] { cp_r(cpu, cpu.registers.h_register); });
+    cpu.addInstruction(0xBD, [this, &cpu] { cp_r(cpu, cpu.registers.l_register); });
+    cpu.addInstruction(0xBE, [this, &cpu] { cp_hl_indirect(cpu); });
+    cpu.addInstruction(0xBF, [this, &cpu] { cp_r(cpu, cpu.registers.a_register); });
+    cpu.addInstruction(0xC6, [this, &cpu] { add_n8(cpu); });
+    cpu.addInstruction(0xCE, [this, &cpu] { adc_n8(cpu); });
+    cpu.addInstruction(0xD6, [this, &cpu] { sub_n8(cpu); });
+    cpu.addInstruction(0xDE, [this, &cpu] { sbc_n8(cpu); });
+    cpu.addInstruction(0xE6, [this, &cpu] { and_n8(cpu); });
+    cpu.addInstruction(0xEE, [this, &cpu] { xor_n8(cpu); });
+    cpu.addInstruction(0xF6, [this, &cpu] { or_n8(cpu); });
+    cpu.addInstruction(0xFE, [this, &cpu] { cp_n8(cpu); });
 }
 
 void EightBitALUInstructionSet::inc_r(CPU& cpu, Byte& reg) {
     reg++; // Increment register
-    if (reg == 0) {
-        cpu.registers.set_flag(FLAG_ZERO, true);
-    } else {
-        cpu.registers.set_flag(FLAG_ZERO, false);
-    }
-
-    cpu.registers.set_flag(FLAG_SUBTRACT, false);
-
-    // Half carry flag is set if there is a carry from the 3rd bit
-    if (reg & 0x08 == 0) {
-        cpu.registers.set_flag(FLAG_HALF_CARRY, false);
-    } else {
-        cpu.registers.set_flag(FLAG_HALF_CARRY, true);
-    }
+    cpu.registers.set_bit(cpu.registers.flag_register, Z, reg == 0); // Set zero flag if register is zero
+    cpu.registers.set_bit(cpu.registers.flag_register, N, false); // Reset subtract flag
+    cpu.registers.set_bit(cpu.registers.flag_register, H, reg & 0x08); // Set half carry flag if there is a carry from the 4th bit
 }
 
 void EightBitALUInstructionSet::dec_r(CPU& cpu, Byte& reg) {
     reg--; // Decrement register
-    if (reg == 0) {
-        cpu.registers.set_flag(FLAG_ZERO, true);
-    } else {
-        cpu.registers.set_flag(FLAG_ZERO, false);
-    }
-
-    cpu.registers.set_flag(FLAG_SUBTRACT, true);
-
-    // Half carry flag is set if there is a borrow from the 4th bit
-    if (reg & 0x08 == 0) {
-        cpu.registers.set_flag(FLAG_HALF_CARRY, false);
-    } else {
-        cpu.registers.set_flag(FLAG_HALF_CARRY, true);
-    }
+    cpu.registers.set_bit(cpu.registers.flag_register, Z, reg == 0);
+    cpu.registers.set_bit(cpu.registers.flag_register, N, true); 
+    cpu.registers.set_bit(cpu.registers.flag_register, H, reg & 0x08);
 }
 
 void EightBitALUInstructionSet::daa(CPU& cpu) {
@@ -329,38 +115,33 @@ void EightBitALUInstructionSet::daa(CPU& cpu) {
 
     Byte a = cpu.registers.a_register; 
 
-    if (cpu.registers.flag_register & FLAG_SUBTRACT) { // if n
-        if (cpu.registers.flag_register & FLAG_HALF_CARRY) {
+    if (cpu.registers.get_bit(cpu.registers.flag_register, N)) { // if n
+        if (cpu.registers.get_bit(cpu.registers.flag_register, H) || (a & 0x0F) > 0x09) {
             a = (a - 0x06) & 0xFF;
         }
 
-        if (cpu.registers.flag_register & FLAG_CARRY) {
+        if (cpu.registers.get_bit(cpu.registers.flag_register, C) || a > 0x99) {
             a = (a - 0x60) & 0xFF;
         }
     } else { // if not n
-        if ((a & 0x0F) > 0x09 || cpu.registers.flag_register & FLAG_HALF_CARRY) {
+        if ((a & 0x0F) > 0x09 || cpu.registers.get_bit(cpu.registers.flag_register, H)) {
             a += 0x06;
         }
 
-        if (a > 0x99 || cpu.registers.flag_register & FLAG_CARRY) {
-            cpu.registers.set_flag(FLAG_CARRY, true);
+        if (a > 0x99 || cpu.registers.get_bit(cpu.registers.flag_register, C)) {
+            cpu.registers.set_bit(cpu.registers.flag_register, C, true);
             a += 0x60;
         }
     }
 
-    if (a == 0) {
-        cpu.registers.set_flag(FLAG_ZERO, true);
-    } else {
-        cpu.registers.set_flag(FLAG_ZERO, false);
-    }
-
+    cpu.registers.set_bit(cpu.registers.flag_register, Z, a == 0);
     cpu.registers.set_flag(FLAG_HALF_CARRY, false);
 }
 
 void EightBitALUInstructionSet::cpl(CPU& cpu) {
     cpu.registers.a_register = ~cpu.registers.a_register;
-    cpu.registers.set_flag(FLAG_SUBTRACT, true);
-    cpu.registers.set_flag(FLAG_HALF_CARRY, true);
+    cpu.registers.set_bit(cpu.registers.flag_register, N, true);
+    cpu.registers.set_bit(cpu.registers.flag_register, H, true);
 }
 
 void EightBitALUInstructionSet::inc_hl_indirect(CPU& cpu) {

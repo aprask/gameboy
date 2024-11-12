@@ -1,7 +1,9 @@
 #include "include/cpu.h"
 #include "include/ControlInstructionSet.h"
+#include "include/8bitALUInstructionSet.h"
 
 ControlInstructionSet control_instruction_set;
+EightBitALUInstructionSet eight_bit_alu_instruction_set;
 
 CPU::CPU(Bus& bus) : bus(bus) {
 }
@@ -26,6 +28,7 @@ void CPU::addInstruction(Word opcode, Instruction instruction) {
 
 void CPU::initializeInstructionTable() {
     control_instruction_set.initializeInstructionTable(*this);
+    eight_bit_alu_instruction_set.initializeInstructionTable(*this);
 }
 
 bool CPU::execute(Word opcode) {

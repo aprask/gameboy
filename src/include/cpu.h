@@ -7,10 +7,10 @@
 #include <functional>
 #include "bus.h"
 
-#define Z 7;
-#define N 6;
-#define H 5;
-#define C 4;
+const int Z = 7;
+const int N = 6;
+const int H = 5;
+const int C = 4;
 
 // TO BE REMOVED -- THIS IS SO EVERYTHING CAN STILL WORK
 #define FLAG_ZERO 0b10000000
@@ -48,7 +48,11 @@ typedef struct {
 
     // TO BE REMOVED -- THIS IS SO EVERYTHING CAN STILL WORK
     void set_flag(Byte flag, bool value) {
-        set_bit(flag_register, flag, value);
+        if (value) {
+            flag_register |= flag;
+        } else {
+            flag_register &= ~flag;
+        }
     }
     // TO BE REMOVED -- THIS IS SO EVERYTHING CAN STILL WORK
 
@@ -65,7 +69,7 @@ typedef struct {
         return (reg >> bit) & 1;
     }
 
-    void set_bit(Byte& reg, Byte bit, bool value) {
+    void set_bit(Byte& reg, int bit, bool value) {
         if (value) {
             reg |= (1 << bit);
         } else {
