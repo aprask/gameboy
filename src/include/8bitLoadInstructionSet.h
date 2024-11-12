@@ -3,7 +3,6 @@
 
 #include "InstructionSet.h"
 #include "cpu.h"
-#include "8bitALUInstructionSet.h"
 
 #define LD_R_R 0x41
 #define LD_R_N 0x06
@@ -28,14 +27,12 @@
 
 class EightBitLoadInstructionSet : public InstructionSet {
 public:
-    EightBitLoadInstructionSet();
-    bool execute(uint8_t opcode, CPU& cpu) override;
-    bool execute_prefix(uint16_t opcode, CPU& cpu) override;
+    void initializeInstructionTable(CPU& cpu) override;
 
 private:
-    EightBitALUInstructionSet alu;
+    void ld_rr_a(CPU& cpu, Byte& source, Byte& destination);
     void ld_r_r(CPU& cpu, Byte& source, Byte& destination);
-    void ld_r_n(CPU& cpu, Byte& destination);
+    void ld_r_n8(CPU& cpu, Byte& destination);
     void ld_r_hl(CPU& cpu, Byte& destination);
     void ld_hl_r(CPU& cpu, Byte& source);
     void ld_hl_n(CPU& cpu);
