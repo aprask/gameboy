@@ -2,10 +2,12 @@
 #include "include/ControlInstructionSet.h"
 #include "include/8bitALUInstructionSet.h"
 #include "include/8bitLoadInstructionSet.h"
+#include "include/8bitShiftInstructionSet.h"
 
 ControlInstructionSet control_instruction_set;
 EightBitALUInstructionSet eight_bit_alu_instruction_set;
 EightBitLoadInstructionSet eight_bit_load_instruction_set;
+EightBitShiftInstructionSet eight_bit_shift_instruction_set;
 
 CPU::CPU(Bus& bus) : bus(bus) {
 }
@@ -32,6 +34,7 @@ void CPU::initializeInstructionTable() {
     control_instruction_set.initializeInstructionTable(*this);
     eight_bit_alu_instruction_set.initializeInstructionTable(*this);
     eight_bit_load_instruction_set.initializeInstructionTable(*this);
+    eight_bit_shift_instruction_set.initializeInstructionTable(*this);
 }
 
 bool CPU::execute(Word opcode) {

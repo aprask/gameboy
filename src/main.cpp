@@ -28,4 +28,9 @@ int main() {
     cpu.registers.b_register = 0x00;
     cpu.execute(0x06); // LD B, n8
     std::cout << "B register: " << std::hex << (int) cpu.registers.b_register << std::endl;
+
+    // 8bitShiftInstructionSet tests
+    cpu.registers.b_register = 0x01;
+    cpu.execute(0xCB30); // SWAP B
+    std::cout << "B register: " << std::hex << (int) cpu.registers.b_register << std::endl;
 }

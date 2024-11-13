@@ -13,6 +13,7 @@ src/main.cpp
 src/ControlInstructionSet.cpp 
 src/8bitALUInstructionSet.cpp
 src/8bitLoadInstructionSet.cpp
+src/8bitShiftInstructionSet.cpp
 src/cpu.cpp 
 src/memory.cpp 
 src/bus.cpp)
