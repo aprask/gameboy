@@ -16,7 +16,7 @@ bool SixteenBitALUTesting::test_inc_rr(CPU& cpu) {
     Byte opcode = 0x03; // INC BC
     cpu.registers.b_register = 0x00;
     cpu.registers.c_register = 0xFF;
-    sixteen_bit_alu_instr.execute(opcode, cpu);
+    cpu.execute(opcode);
     return cpu.registers.b_register == 0x01 && cpu.registers.c_register == 0x00;
 }
 
@@ -25,7 +25,7 @@ bool SixteenBitALUTesting::test_dec_rr(CPU& cpu) {
     Byte opcode = 0x0B; // DEC BC
     cpu.registers.b_register = 0x01;
     cpu.registers.c_register = 0x00;
-    sixteen_bit_alu_instr.execute(opcode, cpu);
+    cpu.execute(opcode);
     return cpu.registers.b_register == 0x00 && cpu.registers.c_register == 0xFF;
 }
 
@@ -36,7 +36,7 @@ bool SixteenBitALUTesting::test_add_hl_rr(CPU& cpu) {
     cpu.registers.l_register = 0xFF;
     cpu.registers.b_register = 0x00;
     cpu.registers.c_register = 0x01;
-    sixteen_bit_alu_instr.execute(opcode, cpu);
+    cpu.execute(opcode);
     return cpu.registers.h_register == 0x01 && cpu.registers.l_register == 0x00;
 }
 
@@ -44,7 +44,7 @@ bool SixteenBitALUTesting::test_inc_sp(CPU& cpu) {
     SixteenBitALUInstructionSet sixteen_bit_alu_instr;
     Byte opcode = 0x33; // INC SP
     cpu.registers.stack_pointer = 0x0001;
-    sixteen_bit_alu_instr.execute(opcode, cpu);
+    cpu.execute(opcode);
     return cpu.registers.stack_pointer == 0x0002;
 }
 
@@ -54,7 +54,7 @@ bool SixteenBitALUTesting::test_add_hl_sp(CPU& cpu) {
     cpu.registers.h_register = 0x00;
     cpu.registers.l_register = 0xFF;
     cpu.registers.stack_pointer = 0x0001;
-    sixteen_bit_alu_instr.execute(opcode, cpu);
+    cpu.execute(opcode);
     return cpu.registers.h_register == 0x01 && cpu.registers.l_register == 0x00;
 }
 
@@ -62,7 +62,7 @@ bool SixteenBitALUTesting::test_dec_sp(CPU& cpu) {
     SixteenBitALUInstructionSet sixteen_bit_alu_instr;
     Byte opcode = 0x3B; // DEC SP
     cpu.registers.stack_pointer = 0x0001;
-    sixteen_bit_alu_instr.execute(opcode, cpu);
+    cpu.execute(opcode);
     return cpu.registers.stack_pointer == 0x0000;
 }
 
@@ -72,6 +72,6 @@ bool SixteenBitALUTesting::test_add_sp_e8(CPU& cpu) {
     cpu.registers.stack_pointer = 0x0001;
     cpu.bus.write(0xC000, 0x01);
     cpu.registers.program_counter = 0xC000;
-    sixteen_bit_alu_instr.execute(opcode, cpu);
+    cpu.execute(opcode);
     return cpu.registers.stack_pointer == 0x0002;
 }
