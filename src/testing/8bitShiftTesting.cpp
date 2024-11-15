@@ -33,7 +33,7 @@ bool EightBitShiftTesting::test_rlca(CPU& cpu) {
     EightBitShiftInstructionSet eight_bit_shift_instr;
     uint8_t opcode = 0x07; // RLCA
     cpu.registers.a_register = 0x80;
-    eight_bit_shift_instr.execute(opcode, cpu);
+    cpu.execute(opcode);
     return cpu.registers.a_register == 0x01;
 }
 
@@ -41,7 +41,7 @@ bool EightBitShiftTesting::test_rrca(CPU& cpu) {
     EightBitShiftInstructionSet eight_bit_shift_instr;
     uint8_t opcode = 0x0F; // RRCA
     cpu.registers.a_register = 0x01;
-    eight_bit_shift_instr.execute(opcode, cpu);
+    cpu.execute(opcode);
     return cpu.registers.a_register == 0x80;
 }
 
@@ -50,7 +50,7 @@ bool EightBitShiftTesting::test_rra(CPU& cpu) {
     uint8_t opcode = 0x1F; // RRA
     cpu.registers.a_register = 0x01;
     cpu.registers.set_flag(FLAG_CARRY, false);
-    eight_bit_shift_instr.execute(opcode, cpu);
+    cpu.execute(opcode);
     return cpu.registers.a_register == 0x00 && cpu.registers.flag_register & FLAG_CARRY;
 }
 
@@ -59,7 +59,7 @@ bool EightBitShiftTesting::test_rla(CPU& cpu) {
     uint8_t opcode = 0x17; // RLA
     cpu.registers.a_register = 0x80;
     cpu.registers.set_flag(FLAG_CARRY, false);
-    eight_bit_shift_instr.execute(opcode, cpu);
+    cpu.execute(opcode);
     return cpu.registers.a_register == 0x00 && cpu.registers.flag_register & FLAG_CARRY;
 }
 
@@ -67,7 +67,7 @@ bool EightBitShiftTesting::test_rlc_r(CPU& cpu) {
     EightBitShiftInstructionSet eight_bit_shift_instr;
     uint16_t opcode = 0xCB00; // RLC B
     cpu.registers.b_register = 0x80;
-    eight_bit_shift_instr.execute_prefix(opcode, cpu);
+    cpu.execute(opcode);
     return cpu.registers.b_register == 0x01;
 }
 
@@ -77,7 +77,7 @@ bool EightBitShiftTesting::test_rlc_hl_indirect(CPU& cpu) {
     cpu.write(0xC000, 0x80);
     cpu.registers.h_register = 0xC0;
     cpu.registers.l_register = 0x00;
-    eight_bit_shift_instr.execute_prefix(opcode, cpu);
+    cpu.execute(opcode);
     return cpu.read(0xC000) == 0x01;
 }
 
@@ -85,7 +85,7 @@ bool EightBitShiftTesting::test_rrc_r(CPU& cpu) {
     EightBitShiftInstructionSet eight_bit_shift_instr;
     uint16_t opcode = 0xCB08; // RRC B
     cpu.registers.b_register = 0x01;
-    eight_bit_shift_instr.execute_prefix(opcode, cpu);
+    cpu.execute(opcode);
     return cpu.registers.b_register == 0x80;
 }
 
@@ -95,7 +95,7 @@ bool EightBitShiftTesting::test_rrc_hl_indirect(CPU& cpu) {
     cpu.write(0xC000, 0x01);
     cpu.registers.h_register = 0xC0;
     cpu.registers.l_register = 0x00;
-    eight_bit_shift_instr.execute_prefix(opcode, cpu);
+    cpu.execute(opcode);
     return cpu.read(0xC000) == 0x80;
 }
 
@@ -104,7 +104,7 @@ bool EightBitShiftTesting::test_rl_r(CPU& cpu) {
     uint16_t opcode = 0xCB10; // RL B
     cpu.registers.b_register = 0x80;
     cpu.registers.set_flag(FLAG_CARRY, false);
-    eight_bit_shift_instr.execute_prefix(opcode, cpu);
+    cpu.execute(opcode);
     return cpu.registers.b_register == 0x00 && cpu.registers.flag_register & FLAG_CARRY;
 }
 
@@ -115,7 +115,7 @@ bool EightBitShiftTesting::test_rl_hl_indirect(CPU& cpu) {
     cpu.registers.h_register = 0xC0;
     cpu.registers.l_register = 0x00;
     cpu.registers.set_flag(FLAG_CARRY, false);
-    eight_bit_shift_instr.execute_prefix(opcode, cpu);
+    cpu.execute(opcode);
     return cpu.read(0xC000) == 0x00 && cpu.registers.flag_register & FLAG_CARRY;
 }
 
@@ -124,7 +124,7 @@ bool EightBitShiftTesting::test_rr_r(CPU& cpu) {
     uint16_t opcode = 0xCB18; // RR B
     cpu.registers.b_register = 0x01;
     cpu.registers.set_flag(FLAG_CARRY, false);
-    eight_bit_shift_instr.execute_prefix(opcode, cpu);
+    cpu.execute(opcode);
     return cpu.registers.b_register == 0x00 && cpu.registers.flag_register & FLAG_CARRY;
 }
 
@@ -135,7 +135,7 @@ bool EightBitShiftTesting::test_rr_hl_indirect(CPU& cpu) {
     cpu.registers.h_register = 0xC0;
     cpu.registers.l_register = 0x00;
     cpu.registers.set_flag(FLAG_CARRY, false);
-    eight_bit_shift_instr.execute_prefix(opcode, cpu);
+    cpu.execute(opcode);
     return cpu.read(0xC000) == 0x00 && cpu.registers.flag_register & FLAG_CARRY;
 }
 
@@ -143,7 +143,7 @@ bool EightBitShiftTesting::test_sla_r(CPU& cpu) {
     EightBitShiftInstructionSet eight_bit_shift_instr;
     uint16_t opcode = 0xCB20; // SLA B
     cpu.registers.b_register = 0x80;
-    eight_bit_shift_instr.execute_prefix(opcode, cpu);
+    cpu.execute(opcode);
     return cpu.registers.b_register == 0x00 && cpu.registers.flag_register & FLAG_CARRY;
 }
 
@@ -153,7 +153,7 @@ bool EightBitShiftTesting::test_sla_hl_indirect(CPU& cpu) {
     cpu.write(0xC000, 0x80);
     cpu.registers.h_register = 0xC0;
     cpu.registers.l_register = 0x00;
-    eight_bit_shift_instr.execute_prefix(opcode, cpu);
+    cpu.execute(opcode);
     return cpu.read(0xC000) == 0x00 && cpu.registers.flag_register & FLAG_CARRY;
 }
 
@@ -161,7 +161,7 @@ bool EightBitShiftTesting::test_sra_r(CPU& cpu) {
     EightBitShiftInstructionSet eight_bit_shift_instr;
     uint16_t opcode = 0xCB28; // SRA B
     cpu.registers.b_register = 0x01;
-    eight_bit_shift_instr.execute_prefix(opcode, cpu);
+    cpu.execute(opcode);
     return cpu.registers.b_register == 0x00 && cpu.registers.flag_register & FLAG_CARRY;
 }
 
@@ -171,7 +171,7 @@ bool EightBitShiftTesting::test_sra_hl_indirect(CPU& cpu) {
     cpu.write(0xC000, 0x01);
     cpu.registers.h_register = 0xC0;
     cpu.registers.l_register = 0x00;
-    eight_bit_shift_instr.execute_prefix(opcode, cpu);
+    cpu.execute(opcode);
     return cpu.read(0xC000) == 0x00 && cpu.registers.flag_register & FLAG_CARRY;
 }
 
@@ -179,7 +179,7 @@ bool EightBitShiftTesting::test_swap_r(CPU& cpu) {
     EightBitShiftInstructionSet eight_bit_shift_instr;
     uint16_t opcode = 0xCB30; // SWAP B
     cpu.registers.b_register = 0x80;
-    eight_bit_shift_instr.execute_prefix(opcode, cpu);
+    cpu.execute(opcode);
     return cpu.registers.b_register == 0x08;
 }
 
@@ -189,7 +189,7 @@ bool EightBitShiftTesting::test_swap_hl_indirect(CPU& cpu) {
     cpu.write(0xC000, 0x80);
     cpu.registers.h_register = 0xC0;
     cpu.registers.l_register = 0x00;
-    eight_bit_shift_instr.execute_prefix(opcode, cpu);
+    cpu.execute(opcode);
     return cpu.read(0xC000) == 0x08;
 }
 
@@ -197,7 +197,7 @@ bool EightBitShiftTesting::test_srl_r(CPU& cpu) {
     EightBitShiftInstructionSet eight_bit_shift_instr;
     uint16_t opcode = 0xCB38; // SRL B
     cpu.registers.b_register = 0x01;
-    eight_bit_shift_instr.execute_prefix(opcode, cpu);
+    cpu.execute(opcode);
     return cpu.registers.b_register == 0x00 && cpu.registers.flag_register & FLAG_CARRY;
 }
 
@@ -207,7 +207,7 @@ bool EightBitShiftTesting::test_srl_hl_indirect(CPU& cpu) {
     cpu.write(0xC000, 0x01);
     cpu.registers.h_register = 0xC0;
     cpu.registers.l_register = 0x00;
-    eight_bit_shift_instr.execute_prefix(opcode, cpu);
+    cpu.execute(opcode);
     return cpu.read(0xC000) == 0x00 && cpu.registers.flag_register & FLAG_CARRY;
 }
 
@@ -215,7 +215,7 @@ bool EightBitShiftTesting::test_bit_n_r(CPU& cpu) {
     EightBitShiftInstructionSet eight_bit_shift_instr;
     uint16_t opcode = 0xCB40; // BIT 0, B
     cpu.registers.b_register = 0x00;
-    eight_bit_shift_instr.execute_prefix(opcode, cpu);
+    cpu.execute(opcode);
     return cpu.registers.flag_register & FLAG_ZERO;
 }
 
@@ -225,7 +225,7 @@ bool EightBitShiftTesting::test_bit_n_hl_indirect(CPU& cpu) {
     cpu.write(0xC000, 0x00);
     cpu.registers.h_register = 0xC0;
     cpu.registers.l_register = 0x00;
-    eight_bit_shift_instr.execute_prefix(opcode, cpu);
+    cpu.execute(opcode);
     return cpu.registers.flag_register & FLAG_ZERO;
 }
 
@@ -233,7 +233,7 @@ bool EightBitShiftTesting::test_res_n_r(CPU& cpu) {
     EightBitShiftInstructionSet eight_bit_shift_instr;
     uint16_t opcode = 0xCB80; // RES 0, B
     cpu.registers.b_register = 0x01;
-    eight_bit_shift_instr.execute_prefix(opcode, cpu);
+    cpu.execute(opcode);
     return cpu.registers.b_register == 0x00;
 }
 
@@ -243,7 +243,7 @@ bool EightBitShiftTesting::test_res_n_hl_indirect(CPU& cpu) {
     cpu.write(0xC000, 0x01);
     cpu.registers.h_register = 0xC0;
     cpu.registers.l_register = 0x00;
-    eight_bit_shift_instr.execute_prefix(opcode, cpu);
+    cpu.execute(opcode);
     return cpu.read(0xC000) == 0x00;
 }
 
@@ -251,7 +251,7 @@ bool EightBitShiftTesting::test_set_n_r(CPU& cpu) {
     EightBitShiftInstructionSet eight_bit_shift_instr;
     uint16_t opcode = 0xCBC0; // SET 0, B
     cpu.registers.b_register = 0x00;
-    eight_bit_shift_instr.execute_prefix(opcode, cpu);
+    cpu.execute(opcode);
     return cpu.registers.b_register == 0x01;
 }
 
@@ -261,6 +261,6 @@ bool EightBitShiftTesting::test_set_n_hl_indirect(CPU& cpu) {
     cpu.write(0xC000, 0x00);
     cpu.registers.h_register = 0xC0;
     cpu.registers.l_register = 0x00;
-    eight_bit_shift_instr.execute_prefix(opcode, cpu);
+    cpu.execute(opcode);
     return cpu.read(0xC000) == 0x01;
 }
