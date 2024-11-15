@@ -1,199 +1,177 @@
 #include "include/8bitLoadInstructionSet.h"
 
-EightBitLoadInstructionSet::EightBitLoadInstructionSet() : alu() {
-
+void EightBitLoadInstructionSet::initializeInstructionTable(CPU& cpu) {
+    cpu.addInstruction(0x02, [this, &cpu] { ld_rr_a(cpu, cpu.registers.b_register, cpu.registers.c_register); });
+    cpu.addInstruction(0x06, [this, &cpu] { ld_r_n8(cpu, cpu.registers.b_register); });
+    cpu.addInstruction(0x0A, [this, &cpu] { ld_a_rr(cpu, cpu.registers.b_register, cpu.registers.c_register); });
+    cpu.addInstruction(0x0E, [this, &cpu] { ld_r_n8(cpu, cpu.registers.c_register); });
+    cpu.addInstruction(0x12, [this, &cpu] { ld_rr_a(cpu, cpu.registers.d_register, cpu.registers.e_register); });
+    cpu.addInstruction(0x16, [this, &cpu] { ld_r_n8(cpu, cpu.registers.d_register); });
+    cpu.addInstruction(0x1A, [this, &cpu] { ld_a_rr(cpu, cpu.registers.d_register, cpu.registers.e_register); });
+    cpu.addInstruction(0x1E, [this, &cpu] { ld_r_n8(cpu, cpu.registers.e_register); });
+    cpu.addInstruction(0x22, [this, &cpu] { ld_inc_hl_a(cpu); });
+    cpu.addInstruction(0x26, [this, &cpu] { ld_r_n8(cpu, cpu.registers.h_register); });
+    cpu.addInstruction(0x2A, [this, &cpu] { ld_a_inc_hl(cpu); });
+    cpu.addInstruction(0x2E, [this, &cpu] { ld_r_n8(cpu, cpu.registers.l_register); });
+    cpu.addInstruction(0x32, [this, &cpu] { ld_dec_hl_a(cpu); });
+    cpu.addInstruction(0x36, [this, &cpu] { ld_hl_n(cpu); });
+    cpu.addInstruction(0x3A, [this, &cpu] { ld_a_dec_hl(cpu); });
+    cpu.addInstruction(0x3E, [this, &cpu] { ld_r_n8(cpu, cpu.registers.a_register); });
+    cpu.addInstruction(0x40, [this, &cpu] { ld_r_r(cpu, cpu.registers.b_register, cpu.registers.b_register); });
+    cpu.addInstruction(0x41, [this, &cpu] { ld_r_r(cpu, cpu.registers.c_register, cpu.registers.b_register); });
+    cpu.addInstruction(0x42, [this, &cpu] { ld_r_r(cpu, cpu.registers.d_register, cpu.registers.b_register); });
+    cpu.addInstruction(0x43, [this, &cpu] { ld_r_r(cpu, cpu.registers.e_register, cpu.registers.b_register); });
+    cpu.addInstruction(0x44, [this, &cpu] { ld_r_r(cpu, cpu.registers.h_register, cpu.registers.b_register); });
+    cpu.addInstruction(0x45, [this, &cpu] { ld_r_r(cpu, cpu.registers.l_register, cpu.registers.b_register); });
+    cpu.addInstruction(0x46, [this, &cpu] { ld_r_hl(cpu, cpu.registers.b_register); });
+    cpu.addInstruction(0x47, [this, &cpu] { ld_r_r(cpu, cpu.registers.a_register, cpu.registers.b_register); });
+    cpu.addInstruction(0x48, [this, &cpu] { ld_r_r(cpu, cpu.registers.b_register, cpu.registers.c_register); });
+    cpu.addInstruction(0x49, [this, &cpu] { ld_r_r(cpu, cpu.registers.c_register, cpu.registers.c_register); });
+    cpu.addInstruction(0x4A, [this, &cpu] { ld_r_r(cpu, cpu.registers.d_register, cpu.registers.c_register); });
+    cpu.addInstruction(0x4B, [this, &cpu] { ld_r_r(cpu, cpu.registers.e_register, cpu.registers.c_register); });
+    cpu.addInstruction(0x4C, [this, &cpu] { ld_r_r(cpu, cpu.registers.h_register, cpu.registers.c_register); });
+    cpu.addInstruction(0x4D, [this, &cpu] { ld_r_r(cpu, cpu.registers.l_register, cpu.registers.c_register); });
+    cpu.addInstruction(0x4E, [this, &cpu] { ld_r_hl(cpu, cpu.registers.c_register); });
+    cpu.addInstruction(0x4F, [this, &cpu] { ld_r_r(cpu, cpu.registers.a_register, cpu.registers.c_register); });
+    cpu.addInstruction(0x50, [this, &cpu] { ld_r_r(cpu, cpu.registers.b_register, cpu.registers.d_register); });
+    cpu.addInstruction(0x51, [this, &cpu] { ld_r_r(cpu, cpu.registers.c_register, cpu.registers.d_register); });
+    cpu.addInstruction(0x52, [this, &cpu] { ld_r_r(cpu, cpu.registers.d_register, cpu.registers.d_register); });
+    cpu.addInstruction(0x53, [this, &cpu] { ld_r_r(cpu, cpu.registers.e_register, cpu.registers.d_register); });
+    cpu.addInstruction(0x54, [this, &cpu] { ld_r_r(cpu, cpu.registers.h_register, cpu.registers.d_register); });
+    cpu.addInstruction(0x55, [this, &cpu] { ld_r_r(cpu, cpu.registers.l_register, cpu.registers.d_register); });
+    cpu.addInstruction(0x56, [this, &cpu] { ld_r_hl(cpu, cpu.registers.d_register); });
+    cpu.addInstruction(0x57, [this, &cpu] { ld_r_r(cpu, cpu.registers.a_register, cpu.registers.d_register); });
+    cpu.addInstruction(0x58, [this, &cpu] { ld_r_r(cpu, cpu.registers.b_register, cpu.registers.e_register); });
+    cpu.addInstruction(0x59, [this, &cpu] { ld_r_r(cpu, cpu.registers.c_register, cpu.registers.e_register); });
+    cpu.addInstruction(0x5A, [this, &cpu] { ld_r_r(cpu, cpu.registers.d_register, cpu.registers.e_register); });
+    cpu.addInstruction(0x5B, [this, &cpu] { ld_r_r(cpu, cpu.registers.e_register, cpu.registers.e_register); });
+    cpu.addInstruction(0x5C, [this, &cpu] { ld_r_r(cpu, cpu.registers.h_register, cpu.registers.e_register); });
+    cpu.addInstruction(0x5D, [this, &cpu] { ld_r_r(cpu, cpu.registers.l_register, cpu.registers.e_register); });
+    cpu.addInstruction(0x5E, [this, &cpu] { ld_r_hl(cpu, cpu.registers.e_register); });
+    cpu.addInstruction(0x5F, [this, &cpu] { ld_r_r(cpu, cpu.registers.a_register, cpu.registers.e_register); });
+    cpu.addInstruction(0x60, [this, &cpu] { ld_r_r(cpu, cpu.registers.b_register, cpu.registers.h_register); });
+    cpu.addInstruction(0x61, [this, &cpu] { ld_r_r(cpu, cpu.registers.c_register, cpu.registers.h_register); });
+    cpu.addInstruction(0x62, [this, &cpu] { ld_r_r(cpu, cpu.registers.d_register, cpu.registers.h_register); });
+    cpu.addInstruction(0x63, [this, &cpu] { ld_r_r(cpu, cpu.registers.e_register, cpu.registers.h_register); });
+    cpu.addInstruction(0x64, [this, &cpu] { ld_r_r(cpu, cpu.registers.h_register, cpu.registers.h_register); });
+    cpu.addInstruction(0x65, [this, &cpu] { ld_r_r(cpu, cpu.registers.l_register, cpu.registers.h_register); });
+    cpu.addInstruction(0x66, [this, &cpu] { ld_r_hl(cpu, cpu.registers.h_register); });
+    cpu.addInstruction(0x67, [this, &cpu] { ld_r_r(cpu, cpu.registers.a_register, cpu.registers.h_register); });
+    cpu.addInstruction(0x68, [this, &cpu] { ld_r_r(cpu, cpu.registers.b_register, cpu.registers.l_register); });
+    cpu.addInstruction(0x69, [this, &cpu] { ld_r_r(cpu, cpu.registers.c_register, cpu.registers.l_register); });
+    cpu.addInstruction(0x6A, [this, &cpu] { ld_r_r(cpu, cpu.registers.d_register, cpu.registers.l_register); });
+    cpu.addInstruction(0x6B, [this, &cpu] { ld_r_r(cpu, cpu.registers.e_register, cpu.registers.l_register); });
+    cpu.addInstruction(0x6C, [this, &cpu] { ld_r_r(cpu, cpu.registers.h_register, cpu.registers.l_register); });
+    cpu.addInstruction(0x6D, [this, &cpu] { ld_r_r(cpu, cpu.registers.l_register, cpu.registers.l_register); });
+    cpu.addInstruction(0x6E, [this, &cpu] { ld_r_hl(cpu, cpu.registers.l_register); });
+    cpu.addInstruction(0x6F, [this, &cpu] { ld_r_r(cpu, cpu.registers.a_register, cpu.registers.l_register); });
+    cpu.addInstruction(0x70, [this, &cpu] { ld_hl_r(cpu, cpu.registers.b_register); });
+    cpu.addInstruction(0x71, [this, &cpu] { ld_hl_r(cpu, cpu.registers.c_register); });
+    cpu.addInstruction(0x72, [this, &cpu] { ld_hl_r(cpu, cpu.registers.d_register); });
+    cpu.addInstruction(0x73, [this, &cpu] { ld_hl_r(cpu, cpu.registers.e_register); });
+    cpu.addInstruction(0x74, [this, &cpu] { ld_hl_r(cpu, cpu.registers.h_register); });
+    cpu.addInstruction(0x75, [this, &cpu] { ld_hl_r(cpu, cpu.registers.l_register); });
+    cpu.addInstruction(0x77, [this, &cpu] { ld_hl_r(cpu, cpu.registers.a_register); });
+    cpu.addInstruction(0x78, [this, &cpu] { ld_r_r(cpu, cpu.registers.b_register, cpu.registers.a_register); });
+    cpu.addInstruction(0x79, [this, &cpu] { ld_r_r(cpu, cpu.registers.c_register, cpu.registers.a_register); });
+    cpu.addInstruction(0x7A, [this, &cpu] { ld_r_r(cpu, cpu.registers.d_register, cpu.registers.a_register); });
+    cpu.addInstruction(0x7B, [this, &cpu] { ld_r_r(cpu, cpu.registers.e_register, cpu.registers.a_register); });
+    cpu.addInstruction(0x7C, [this, &cpu] { ld_r_r(cpu, cpu.registers.h_register, cpu.registers.a_register); });
+    cpu.addInstruction(0x7D, [this, &cpu] { ld_r_r(cpu, cpu.registers.l_register, cpu.registers.a_register); });
+    cpu.addInstruction(0x7E, [this, &cpu] { ld_r_hl(cpu, cpu.registers.a_register); });
+    cpu.addInstruction(0x7F, [this, &cpu] { ld_r_r(cpu, cpu.registers.a_register, cpu.registers.a_register); });
+    cpu.addInstruction(0xE0, [this, &cpu] { ldh_n_a(cpu); });
+    cpu.addInstruction(0xE2, [this, &cpu] { ldh_c_a(cpu); });
+    cpu.addInstruction(0xEA, [this, &cpu] { ld_nn_a(cpu); });
+    cpu.addInstruction(0xF0, [this, &cpu] { ldh_a_n(cpu); });
+    cpu.addInstruction(0xF2, [this, &cpu] { ldh_a_c(cpu); });
+    cpu.addInstruction(0xFA, [this, &cpu] { ld_a_nn(cpu); });
 }
-
-
-bool EightBitLoadInstructionSet::execute_prefix(uint16_t opcode, CPU& cpu) {
-        return false;
-}
-
-bool EightBitLoadInstructionSet::execute(uint8_t opcode, CPU& cpu) {
-    /*
-    decoding logic where the opcode is 0b10xxxyyy
-
-    where xxx is the destination and yyy is the source
-
-    src & 0x07
-
-    1011 1010 & 0000 0111 == 010
-
-    dest >> 3 & 0x07
-
-    (1011 1010) >> 3 ==> 0001 0110
-
-    0001 0110 & 0x07 == 110
-    */
-   switch (opcode) {
-        case LD_R_R: {
-            uint8_t src = opcode & 0x07;
-            uint8_t dest = (opcode >> 3) & 0x07;
-            ld_r_r(cpu, src, dest);
-            return true;
-        }
-        case LD_R_N: {
-            uint8_t dest = (opcode >> 3) & 0x07;
-            ld_r_n(cpu, dest);
-            return true;
-        }
-        case LD_R_HL: {
-            uint8_t dest = (opcode >> 3) & 0x07;
-            ld_r_hl(cpu, dest);
-            return true;
-        }
-        case LD_HL_R: {
-            uint8_t src = opcode & 0x07;
-            ld_hl_r(cpu, src);
-            return true;
-        }
-        case LD_HL_N: {
-            ld_hl_n(cpu);
-            return true;
-        }
-        case LD_BC_A: {
-            ld_bc_a(cpu);
-            return true;
-        }
-        case LD_DE_A: {
-            ld_de_a(cpu);
-            return true;
-        }
-        case LD_A_NN: {
-            ld_a_nn(cpu);
-            return true;
-        }
-        case LD_NN_A: {
-            ld_nn_a(cpu);
-            return true;
-        }
-        case LDH_A_C: {
-            ldh_a_c(cpu);
-            return true;
-        }
-        case LDH_C_A: {
-            ldh_c_a(cpu);
-            return true;
-        }
-        case LDH_N_A: {
-            ldh_n_a(cpu);
-            return true;
-        }
-        case LDH_A_N: {
-            ldh_a_n(cpu);
-            return true;
-        }
-        case LD_A_DEC_HL: {
-            ld_a_dec_hl(cpu);
-            return true;
-        }
-        case LD_DEC_HL_A: {
-            ld_dec_hl_a(cpu);
-            return true;
-        }
-        case LD_A_INC_HL: {
-            ld_a_inc_hl(cpu);
-            return true;
-        }
-        default:
-            return false; // Opcode not handled by EightBitLoadInstructionSet
-    }
-    
-};
-
 
 void EightBitLoadInstructionSet::ld_r_r(CPU& cpu, Byte& source, Byte& destination) {
-    source = destination;
+    destination = source;
 }
 
-void EightBitLoadInstructionSet::ld_r_n(CPU& cpu, Byte& destination) {
-    Byte data = cpu.bus.read(cpu.registers.program_counter);
-    destination = data;
+void EightBitLoadInstructionSet::ld_r_n8(CPU& cpu, Byte& destination) {
+    destination = cpu.read(cpu.registers.program_counter);
+    cpu.registers.program_counter++;
 }
 
 void EightBitLoadInstructionSet::ld_r_hl(CPU& cpu, Byte& destination) {
-    destination = cpu.bus.read(cpu.registers.h_register << 8 | cpu.registers.l_register);
+    destination = cpu.read(cpu.registers.get_pair(cpu.registers.h_register, cpu.registers.l_register));
 }
 
 void EightBitLoadInstructionSet::ld_hl_r(CPU& cpu, Byte& source) {
-    cpu.bus.write(cpu.registers.h_register << 8 | cpu.registers.l_register, source);
+    cpu.write(cpu.registers.get_pair(cpu.registers.h_register, cpu.registers.l_register), source);
 }
 
 void EightBitLoadInstructionSet::ld_hl_n(CPU& cpu) {
-    Byte data = cpu.bus.read(cpu.registers.program_counter);
-    cpu.bus.write(cpu.registers.h_register << 8 | cpu.registers.l_register, data);
+    cpu.write(cpu.registers.get_pair(cpu.registers.h_register, cpu.registers.l_register), cpu.registers.program_counter);
+    cpu.registers.program_counter++;
 }
 
-void EightBitLoadInstructionSet::ld_bc_a(CPU& cpu) {
-    cpu.registers.a_register = cpu.bus.read(cpu.registers.a_register << 8 | cpu.registers.b_register);
+void EightBitLoadInstructionSet::ld_a_rr(CPU& cpu, Byte& high, Byte& low) {
+    cpu.registers.a_register = cpu.read(cpu.registers.get_pair(high, low));
 }
 
-void EightBitLoadInstructionSet::ld_de_a(CPU& cpu) {
-    cpu.registers.a_register = cpu.bus.read(cpu.registers.d_register << 8 | cpu.registers.e_register);
+void EightBitLoadInstructionSet::ld_rr_a(CPU& cpu, Byte& high, Byte& low) {
+    cpu.write(cpu.registers.get_pair(high, low), cpu.registers.a_register);
 }
 
 void EightBitLoadInstructionSet::ld_a_nn(CPU& cpu) {
-    Byte nn_lsb = cpu.bus.read(cpu.registers.program_counter);
+    Byte low = cpu.read(cpu.registers.program_counter);
     cpu.registers.program_counter++;
-    Byte nn_msb = cpu.bus.read(cpu.registers.program_counter);
+    Byte high = cpu.read(cpu.registers.program_counter);
     cpu.registers.program_counter++;
-    uint16_t nn = (nn_msb << 8) | nn_lsb; // creating 16 bit addr
-    cpu.registers.a_register = cpu.bus.read(nn);
+
+    cpu.registers.a_register = cpu.read(high << 8 | low);
 }
 
 void EightBitLoadInstructionSet::ld_nn_a(CPU& cpu) {
-    Byte nn_lsb = cpu.bus.read(cpu.registers.program_counter);
+    Byte low = cpu.read(cpu.registers.program_counter);
     cpu.registers.program_counter++;
-    Byte nn_msb = cpu.bus.read(cpu.registers.program_counter);
+    Byte high = cpu.read(cpu.registers.program_counter);
     cpu.registers.program_counter++;
-    uint16_t nn = (nn_msb << 8) | nn_lsb; // creating 16 bit addr
-    cpu.bus.write(nn, cpu.registers.a_register);
+
+    cpu.write(high << 8 | low, cpu.registers.a_register);
 }
 
 void EightBitLoadInstructionSet::ldh_a_c(CPU& cpu) {
-    Word address = (0xFF << 8) | cpu.registers.c_register;
-    cpu.registers.a_register = cpu.bus.read(address);
+    cpu.registers.a_register = cpu.read(0xFF00 | cpu.registers.c_register);
 }
 
 void EightBitLoadInstructionSet::ldh_c_a(CPU& cpu) {
-    Word address = (0xFF << 8) | cpu.registers.c_register;
-    cpu.bus.write(address, cpu.registers.a_register);
+    cpu.write(0xFF00 | cpu.registers.c_register, cpu.registers.a_register);
 }
 
 void EightBitLoadInstructionSet::ldh_a_n(CPU& cpu) {
-    Byte data = cpu.bus.read(cpu.registers.program_counter);
+    Byte offset = cpu.read(cpu.registers.program_counter);
     cpu.registers.program_counter++;
-    Word address = (0xFF << 8) | data;
-    cpu.registers.a_register = cpu.bus.read(address);
+    cpu.registers.a_register = cpu.read(0xFF00 | offset);
 }
 
 void EightBitLoadInstructionSet::ldh_n_a(CPU& cpu) {
-    Byte data = cpu.bus.read(cpu.registers.program_counter);
+    Byte offset = cpu.read(cpu.registers.program_counter);
     cpu.registers.program_counter++;
-    Word address = (0xFF << 8) | data;
-    cpu.bus.write(address, cpu.registers.a_register);
+    cpu.write(0xFF00 | offset, cpu.registers.a_register);
 }
 
 void EightBitLoadInstructionSet::ld_a_dec_hl(CPU& cpu) {
-    Word address = cpu.registers.h_register << 8 | cpu.registers.l_register;
-    cpu.registers.a_register = cpu.bus.read(address);
-    alu.execute(DEC_HL_INDIRECT, cpu);
+    cpu.registers.a_register = cpu.read(cpu.registers.get_pair(cpu.registers.h_register, cpu.registers.l_register));
+    cpu.execute(0x35); // DEC (HL)
 }
 
 void EightBitLoadInstructionSet::ld_dec_hl_a(CPU& cpu) {
-    Word address = cpu.registers.h_register << 8 | cpu.registers.l_register;
-    cpu.bus.write(address, cpu.registers.a_register);
-    alu.execute(DEC_HL_INDIRECT, cpu);
+    cpu.write(cpu.registers.get_pair(cpu.registers.h_register, cpu.registers.l_register), cpu.registers.a_register);
+    cpu.execute(0x35); // DEC (HL)
 }
 
 void EightBitLoadInstructionSet::ld_a_inc_hl(CPU& cpu) {
-    Word address = cpu.registers.h_register << 8 | cpu.registers.l_register;
-    cpu.registers.a_register = cpu.bus.read(address);
-    alu.execute(INC_HL_INDIRECT, cpu);
+    cpu.registers.a_register = cpu.read(cpu.registers.get_pair(cpu.registers.h_register, cpu.registers.l_register));
+    cpu.execute(0x34); // INC (HL)
 }
 
 void EightBitLoadInstructionSet::ld_inc_hl_a(CPU& cpu) {
-    Word address = cpu.registers.h_register << 8 | cpu.registers.l_register;
-    cpu.bus.write(address, cpu.registers.a_register);
-    alu.execute(INC_HL_INDIRECT, cpu);
+    cpu.write(cpu.registers.get_pair(cpu.registers.h_register, cpu.registers.l_register), cpu.registers.a_register);
+    cpu.execute(0x34); // INC (HL)
 }
