@@ -4,41 +4,9 @@
 #include "InstructionSet.h"
 #include "cpu.h"
 
-#define JR_e8 0x18
-#define JR_NZ_e8 0x20
-#define JR_Z_e8 0x28
-#define JR_NC_e8 0x30
-#define JR_C_e8 0x38
-#define RET_NZ 0xC0
-#define JP_NZ_a16 0xC2
-#define JP_a16 0xC3
-#define CALL_NZ_a16 0xC4
-#define RST_00H 0xC7
-#define RET_Z 0xC8
-#define RET 0xC9
-#define JP_Z_a16 0xCA
-#define CALL_Z_a16 0xCC
-#define CALL_a16 0xCD
-#define RST_08H 0xCF
-#define RET_NC 0xD0
-#define JP_NC_a16 0xD2
-#define CALL_NC_a16 0xD4
-#define RST_10H 0xD7
-#define RET_C 0xD8
-#define RETI 0xD9
-#define JP_C_a16 0xDA
-#define CALL_C_a16 0xDC
-#define RST_18H 0xDF
-#define RST_20H 0xE7
-#define JP_HL 0xE9
-#define RST_28H 0xEF
-#define RST_30H 0xF7
-#define RST_38H 0xFF
-
 class JumpInstructionSet : public InstructionSet {
 public:
-    bool execute(uint8_t opcode, CPU& cpu) override;
-    bool execute_prefix(uint16_t opcode, CPU& cpu) override;
+    void initializeInstructionTable(CPU& cpu) override;
 
 private:
     void jr_e8(CPU& cpu);

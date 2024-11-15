@@ -1,59 +1,21 @@
 #include "include/16bitLoadInstructionSet.h"
 
-bool SixteenBitLoadInstructionSet::execute_prefix(uint16_t opcode, CPU& cpu) {
-        return false;
-}
-
-bool SixteenBitLoadInstructionSet::execute(uint8_t opcode, CPU& cpu) {
-    switch (opcode) {
-        case LD_BC_n16:
-            ld_bc_n16(cpu);
-            return true;
-        case LD_a16_SP:
-            ld_a16_sp(cpu);
-            return true;
-        case LD_DE_n16:
-            ld_de_n16(cpu);
-            return true;
-        case LD_HL_n16:
-            ld_hl_n16(cpu);
-            return true;
-        case LD_SP_n16:
-            ld_sp_n16(cpu);
-            return true;
-        case POP_BC:
-            pop_bc(cpu);
-            return true;
-        case POP_DE:
-            pop_de(cpu);
-            return true;
-        case POP_HL:
-            pop_hl(cpu);
-            return true;
-        case POP_AF:
-            pop_af(cpu);
-            return true;
-        case PUSH_BC:
-            push_bc(cpu);
-            return true;
-        case PUSH_DE:
-            push_de(cpu);
-            return true;
-        case PUSH_HL:
-            push_hl(cpu);
-            return true;
-        case PUSH_AF:
-            push_af(cpu);
-            return true;
-        case LP_HL_SP_e8:
-            lp_hl_sp_e8(cpu);
-            return true;
-        case LP_SP_HL:
-            lp_sp_hl(cpu);
-            return true;
-        default:
-            return false;
-    }
+void SixteenBitLoadInstructionSet::initializeInstructionTable(CPU& cpu) {
+    cpu.addInstruction(0x01, [this, &cpu] { this->ld_bc_n16(cpu); });
+    cpu.addInstruction(0x08, [this, &cpu] { this->ld_a16_sp(cpu); });
+    cpu.addInstruction(0x11, [this, &cpu] { this->ld_de_n16(cpu); });
+    cpu.addInstruction(0x21, [this, &cpu] { this->ld_hl_n16(cpu); });
+    cpu.addInstruction(0x31, [this, &cpu] { this->ld_sp_n16(cpu); });
+    cpu.addInstruction(0xC1, [this, &cpu] { this->pop_bc(cpu); });
+    cpu.addInstruction(0xD1, [this, &cpu] { this->pop_de(cpu); });
+    cpu.addInstruction(0xE1, [this, &cpu] { this->pop_hl(cpu); });
+    cpu.addInstruction(0xF1, [this, &cpu] { this->pop_af(cpu); });
+    cpu.addInstruction(0xC5, [this, &cpu] { this->push_bc(cpu); });
+    cpu.addInstruction(0xD5, [this, &cpu] { this->push_de(cpu); });
+    cpu.addInstruction(0xE5, [this, &cpu] { this->push_hl(cpu); });
+    cpu.addInstruction(0xF5, [this, &cpu] { this->push_af(cpu); });
+    cpu.addInstruction(0xF8, [this, &cpu] { this->lp_hl_sp_e8(cpu); });
+    cpu.addInstruction(0xF9, [this, &cpu] { this->lp_sp_hl(cpu); });
 }
 
 void SixteenBitLoadInstructionSet::ld_bc_n16(CPU& cpu) {
