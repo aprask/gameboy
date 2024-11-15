@@ -18,6 +18,7 @@ src/16bitLoadInstructionSet.cpp
 src/8bitShiftInstructionSet.cpp
 src/8bitALUInstructionSet.cpp
 src/16bitALUInstructionSet.cpp
+src/8bitLoadInstructionSet.cpp
 src/testing/Testing.cpp)
 
 # Include directories
