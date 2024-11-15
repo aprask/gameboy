@@ -1,104 +1,36 @@
 #include "include/JumpInstructionSet.h"
 
-bool JumpInstructionSet::execute_prefix(uint16_t opcode, CPU& cpu) {
-        return false;
-}
-
-bool JumpInstructionSet::execute(uint8_t opcode, CPU& cpu) {
-    switch (opcode) {
-        case JR_e8:
-            jr_e8(cpu);
-            return true;
-        case JR_NZ_e8:
-            jr_nz_e8(cpu);
-            return true;
-        case JR_Z_e8:
-            jr_z_e8(cpu);
-            return true;
-        case JR_NC_e8:
-            jr_nc_e8(cpu);
-            return true;
-        case JR_C_e8:
-            jr_c_e8(cpu);
-            return true;
-        case RET_NZ:
-            ret_nz(cpu);
-            return true;
-        case JP_NZ_a16:
-            jp_nz_a16(cpu);
-            return true;
-        case JP_a16:
-            jp_a16(cpu);
-            return true;
-        case CALL_NZ_a16:
-            call_nz_a16(cpu);
-            return true;
-        case RST_00H:
-            rst_00H(cpu);
-            return true;
-        case RET_Z:
-            ret_z(cpu);
-            return true;
-        case RET:
-            ret(cpu);
-            return true;
-        case JP_Z_a16:
-            jp_z_a16(cpu);
-            return true;
-        case CALL_Z_a16:
-            call_z_a16(cpu);
-            return true;
-        case CALL_a16:
-            call_a16(cpu);
-            return true;
-        case RST_08H:
-            rst_08H(cpu);
-            return true;
-        case RET_NC:
-            ret_nc(cpu);
-            return true;
-        case JP_NC_a16:
-            jp_nc_a16(cpu);
-            return true;
-        case CALL_NC_a16:
-            call_nc_a16(cpu);
-            return true;
-        case RST_10H:
-            rst_10H(cpu);
-            return true;
-        case RET_C:
-            ret_c(cpu);
-            return true;
-        case RETI:
-            reti(cpu);
-            return true;
-        case JP_C_a16:
-            jp_c_a16(cpu);
-            return true;
-        case CALL_C_a16:
-            call_c_a16(cpu);
-            return true;
-        case RST_18H:
-            rst_18H(cpu);
-            return true;
-        case RST_20H:
-            rst_20H(cpu);
-            return true;
-        case JP_HL:
-            jp_hl(cpu);
-            return true;
-        case RST_28H:
-            rst_28H(cpu);
-            return true;
-        case RST_30H:    
-            rst_30H(cpu);
-            return true;
-        case RST_38H:    
-            rst_38H(cpu);
-            return true;
-        default:
-            return false; // Opcode not handled by JumpInstructionSet
-    }
+void JumpInstructionSet::initializeInstructionTable(CPU& cpu) {
+    cpu.addInstruction(0x18, [this, &cpu] { this->jr_e8(cpu); });
+    cpu.addInstruction(0x20, [this, &cpu] { this->jr_nz_e8(cpu); });
+    cpu.addInstruction(0x28, [this, &cpu] { this->jr_z_e8(cpu); });
+    cpu.addInstruction(0x30, [this, &cpu] { this->jr_nc_e8(cpu); });
+    cpu.addInstruction(0x38, [this, &cpu] { this->jr_c_e8(cpu); });
+    cpu.addInstruction(0xC0, [this, &cpu] { this->ret_nz(cpu); });
+    cpu.addInstruction(0xC2, [this, &cpu] { this->jp_nz_a16(cpu); });
+    cpu.addInstruction(0xC3, [this, &cpu] { this->jp_a16(cpu); });
+    cpu.addInstruction(0xC4, [this, &cpu] { this->call_nz_a16(cpu); });
+    cpu.addInstruction(0xC7, [this, &cpu] { this->rst_00H(cpu); });
+    cpu.addInstruction(0xC8, [this, &cpu] { this->ret_z(cpu); });
+    cpu.addInstruction(0xC9, [this, &cpu] { this->ret(cpu); });
+    cpu.addInstruction(0xCA, [this, &cpu] { this->jp_z_a16(cpu); });
+    cpu.addInstruction(0xCC, [this, &cpu] { this->call_z_a16(cpu); });
+    cpu.addInstruction(0xCD, [this, &cpu] { this->call_a16(cpu); });
+    cpu.addInstruction(0xCF, [this, &cpu] { this->rst_08H(cpu); });
+    cpu.addInstruction(0xD0, [this, &cpu] { this->ret_nc(cpu); });
+    cpu.addInstruction(0xD2, [this, &cpu] { this->jp_nc_a16(cpu); });
+    cpu.addInstruction(0xD4, [this, &cpu] { this->call_nc_a16(cpu); });
+    cpu.addInstruction(0xD7, [this, &cpu] { this->rst_10H(cpu); });
+    cpu.addInstruction(0xD8, [this, &cpu] { this->ret_c(cpu); });
+    cpu.addInstruction(0xD9, [this, &cpu] { this->reti(cpu); });
+    cpu.addInstruction(0xDA, [this, &cpu] { this->jp_c_a16(cpu); });
+    cpu.addInstruction(0xDC, [this, &cpu] { this->call_c_a16(cpu); });
+    cpu.addInstruction(0xDF, [this, &cpu] { this->rst_18H(cpu); });
+    cpu.addInstruction(0xE7, [this, &cpu] { this->rst_20H(cpu); });
+    cpu.addInstruction(0xE9, [this, &cpu] { this->jp_hl(cpu); });
+    cpu.addInstruction(0xEF, [this, &cpu] { this->rst_28H(cpu); });
+    cpu.addInstruction(0xF7, [this, &cpu] { this->rst_30H(cpu); });
+    cpu.addInstruction(0xFF, [this, &cpu] { this->rst_38H(cpu); });
 }
 
 void JumpInstructionSet::jr_e8(CPU& cpu) {

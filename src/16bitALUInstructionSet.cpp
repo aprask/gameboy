@@ -1,53 +1,19 @@
 #include "include/16bitALUInstructionSet.h"
 
-bool SixteenBitALUInstructionSet::execute_prefix(uint16_t opcode, CPU& cpu) {
-        return false;
-}
-
-bool SixteenBitALUInstructionSet::execute(uint8_t opcode, CPU& cpu) {
-    switch (opcode) {
-        case INC_BC:
-            inc_rr(cpu, cpu.registers.b_register, cpu.registers.c_register);
-            return true;
-        case ADD_HL_BC:
-            add_hl_rr(cpu, cpu.registers.b_register, cpu.registers.c_register);
-            return true;
-        case DEC_BC:
-            dec_rr(cpu, cpu.registers.b_register, cpu.registers.c_register);
-            return true;
-        case INC_DE:
-            inc_rr(cpu, cpu.registers.d_register, cpu.registers.e_register);
-            return true;
-        case ADD_HL_DE:
-            add_hl_rr(cpu, cpu.registers.d_register, cpu.registers.e_register);
-            return true;
-        case DEC_DE:
-            dec_rr(cpu, cpu.registers.d_register, cpu.registers.e_register);
-            return true;
-        case INC_HL:
-            inc_rr(cpu, cpu.registers.h_register, cpu.registers.l_register);
-            return true;
-        case ADD_HL_HL:
-            add_hl_rr(cpu, cpu.registers.h_register, cpu.registers.l_register);
-            return true;
-        case DEC_HL:
-            dec_rr(cpu, cpu.registers.h_register, cpu.registers.l_register);
-            return true;
-        case INC_SP:
-            inc_sp(cpu);
-            return true;
-        case ADD_HL_SP:
-            add_hl_sp(cpu);
-            return true;
-        case DEC_SP:
-            dec_sp(cpu);
-            return true;
-        case ADD_SP_e8:
-            add_sp_e8(cpu);
-            return true;
-        default:
-            return false; // Opcode not handled by SixteenBitALUInstructionSet
-    }
+void SixteenBitALUInstructionSet::initializeInstructionTable(CPU& cpu) {
+    cpu.addInstruction(0x03, [this, &cpu] { this->inc_rr(cpu, cpu.registers.b_register, cpu.registers.c_register); });
+    cpu.addInstruction(0x09, [this, &cpu] { this->add_hl_rr(cpu, cpu.registers.b_register, cpu.registers.c_register); });
+    cpu.addInstruction(0x0B, [this, &cpu] { this->dec_rr(cpu, cpu.registers.b_register, cpu.registers.c_register); });
+    cpu.addInstruction(0x13, [this, &cpu] { this->inc_rr(cpu, cpu.registers.d_register, cpu.registers.e_register); });
+    cpu.addInstruction(0x19, [this, &cpu] { this->add_hl_rr(cpu, cpu.registers.d_register, cpu.registers.e_register); });
+    cpu.addInstruction(0x1B, [this, &cpu] { this->dec_rr(cpu, cpu.registers.d_register, cpu.registers.e_register); });
+    cpu.addInstruction(0x23, [this, &cpu] { this->inc_rr(cpu, cpu.registers.h_register, cpu.registers.l_register); });
+    cpu.addInstruction(0x29, [this, &cpu] { this->add_hl_rr(cpu, cpu.registers.h_register, cpu.registers.l_register); });
+    cpu.addInstruction(0x2B, [this, &cpu] { this->dec_rr(cpu, cpu.registers.h_register, cpu.registers.l_register); });
+    cpu.addInstruction(0x33, [this, &cpu] { this->inc_sp(cpu); });
+    cpu.addInstruction(0x39, [this, &cpu] { this->add_hl_sp(cpu); });
+    cpu.addInstruction(0x3B, [this, &cpu] { this->dec_sp(cpu); });
+    cpu.addInstruction(0xE8, [this, &cpu] { this->add_sp_e8(cpu); });
 }
 
 void SixteenBitALUInstructionSet::inc_rr(CPU& cpu, Byte& reg1, Byte& reg2) {
