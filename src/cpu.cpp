@@ -5,6 +5,7 @@
 #include "include/8bitShiftInstructionSet.h"
 #include "include/16bitALUInstructionSet.h"
 #include "include/16bitLoadInstructionSet.h"
+#include <iostream>
 
 ControlInstructionSet control_instruction_set;
 EightBitALUInstructionSet eight_bit_alu_instruction_set;
@@ -17,12 +18,33 @@ CPU::CPU(Bus& bus) : bus(bus) {
     IME_FLAG = false; // disable interrupts by default (until EI is called, then IME_FLAG is set to true)
         // Reasoning: Interrupts could interfere with the BIOS set up. If the system "NEEDS" interrupts, it will enable them.
         // More, this is how the actual Gameboy worked. When you boot it up, interrupts are disabled.
+    HALT_FLAG = false;
+    Interrupt vblank = {false, false, 0x0040};
+    Interrupt lcdStat = {false, false, 0x0048};
+    Interrupt timer = {false, false, 0x0050};
+    Interrupt serial = {false, false, 0x0058};
+    Interrupt joypad = {false, false, 0x0060};
 }
 
 void CPU::reset() {
 }
 
+void CPU::handleInterrupts() {
+    std::cout << "TODO" << std::endl;
+}
+
+Word CPU::fetchPC() {
+    Byte opcode = read(registers.program_counter);
+    registers.program_counter++;
+    return opcode;
+}
+
 void CPU::cycle() {
+    Word opcode = fetchPC();
+    if (!execute(opcode)) {
+        std::cout << "Cannot execute opcode" << std::endl;
+    }
+    handleInterrupts();
 }
 
 
