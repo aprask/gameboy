@@ -16,21 +16,21 @@ void ControlInstructionSet::initializeInstructionTable(CPU& cpu) {
 void ControlInstructionSet::nop(CPU& cpu) {}
 
 void ControlInstructionSet::halt(CPU& cpu) {
-    std::cout << "HALT" << std::endl; // Placeholder: Call the halt function on the CPU
+    
 }
 
 void ControlInstructionSet::stop(CPU& cpu) {
-    std::cout << "STOP" << std::endl; // Placeholder: Call the stop function on the CPU
+
 }
 
 void ControlInstructionSet::prefix_cb(CPU& cpu) {
-    std::cout << "PREFIX CB" << std::endl; // Placeholder: Call the prefix_cb function on the CPU
+
 }
 
 void ControlInstructionSet::di(CPU& cpu) {
-    std::cout << "DI" << std::endl; // Placeholder: Call the di function on the CPU
+
 }
 
 void ControlInstructionSet::ei(CPU& cpu) {
-    std::cout << "EI" << std::endl; // Placeholder: Call the ei function on the CPU
+
 }

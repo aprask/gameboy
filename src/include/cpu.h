@@ -82,13 +82,14 @@ class CPU {
 public:
     Registers registers;
     Bus bus;
+    bool IME_FLAG;
 
     CPU(Bus& bus);
     void reset();
     void cycle();
     void write(Word address, Byte data);
     Byte read(Word address);
-
+    void handleInterrupts();
     void addInstruction(Word opcode, Instruction instruction);
     void initializeInstructionTable();
     bool execute(Word opcode);

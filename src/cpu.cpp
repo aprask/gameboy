@@ -14,6 +14,9 @@ SixteenBitALUInstructionSet sixteen_bit_alu_instruction_set;
 SixteenBitLoadInstructionSet sixteen_bit_load_instruction_set;
 
 CPU::CPU(Bus& bus) : bus(bus) {
+    IME_FLAG = false; // disable interrupts by default (until EI is called, then IME_FLAG is set to true)
+        // Reasoning: Interrupts could interfere with the BIOS set up. If the system "NEEDS" interrupts, it will enable them.
+        // More, this is how the actual Gameboy worked. When you boot it up, interrupts are disabled.
 }
 
 void CPU::reset() {
@@ -21,6 +24,7 @@ void CPU::reset() {
 
 void CPU::cycle() {
 }
+
 
 void CPU::write(Word address, Byte data) {
     bus.write(address, data);
