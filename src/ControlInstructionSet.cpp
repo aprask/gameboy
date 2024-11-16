@@ -13,9 +13,7 @@ void ControlInstructionSet::initializeInstructionTable(CPU& cpu) {
     cpu.addInstruction(0xFB, [this, &cpu] { this->ei(cpu); });
 }
 
-void ControlInstructionSet::nop(CPU& cpu) {
-    std::cout << "NOP" << std::endl; // NOP does not actually do anything
-}
+void ControlInstructionSet::nop(CPU& cpu) {}
 
 void ControlInstructionSet::halt(CPU& cpu) {
     std::cout << "HALT" << std::endl; // Placeholder: Call the halt function on the CPU
