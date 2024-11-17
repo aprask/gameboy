@@ -19,11 +19,11 @@ CPU::CPU(Bus& bus) : bus(bus) {
         // Reasoning: Interrupts could interfere with the BIOS set up. If the system "NEEDS" interrupts, it will enable them.
         // More, this is how the actual Gameboy worked. When you boot it up, interrupts are disabled.
     HALT_FLAG = false;
-    Interrupt vblank = {false, false, 0x0040};
-    Interrupt lcdStat = {false, false, 0x0048};
-    Interrupt timer = {false, false, 0x0050};
-    Interrupt serial = {false, false, 0x0058};
-    Interrupt joypad = {false, false, 0x0060};
+    vblank = {false, false, 0x0040};
+    lcdStat = {false, false, 0x0048};
+    timer = {false, false, 0x0050};
+    serial = {false, false, 0x0058};
+    joypad = {false, false, 0x0060};
 }
 
 void CPU::reset() {
