@@ -29,6 +29,12 @@ using Byte = uint8_t; // 8 bits
 using Word = uint16_t; // 16 bits
 
 typedef struct {
+    bool enabled;
+    bool requested;
+    uint16_t handlerAddr;
+} Interrupt;
+
+typedef struct {
     Word program_counter;
     Word stack_pointer;
 
@@ -82,13 +88,22 @@ class CPU {
 public:
     Registers registers;
     Bus bus;
+    bool IME_FLAG;
+    bool HALT_FLAG;
+    bool STOP_FLAG;
+    Interrupt vblank;
+    Interrupt lcdStat;
+    Interrupt timer;
+    Interrupt serial;
+    Interrupt joypad;
 
     CPU(Bus& bus);
     void reset();
     void cycle();
     void write(Word address, Byte data);
     Byte read(Word address);
-
+    void handleInterrupts();
+    Word fetchPC();
     void addInstruction(Word opcode, Instruction instruction);
     void initializeInstructionTable();
     bool execute(Word opcode);

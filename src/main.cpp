@@ -33,4 +33,18 @@ int main() {
     cpu.registers.b_register = 0x01;
     cpu.execute(0xCB30); // SWAP B
     std::cout << "B register: " << std::hex << (int) cpu.registers.b_register << std::endl;
+
+    cpu.registers.program_counter = 0x0000;
+    cpu.HALT_FLAG = false;
+
+    // testing 5 cpu cycles
+    while (true) {
+        if (cpu.HALT_FLAG) {
+            continue;
+        }
+        cpu.cycle();
+        // temp exit cond
+        if (cpu.registers.program_counter == 0x0005) break;
+    }
+    return 0;
 }
