@@ -30,7 +30,7 @@ void CPU::reset() {
 }
 
 void CPU::handleInterrupts() {
-    std::cout << "TODO" << std::endl;
+    std::cout << "Interrupt" << std::endl;
 }
 
 Word CPU::fetchPC() {
@@ -43,6 +43,8 @@ void CPU::cycle() {
     Word opcode = fetchPC();
     if (!execute(opcode)) {
         std::cout << "Cannot execute opcode" << std::endl;
+    } else {
+        std::cout << "Executed opcode" << std::endl;
     }
     handleInterrupts();
 }

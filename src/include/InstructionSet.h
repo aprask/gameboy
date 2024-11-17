@@ -4,6 +4,6 @@
 #include "cpu.h"
 class InstructionSet {
 public:
-    virtual void initializeInstructionTable(CPU& cpu);
+    virtual void initializeInstructionTable(CPU& cpu) = 0;
 };
 #endif // INSTRUCTION_SET_H
