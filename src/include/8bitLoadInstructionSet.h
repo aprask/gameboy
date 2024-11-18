@@ -9,8 +9,8 @@ public:
     void initializeInstructionTable(CPU& cpu) override;
 
 private:
-    void ld_rr_a(CPU& cpu, Byte& source, Byte& destination);
-    void ld_a_rr(CPU& cpu, Byte& source, Byte& destination);
+    void ld_rr_a(CPU& cpu, int pair);
+    void ld_a_rr(CPU& cpu, int pair);
     void ld_r_r(CPU& cpu, Byte& source, Byte& destination);
     void ld_r_n8(CPU& cpu, Byte& destination);
     void ld_r_hl(CPU& cpu, Byte& destination);

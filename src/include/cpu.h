@@ -12,17 +12,10 @@ const int N = 6;
 const int H = 5;
 const int C = 4;
 
-// TO BE REMOVED -- THIS IS SO EVERYTHING CAN STILL WORK
-#define FLAG_ZERO 0b10000000
-#define FLAG_SUBTRACT 0b01000000
-#define FLAG_HALF_CARRY 0b00100000
-#define FLAG_CARRY 0b00010000
-// TO BE REMOVED -- THIS IS SO EVERYTHING CAN STILL WORK
-
-typedef struct { // I think I found a way to not have to do this? Massive W
-    Byte& reg;
-    bool bit;
-} InstructionParameters;
+const int AF = 0;
+const int BC = 1;
+const int DE = 2;
+const int HL = 3;
 
 using Instruction = std::function<void()>;
 using Byte = uint8_t; // 8 bits
@@ -41,47 +34,17 @@ typedef struct {
     // Special purpose registers
     Byte instruction_register;
     Byte interrupt_enable;
-    Byte a_register; // Accumulator
-    Byte flag_register; // Four least-significant bits will ALWAYS be zero.
+    Byte a; // Accumulator
+    Byte f; // Four least-significant bits will ALWAYS be zero.
 
     // General purpose registers
-    Byte b_register;
-    Byte c_register;
-    Byte d_register;
-    Byte e_register;
-    Byte h_register; // High register
-    Byte l_register; // Low register
+    Byte b;
+    Byte c;
+    Byte d;
+    Byte e;
+    Byte h; // High register
+    Byte l; // Low register
 
-    // TO BE REMOVED -- THIS IS SO EVERYTHING CAN STILL WORK
-    void set_flag(Byte flag, bool value) {
-        if (value) {
-            flag_register |= flag;
-        } else {
-            flag_register &= ~flag;
-        }
-    }
-    // TO BE REMOVED -- THIS IS SO EVERYTHING CAN STILL WORK
-
-    Word get_pair(Byte high, Byte low) {
-        return (high << 8) | low;
-    }
-
-    void set_pair(Word value, Byte& high, Byte& low) {
-        high = (value & 0xFF00) >> 8;
-        low = value & 0x00FF;
-    }
-
-    bool get_bit(Byte reg, Byte bit) {
-        return (reg >> bit) & 1;
-    }
-
-    void set_bit(Byte& reg, int bit, bool value) {
-        if (value) {
-            reg |= (1 << bit);
-        } else {
-            reg &= ~(1 << bit);
-        }
-    }
 } Registers;
 
 class CPU {
@@ -97,13 +60,21 @@ public:
     Interrupt serial;
     Interrupt joypad;
 
+    // Register functions
+    Byte readPair(int pair);
+    void writePair(int pair, Byte value);
+    Word getPair(int pair);
+    void setPair(int pair, Word value);
+    bool getBit(Byte& reg, Byte bit);
+    void setBit(Byte& reg, unsigned int bit, bool value);
+    Word fetchPC();
+
     CPU(Bus& bus);
     void reset();
     void cycle();
     void write(Word address, Byte data);
     Byte read(Word address);
     void handleInterrupts();
-    Word fetchPC();
     void addInstruction(Word opcode, Instruction instruction);
     void initializeInstructionTable();
     bool execute(Word opcode);
