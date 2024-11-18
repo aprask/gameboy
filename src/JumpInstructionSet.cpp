@@ -34,8 +34,9 @@ void JumpInstructionSet::initializeInstructionTable(CPU& cpu) {
 }
 
 void JumpInstructionSet::jr_e8(CPU& cpu) {
-    // Placeholder for JR e8 functionality
-    // Example: cpu.jr_e8();
+    uint8_t offset = cpu.fetchPC();
+    cpu.registers.program_counter++;
+    cpu.registers.program_counter = cpu.registers.program_counter + offset;
 }
 
 void JumpInstructionSet::jr_nz_e8(CPU& cpu) {
@@ -64,13 +65,19 @@ void JumpInstructionSet::ret_nz(CPU& cpu) {
 }
 
 void JumpInstructionSet::jp_nz_a16(CPU& cpu) {
-    // Placeholder for JP NZ a16 functionality
-    // Example: cpu.jp_nz_a16();
+    uint8_t nn_lsb = cpu.fetchPC();
+    uint8_t nn_msb = cpu.fetchPC();
+    uint16_t nn = (nn_msb << 8) | nn_lsb;
+    if (!(cpu.registers.flag_register & FLAG_ZERO)) {
+        cpu.registers.program_counter = nn;
+    }
 }
 
 void JumpInstructionSet::jp_a16(CPU& cpu) {
-    // Placeholder for JP a16 functionality
-    // Example: cpu.jp_a16();
+    uint8_t nn_lsb = cpu.fetchPC();
+    uint8_t nn_msb = cpu.fetchPC();
+    uint16_t nn = (nn_msb << 8) | nn_lsb;
+    cpu.registers.program_counter = nn;
 }
 
 void JumpInstructionSet::call_nz_a16(CPU& cpu) {
@@ -94,8 +101,12 @@ void JumpInstructionSet::ret(CPU& cpu) {
 }
 
 void JumpInstructionSet::jp_z_a16(CPU& cpu) {
-    // Placeholder for JP Z a16 functionality
-    // Example: cpu.jp_z_a16();
+    uint8_t nn_lsb = cpu.fetchPC();
+    uint8_t nn_msb = cpu.fetchPC();
+    uint16_t nn = (nn_msb << 8) | nn_lsb;
+    if ((cpu.registers.flag_register & FLAG_ZERO)) {
+        cpu.registers.program_counter = nn;
+    }
 }
 
 void JumpInstructionSet::call_z_a16(CPU& cpu) {
@@ -119,8 +130,12 @@ void JumpInstructionSet::ret_nc(CPU& cpu) {
 }
 
 void JumpInstructionSet::jp_nc_a16(CPU& cpu) {
-    // Placeholder for JP NC a16 functionality
-    // Example: cpu.jp_nc_a16();
+    uint8_t nn_lsb = cpu.fetchPC();
+    uint8_t nn_msb = cpu.fetchPC();
+    uint16_t nn = (nn_msb << 8) | nn_lsb;
+    if (!(cpu.registers.flag_register & FLAG_CARRY)) {
+        cpu.registers.program_counter = nn;
+    }
 }
 
 void JumpInstructionSet::call_nc_a16(CPU& cpu) {
@@ -144,8 +159,12 @@ void JumpInstructionSet::reti(CPU& cpu) {
 }
 
 void JumpInstructionSet::jp_c_a16(CPU& cpu) {
-    // Placeholder for JP C a16 functionality
-    // Example: cpu.jp_c_a16();
+    uint8_t nn_lsb = cpu.fetchPC();
+    uint8_t nn_msb = cpu.fetchPC();
+    uint16_t nn = (nn_msb << 8) | nn_lsb;
+    if ((cpu.registers.flag_register & FLAG_CARRY)) {
+        cpu.registers.program_counter = nn;
+    }
 }
 
 void JumpInstructionSet::call_c_a16(CPU& cpu) {
@@ -164,8 +183,7 @@ void JumpInstructionSet::rst_20H(CPU& cpu) {
 }
 
 void JumpInstructionSet::jp_hl(CPU& cpu) {
-    // Placeholder for JP HL functionality
-    // Example: cpu.jp_hl();
+    cpu.registers.program_counter = (cpu.registers.h_register << 8) | cpu.registers.l_register;
 }
 
 void JumpInstructionSet::rst_28H(CPU& cpu) {
