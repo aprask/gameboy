@@ -14,30 +14,26 @@ void SixteenBitALUTesting::run(CPU& cpu) {
 bool SixteenBitALUTesting::test_inc_rr(CPU& cpu) {
     SixteenBitALUInstructionSet sixteen_bit_alu_instr;
     Byte opcode = 0x03; // INC BC
-    cpu.registers.b_register = 0x00;
-    cpu.registers.c_register = 0xFF;
+    cpu.setPair(BC, 0x00FF);
     cpu.execute(opcode);
-    return cpu.registers.b_register == 0x01 && cpu.registers.c_register == 0x00;
+    return cpu.getPair(BC) == 0x0100;
 }
 
 bool SixteenBitALUTesting::test_dec_rr(CPU& cpu) {
     SixteenBitALUInstructionSet sixteen_bit_alu_instr;
     Byte opcode = 0x0B; // DEC BC
-    cpu.registers.b_register = 0x01;
-    cpu.registers.c_register = 0x00;
+    cpu.setPair(BC, 0x0100);
     cpu.execute(opcode);
-    return cpu.registers.b_register == 0x00 && cpu.registers.c_register == 0xFF;
+    return cpu.getPair(BC) == 0x00FF;
 }
 
 bool SixteenBitALUTesting::test_add_hl_rr(CPU& cpu) {
     SixteenBitALUInstructionSet sixteen_bit_alu_instr;
     Byte opcode = 0x09; // ADD HL BC
-    cpu.registers.h_register = 0x00;
-    cpu.registers.l_register = 0xFF;
-    cpu.registers.b_register = 0x00;
-    cpu.registers.c_register = 0x01;
+    cpu.setPair(HL, 0x00FF);
+    cpu.setPair(BC, 0x0001);
     cpu.execute(opcode);
-    return cpu.registers.h_register == 0x01 && cpu.registers.l_register == 0x00;
+    return cpu.getPair(HL) == 0x0100;
 }
 
 bool SixteenBitALUTesting::test_inc_sp(CPU& cpu) {
@@ -51,11 +47,10 @@ bool SixteenBitALUTesting::test_inc_sp(CPU& cpu) {
 bool SixteenBitALUTesting::test_add_hl_sp(CPU& cpu) {
     SixteenBitALUInstructionSet sixteen_bit_alu_instr;
     Byte opcode = 0x39; // ADD HL SP
-    cpu.registers.h_register = 0x00;
-    cpu.registers.l_register = 0xFF;
+    cpu.setPair(HL, 0x00FF);
     cpu.registers.stack_pointer = 0x0001;
     cpu.execute(opcode);
-    return cpu.registers.h_register == 0x01 && cpu.registers.l_register == 0x00;
+    return cpu.getPair(HL) == 0x0100;
 }
 
 bool SixteenBitALUTesting::test_dec_sp(CPU& cpu) {

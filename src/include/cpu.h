@@ -17,18 +17,6 @@ const int BC = 1;
 const int DE = 2;
 const int HL = 3;
 
-// TO BE REMOVED -- THIS IS SO EVERYTHING CAN STILL WORK
-#define FLAG_ZERO 0b10000000
-#define FLAG_SUBTRACT 0b01000000
-#define FLAG_HALF_CARRY 0b00100000
-#define FLAG_CARRY 0b00010000
-// TO BE REMOVED -- THIS IS SO EVERYTHING CAN STILL WORK
-
-typedef struct { // I think I found a way to not have to do this? Massive W
-    Byte& reg;
-    bool bit;
-} InstructionParameters;
-
 using Instruction = std::function<void()>;
 using Byte = uint8_t; // 8 bits
 using Word = uint16_t; // 16 bits
@@ -56,16 +44,6 @@ typedef struct {
     Byte e;
     Byte h; // High register
     Byte l; // Low register
-
-    // TO BE REMOVED -- THIS IS SO EVERYTHING CAN STILL WORK
-    void set_flag(Byte flag, bool value) {
-        if (value) {
-            f |= flag;
-        } else {
-            f &= ~flag;
-        }
-    }
-    // TO BE REMOVED -- THIS IS SO EVERYTHING CAN STILL WORK
 
 } Registers;
 

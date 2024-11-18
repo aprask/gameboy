@@ -177,7 +177,7 @@ void EightBitALUInstructionSet::scf(CPU& cpu) {
 void EightBitALUInstructionSet::ccf(CPU& cpu) {
     cpu.setBit(cpu.registers.f, N, false);
     cpu.setBit(cpu.registers.f, H, false);
-    cpu.setBit(cpu.registers.f, C, !cpu.registers.f & FLAG_CARRY);
+    cpu.setBit(cpu.registers.f, C, !cpu.getBit(cpu.registers.f, C));
 }
 
 void EightBitALUInstructionSet::add_r(CPU& cpu, Byte& reg) {
