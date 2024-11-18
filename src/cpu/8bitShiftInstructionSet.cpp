@@ -1,4 +1,4 @@
-#include "include/8bitShiftInstructionSet.h"
+#include "../include/8bitShiftInstructionSet.h"
 
 void EightBitShiftInstructionSet::initializeInstructionTable(CPU& cpu) {
     cpu.addInstruction(0x07, [this, &cpu] { this->rlca(cpu); });

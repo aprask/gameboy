@@ -1,10 +1,10 @@
-#include "include/cpu.h"
-#include "include/ControlInstructionSet.h"
-#include "include/8bitALUInstructionSet.h"
-#include "include/8bitLoadInstructionSet.h"
-#include "include/8bitShiftInstructionSet.h"
-#include "include/16bitALUInstructionSet.h"
-#include "include/16bitLoadInstructionSet.h"
+#include "../include/cpu.h"
+#include "../include/ControlInstructionSet.h"
+#include "../include/8bitALUInstructionSet.h"
+#include "../include/8bitLoadInstructionSet.h"
+#include "../include/8bitShiftInstructionSet.h"
+#include "../include/16bitALUInstructionSet.h"
+#include "../include/16bitLoadInstructionSet.h"
 #include <iostream>
 
 ControlInstructionSet control_instruction_set;

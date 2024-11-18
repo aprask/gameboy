@@ -1,4 +1,4 @@
-#include "include/JumpInstructionSet.h"
+#include "../include/JumpInstructionSet.h"
 
 void JumpInstructionSet::initializeInstructionTable(CPU& cpu) {
     cpu.addInstruction(0x18, [this, &cpu] { this->jr_e8(cpu); });

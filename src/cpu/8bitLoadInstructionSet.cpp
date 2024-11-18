@@ -1,4 +1,4 @@
-#include "include/8bitLoadInstructionSet.h"
+#include "../include/8bitLoadInstructionSet.h"
 
 void EightBitLoadInstructionSet::initializeInstructionTable(CPU& cpu) {
     cpu.addInstruction(0x02, [this, &cpu] { ld_rr_a(cpu, BC); });

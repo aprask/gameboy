@@ -10,15 +10,15 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 # Add the executable
 add_executable(Gameboy 
 src/main.cpp 
-src/ControlInstructionSet.cpp 
-src/cpu.cpp 
+src/cpu/ControlInstructionSet.cpp 
+src/cpu/cpu.cpp 
 src/memory.cpp 
 src/bus.cpp
-src/16bitLoadInstructionSet.cpp
-src/8bitShiftInstructionSet.cpp
-src/8bitALUInstructionSet.cpp
-src/16bitALUInstructionSet.cpp
-src/8bitLoadInstructionSet.cpp
+src/cpu/16bitLoadInstructionSet.cpp
+src/cpu/8bitShiftInstructionSet.cpp
+src/cpu/8bitALUInstructionSet.cpp
+src/cpu/16bitALUInstructionSet.cpp
+src/cpu/8bitLoadInstructionSet.cpp
 src/testing/Testing.cpp)
 
 # Include directories

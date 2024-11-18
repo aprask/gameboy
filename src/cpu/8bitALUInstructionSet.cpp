@@ -1,4 +1,4 @@
-#include "include/8bitALUInstructionSet.h"
+#include "../include/8bitALUInstructionSet.h"
 
 void EightBitALUInstructionSet::initializeInstructionTable(CPU& cpu) {
     cpu.addInstruction(0x04, [this, &cpu] { inc_r(cpu, cpu.registers.b); });

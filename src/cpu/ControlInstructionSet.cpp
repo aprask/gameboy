@@ -1,4 +1,4 @@
-#include "include/ControlInstructionSet.h"
+#include "../include/ControlInstructionSet.h"
 #include <iostream>
 
 void ControlInstructionSet::initializeInstructionTable(CPU& cpu) {

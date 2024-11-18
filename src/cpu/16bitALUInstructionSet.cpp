@@ -1,4 +1,4 @@
-#include "include/16bitALUInstructionSet.h"
+#include "../include/16bitALUInstructionSet.h"
 
 void SixteenBitALUInstructionSet::initializeInstructionTable(CPU& cpu) {
     cpu.addInstruction(0x03, [this, &cpu] { this->inc_rr(cpu, BC); });

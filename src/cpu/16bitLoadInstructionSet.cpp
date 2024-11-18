@@ -1,4 +1,4 @@
-#include "include/16bitLoadInstructionSet.h"
+#include "../include/16bitLoadInstructionSet.h"
 
 void SixteenBitLoadInstructionSet::initializeInstructionTable(CPU& cpu) {
     cpu.addInstruction(0x01, [this, &cpu] { this->ld_rr_n16(cpu, BC); });
