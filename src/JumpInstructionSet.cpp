@@ -34,33 +34,33 @@ void JumpInstructionSet::initializeInstructionTable(CPU& cpu) {
 }
 
 void JumpInstructionSet::jr_e8(CPU& cpu) {
-    uint8_t offset = cpu.fetchPC();
+    int8_t offset = cpu.fetchPC();
     cpu.registers.program_counter += offset;
 }
 
 void JumpInstructionSet::jr_nz_e8(CPU& cpu) {
-    uint8_t offset = cpu.fetchPC();
+    int8_t offset = cpu.fetchPC();
     if (!(cpu.registers.flag_register & FLAG_ZERO)) {
         cpu.registers.program_counter += offset;
     }
 }
 
 void JumpInstructionSet::jr_z_e8(CPU& cpu) {
-    uint8_t offset = cpu.fetchPC();
+    int8_t offset = cpu.fetchPC();
     if ((cpu.registers.flag_register & FLAG_ZERO)) {
         cpu.registers.program_counter += offset;
     }
 }
 
 void JumpInstructionSet::jr_nc_e8(CPU& cpu) {
-    uint8_t offset = cpu.fetchPC();
+    int8_t offset = cpu.fetchPC();
     if (!(cpu.registers.flag_register & FLAG_CARRY)) {
         cpu.registers.program_counter += offset;
     }
 }
 
 void JumpInstructionSet::jr_c_e8(CPU& cpu) {
-    uint8_t offset = cpu.fetchPC();
+    int8_t offset = cpu.fetchPC();
     if ((cpu.registers.flag_register & FLAG_CARRY)) {
         cpu.registers.program_counter += offset;
     }
@@ -108,8 +108,11 @@ void JumpInstructionSet::call_nz_a16(CPU& cpu) {
 }
 
 void JumpInstructionSet::rst_00H(CPU& cpu) {
-    // Placeholder for RST 00 functionality
-    // Example: cpu.rst_00();
+    cpu.registers.stack_pointer--;
+    cpu.bus.write(cpu.registers.stack_pointer, (cpu.registers.program_counter >> 8) & 0xFF);
+    cpu.registers.stack_pointer--;
+    cpu.bus.write(cpu.registers.stack_pointer, (cpu.registers.program_counter) & 0xFF);
+    cpu.registers.program_counter = 0x00;
 }
 
 void JumpInstructionSet::ret_z(CPU& cpu) {
@@ -167,8 +170,11 @@ void JumpInstructionSet::call_a16(CPU& cpu) {
 }
 
 void JumpInstructionSet::rst_08H(CPU& cpu) {
-    // Placeholder for RST 08 functionality
-    // Example: cpu.rst_08();
+    cpu.registers.stack_pointer--;
+    cpu.bus.write(cpu.registers.stack_pointer, (cpu.registers.program_counter >> 8) & 0xFF);
+    cpu.registers.stack_pointer--;
+    cpu.bus.write(cpu.registers.stack_pointer, (cpu.registers.program_counter) & 0xFF);
+    cpu.registers.program_counter = 0x08;
 }
 
 void JumpInstructionSet::ret_nc(CPU& cpu) {
@@ -206,8 +212,11 @@ void JumpInstructionSet::call_nc_a16(CPU& cpu) {
 }
 
 void JumpInstructionSet::rst_10H(CPU& cpu) {
-    // Placeholder for RST 10 functionality
-    // Example: cpu.rst_10();
+    cpu.registers.stack_pointer--;
+    cpu.bus.write(cpu.registers.stack_pointer, (cpu.registers.program_counter >> 8) & 0xFF);
+    cpu.registers.stack_pointer--;
+    cpu.bus.write(cpu.registers.stack_pointer, (cpu.registers.program_counter) & 0xFF);
+    cpu.registers.program_counter = 0x10;
 }
 
 void JumpInstructionSet::ret_c(CPU& cpu) {
@@ -254,13 +263,19 @@ void JumpInstructionSet::call_c_a16(CPU& cpu) {
 }
 
 void JumpInstructionSet::rst_18H(CPU& cpu) {
-    // Placeholder for RST 18 functionality
-    // Example: cpu.rst_18();
+    cpu.registers.stack_pointer--;
+    cpu.bus.write(cpu.registers.stack_pointer, (cpu.registers.program_counter >> 8) & 0xFF);
+    cpu.registers.stack_pointer--;
+    cpu.bus.write(cpu.registers.stack_pointer, (cpu.registers.program_counter) & 0xFF);
+    cpu.registers.program_counter = 0x18;
 }
 
 void JumpInstructionSet::rst_20H(CPU& cpu) {
-    // Placeholder for RST 20 functionality
-    // Example: cpu.rst_20();
+    cpu.registers.stack_pointer--;
+    cpu.bus.write(cpu.registers.stack_pointer, (cpu.registers.program_counter >> 8) & 0xFF);
+    cpu.registers.stack_pointer--;
+    cpu.bus.write(cpu.registers.stack_pointer, (cpu.registers.program_counter) & 0xFF);
+    cpu.registers.program_counter = 0x20;
 }
 
 void JumpInstructionSet::jp_hl(CPU& cpu) {
@@ -268,17 +283,26 @@ void JumpInstructionSet::jp_hl(CPU& cpu) {
 }
 
 void JumpInstructionSet::rst_28H(CPU& cpu) {
-    // Placeholder for RST 28 functionality
-    // Example: cpu.rst_28();
+    cpu.registers.stack_pointer--;
+    cpu.bus.write(cpu.registers.stack_pointer, (cpu.registers.program_counter >> 8) & 0xFF);
+    cpu.registers.stack_pointer--;
+    cpu.bus.write(cpu.registers.stack_pointer, (cpu.registers.program_counter) & 0xFF);
+    cpu.registers.program_counter = 0x28;
 }
 
 void JumpInstructionSet::rst_30H(CPU& cpu) {
-    // Placeholder for RST 30 functionality
-    // Example: cpu.rst_30();
+    cpu.registers.stack_pointer--;
+    cpu.bus.write(cpu.registers.stack_pointer, (cpu.registers.program_counter >> 8) & 0xFF);
+    cpu.registers.stack_pointer--;
+    cpu.bus.write(cpu.registers.stack_pointer, (cpu.registers.program_counter) & 0xFF);
+    cpu.registers.program_counter = 0x30;
 }
 
 void JumpInstructionSet::rst_38H(CPU& cpu) {
-    // Placeholder for RST 38 functionality
-    // Example: cpu.rst_38();
+    cpu.registers.stack_pointer--;
+    cpu.bus.write(cpu.registers.stack_pointer, (cpu.registers.program_counter >> 8) & 0xFF);
+    cpu.registers.stack_pointer--;
+    cpu.bus.write(cpu.registers.stack_pointer, (cpu.registers.program_counter) & 0xFF);
+    cpu.registers.program_counter = 0x38;
 }
 
