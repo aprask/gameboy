@@ -33,6 +33,7 @@ void CPU::handleInterrupts() {
     std::cout << "Interrupt" << std::endl;
 }
 
+// Fetches the next opcode from the memory address stored in the program counter
 Word CPU::fetchPC() {
     Byte opcode = read(registers.program_counter);
     registers.program_counter++;
@@ -49,19 +50,22 @@ void CPU::cycle() {
     handleInterrupts();
 }
 
-
+// Writes the data to the memory address
 void CPU::write(Word address, Byte data) {
     bus.write(address, data);
 }
 
+// Reads the data at the memory address
 Byte CPU::read(Word address) {
     return bus.read(address);
 }
 
+// Adds the instruction to the instruction table
 void CPU::addInstruction(Word opcode, Instruction instruction) {
     instruction_table[opcode] = instruction;
 }
 
+// Initializes the instruction table with the instructions from the instruction sets
 void CPU::initializeInstructionTable() {
     control_instruction_set.initializeInstructionTable(*this);
     eight_bit_alu_instruction_set.initializeInstructionTable(*this);
@@ -71,6 +75,7 @@ void CPU::initializeInstructionTable() {
     sixteen_bit_load_instruction_set.initializeInstructionTable(*this);
 }
 
+// Executes the instruction stored in the opcode
 bool CPU::execute(Word opcode) {
     if (instruction_table.find(opcode) == instruction_table.end()) {
         return false;
@@ -79,4 +84,90 @@ bool CPU::execute(Word opcode) {
     auto instruction = instruction_table.find(opcode);
     instruction->second();
     return true;
+}
+
+// Reads the value at the memory address stored in the register pair
+Byte CPU::readPair(int pair) {
+    switch (pair) {
+        case AF:
+            read(getPair(AF));
+        case BC:
+            read(getPair(BC));
+        case DE:
+            read(getPair(DE));
+        case HL:
+            read(getPair(HL));
+        default:
+            return 0;
+    }
+}
+
+// Writes the value provided to the memory address stored in the register pair
+void CPU::writePair(int pair, Byte value) {
+    switch (pair) {
+        case AF:
+            write(getPair(AF), value);
+        case BC:
+            write(getPair(BC), value);
+        case DE:
+            write(getPair(DE), value);
+        case HL:
+            write(getPair(HL), value);
+        default:
+            break;
+    }
+}
+
+// Returns the data stored in the register pair
+Word CPU::getPair(int pair) {
+    switch (pair) {
+        case AF:
+            return (registers.a << 8) | registers.f;
+        case BC:
+            return (registers.b << 8) | registers.c;
+        case DE:
+            return (registers.d << 8) | registers.e;
+        case HL:
+            return (registers.h << 8) | registers.l;
+        default:
+            return 0;
+    }
+}
+
+// Sets the register pair to the Word value
+void CPU::setPair(int pair, Word value) {
+    switch (pair) {
+        case AF:
+            registers.a = value >> 8;
+            registers.f = value & 0x00FF;
+            break;
+        case BC:
+            registers.b = value >> 8;
+            registers.c = value & 0x00FF;
+            break;
+        case DE:
+            registers.d = value >> 8;
+            registers.e = value & 0x00FF;
+            break;
+        case HL:
+            registers.h = value >> 8;
+            registers.l = value & 0x00FF;
+            break;
+        default:
+            break;
+    }
+}
+
+// Returns the value of the specified bit in the specified register
+bool CPU::getBit(Byte& reg, Byte bit) {
+    return (reg >> bit) & 1;
+}
+
+// Sets the specified bit in the specified register to the specified value
+void CPU::setBit(Byte& reg, unsigned int bit, bool value) {
+    if (value) {
+        reg |= (1 << bit);
+    } else {
+        reg &= ~(1 << bit);
+    }
 }
