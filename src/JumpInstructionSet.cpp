@@ -35,28 +35,35 @@ void JumpInstructionSet::initializeInstructionTable(CPU& cpu) {
 
 void JumpInstructionSet::jr_e8(CPU& cpu) {
     uint8_t offset = cpu.fetchPC();
-    cpu.registers.program_counter++;
-    cpu.registers.program_counter = cpu.registers.program_counter + offset;
+    cpu.registers.program_counter += offset;
 }
 
 void JumpInstructionSet::jr_nz_e8(CPU& cpu) {
-    // Placeholder for JR NZ e8 functionality
-    // Example: cpu.jr_nz_e8();
+    uint8_t offset = cpu.fetchPC();
+    if (!(cpu.registers.flag_register & FLAG_ZERO)) {
+        cpu.registers.program_counter += offset;
+    }
 }
 
 void JumpInstructionSet::jr_z_e8(CPU& cpu) {
-    // Placeholder for JR Z e8 functionality
-    // Example: cpu.jr_z_e8();
+    uint8_t offset = cpu.fetchPC();
+    if ((cpu.registers.flag_register & FLAG_ZERO)) {
+        cpu.registers.program_counter += offset;
+    }
 }
 
 void JumpInstructionSet::jr_nc_e8(CPU& cpu) {
-    // Placeholder for JR NC e8 functionality
-    // Example: cpu.jr_nc_e8();
+    uint8_t offset = cpu.fetchPC();
+    if (!(cpu.registers.flag_register & FLAG_CARRY)) {
+        cpu.registers.program_counter += offset;
+    }
 }
 
 void JumpInstructionSet::jr_c_e8(CPU& cpu) {
-    // Placeholder for JR C e8 functionality
-    // Example: cpu.jr_c_e8();
+    uint8_t offset = cpu.fetchPC();
+    if ((cpu.registers.flag_register & FLAG_CARRY)) {
+        cpu.registers.program_counter += offset;
+    }
 }
 
 void JumpInstructionSet::ret_nz(CPU& cpu) {
@@ -81,8 +88,18 @@ void JumpInstructionSet::jp_a16(CPU& cpu) {
 }
 
 void JumpInstructionSet::call_nz_a16(CPU& cpu) {
-    // Placeholder for CALL NZ a16 functionality
-    // Example: cpu.call_nz_a16();
+    uint8_t nn_lsb = cpu.fetchPC();
+    uint8_t nn_msb = cpu.fetchPC();
+    uint16_t nn = (nn_msb << 8) | nn_lsb;
+    if (!(cpu.registers.flag_register & FLAG_ZERO)) {
+        uint16_t return_address = cpu.registers.program_counter;
+        // allocating space for return address (writing to memory)
+        cpu.registers.stack_pointer--;
+        cpu.bus.write(cpu.registers.stack_pointer, (return_address >> 8) & 0xFF);
+        cpu.registers.stack_pointer--;
+        cpu.bus.write(cpu.registers.stack_pointer, return_address & 0xFF);
+        cpu.registers.program_counter = nn;
+    }
 }
 
 void JumpInstructionSet::rst_00H(CPU& cpu) {
