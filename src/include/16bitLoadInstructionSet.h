@@ -8,11 +8,11 @@ class SixteenBitLoadInstructionSet : public InstructionSet {
         void initializeInstructionTable(CPU& cpu) override;
         
     private:
-        void ld_rr_n16(CPU& cpu, Byte& high, Byte& low);
+        void ld_rr_n16(CPU& cpu, int pair);
         void ld_a16_sp(CPU& cpu);
         void ld_sp_n16(CPU& cpu);
-        void pop_rr(CPU& cpu, Byte& high, Byte& low);
-        void push_rr(CPU& cpu, Byte& high, Byte& low);
+        void pop_rr(CPU& cpu, int pair);
+        void push_rr(CPU& cpu, int pair);
         void lp_hl_sp_e8(CPU& cpu);
         void lp_sp_hl(CPU& cpu);
 };

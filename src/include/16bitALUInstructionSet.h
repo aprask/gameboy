@@ -9,9 +9,9 @@ public:
     void initializeInstructionTable(CPU& cpu) override;
 
 private:
-    void inc_rr(CPU& cpu, Byte& reg1, Byte& reg2);
-    void dec_rr(CPU& cpu, Byte& reg1, Byte& reg2);
-    void add_hl_rr(CPU& cpu, Byte& reg1, Byte& reg2);
+    void inc_rr(CPU& cpu, int pair);
+    void dec_rr(CPU& cpu, int pair);
+    void add_hl_rr(CPU& cpu, int pair);
     void inc_sp(CPU& cpu);
     void add_hl_sp(CPU& cpu);
     void dec_sp(CPU& cpu);

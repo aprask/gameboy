@@ -12,27 +12,27 @@ int main() {
     CPU cpu(bus);
 
     // CPU-rework tests
-    cpu.registers.a_register = 0x01;
+    cpu.registers.a = 0x01;
     cpu.initializeInstructionTable();
     cpu.execute(0x00); // NOP
     cpu.execute(0x76); // HALT
 
     // 8bitALUInstructionSet tests
-    cpu.registers.b_register = 0x01;
+    cpu.registers.b = 0x01;
     cpu.execute(0x04); // INC B
-    std::cout << "B register: " << std::hex << (int) cpu.registers.b_register << std::endl;
+    std::cout << "B register: " << std::hex << (int) cpu.registers.b << std::endl;
 
     // 8bitLoadInstructionSet tests
     cpu.write(0xC000, 0x01);
     cpu.registers.program_counter = 0xC000;
-    cpu.registers.b_register = 0x00;
+    cpu.registers.b = 0x00;
     cpu.execute(0x06); // LD B, n8
-    std::cout << "B register: " << std::hex << (int) cpu.registers.b_register << std::endl;
+    std::cout << "B register: " << std::hex << (int) cpu.registers.b << std::endl;
 
     // 8bitShiftInstructionSet tests
-    cpu.registers.b_register = 0x01;
+    cpu.registers.b = 0x01;
     cpu.execute(0xCB30); // SWAP B
-    std::cout << "B register: " << std::hex << (int) cpu.registers.b_register << std::endl;
+    std::cout << "B register: " << std::hex << (int) cpu.registers.b << std::endl;
 
     cpu.registers.program_counter = 0x0000;
     cpu.HALT_FLAG = false;

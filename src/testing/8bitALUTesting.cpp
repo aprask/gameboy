@@ -9,17 +9,16 @@ void EightBitALUTesting::run(CPU& cpu) {
 bool EightBitALUTesting::test_inc_r(CPU& cpu) {
     EightBitALUInstructionSet eight_bit_alu_instr;
     uint8_t opcode = 0x04; // INC B
-    cpu.registers.b_register = 0x01;
+    cpu.registers.b = 0x01;
     cpu.execute(opcode);
-    return cpu.registers.b_register == 0x02;
+    return cpu.registers.b == 0x02;
 }
 
 bool EightBitALUTesting::test_inc_hl_indirect(CPU& cpu) {
     EightBitALUInstructionSet eight_bit_alu_instr;
     uint8_t opcode = 0x34; // INC (HL)
     cpu.write(0xC000, 0x01);
-    cpu.registers.h_register = 0xC0;
-    cpu.registers.l_register = 0x00;
+    cpu.setPair(HL, 0xC000);
     cpu.execute(opcode);
     return cpu.read(0xC000) == 0x02;
 }
