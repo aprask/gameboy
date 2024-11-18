@@ -67,8 +67,13 @@ void JumpInstructionSet::jr_c_e8(CPU& cpu) {
 }
 
 void JumpInstructionSet::ret_nz(CPU& cpu) {
-    // Placeholder for RET NZ functionality
-    // Example: cpu.ret_nz();
+    if (!(cpu.registers.flag_register & FLAG_ZERO)) {
+        uint8_t lsb = cpu.bus.read(cpu.registers.stack_pointer);
+        cpu.registers.stack_pointer++;
+        uint8_t msb = cpu.bus.read(cpu.registers.stack_pointer);
+        cpu.registers.stack_pointer++;
+        cpu.registers.program_counter = (msb << 8) | lsb;
+    }
 }
 
 void JumpInstructionSet::jp_nz_a16(CPU& cpu) {
@@ -108,13 +113,21 @@ void JumpInstructionSet::rst_00H(CPU& cpu) {
 }
 
 void JumpInstructionSet::ret_z(CPU& cpu) {
-    // Placeholder for RET Z functionality
-    // Example: cpu.ret_z();
+    if ((cpu.registers.flag_register & FLAG_ZERO)) {
+        uint8_t lsb = cpu.bus.read(cpu.registers.stack_pointer);
+        cpu.registers.stack_pointer++;
+        uint8_t msb = cpu.bus.read(cpu.registers.stack_pointer);
+        cpu.registers.stack_pointer++;
+        cpu.registers.program_counter = (msb << 8) | lsb;
+    }
 }
 
 void JumpInstructionSet::ret(CPU& cpu) {
-    // Placeholder for RET functionality
-    // Example: cpu.ret();
+    uint8_t lsb = cpu.bus.read(cpu.registers.stack_pointer);
+    cpu.registers.stack_pointer++;
+    uint8_t msb = cpu.bus.read(cpu.registers.stack_pointer);
+    cpu.registers.stack_pointer++;
+    cpu.registers.program_counter = (msb << 8) | lsb;
 }
 
 void JumpInstructionSet::jp_z_a16(CPU& cpu) {
@@ -159,8 +172,13 @@ void JumpInstructionSet::rst_08H(CPU& cpu) {
 }
 
 void JumpInstructionSet::ret_nc(CPU& cpu) {
-    // Placeholder for RET NC functionality
-    // Example: cpu.ret_nc();
+    if (!(cpu.registers.flag_register & FLAG_CARRY)) {
+        uint8_t lsb = cpu.bus.read(cpu.registers.stack_pointer);
+        cpu.registers.stack_pointer++;
+        uint8_t msb = cpu.bus.read(cpu.registers.stack_pointer);
+        cpu.registers.stack_pointer++;
+        cpu.registers.program_counter = (msb << 8) | lsb;
+    }
 }
 
 void JumpInstructionSet::jp_nc_a16(CPU& cpu) {
@@ -173,7 +191,7 @@ void JumpInstructionSet::jp_nc_a16(CPU& cpu) {
 }
 
 void JumpInstructionSet::call_nc_a16(CPU& cpu) {
-        uint8_t nn_lsb = cpu.fetchPC();
+    uint8_t nn_lsb = cpu.fetchPC();
     uint8_t nn_msb = cpu.fetchPC();
     uint16_t nn = (nn_msb << 8) | nn_lsb;
     if (!(cpu.registers.flag_register & FLAG_CARRY)) {
@@ -193,13 +211,22 @@ void JumpInstructionSet::rst_10H(CPU& cpu) {
 }
 
 void JumpInstructionSet::ret_c(CPU& cpu) {
-    // Placeholder for RET C functionality
-    // Example: cpu.ret_c();
+    if ((cpu.registers.flag_register & FLAG_CARRY)) {
+        uint8_t lsb = cpu.bus.read(cpu.registers.stack_pointer);
+        cpu.registers.stack_pointer++;
+        uint8_t msb = cpu.bus.read(cpu.registers.stack_pointer);
+        cpu.registers.stack_pointer++;
+        cpu.registers.program_counter = (msb << 8) | lsb;
+    }
 }
 
 void JumpInstructionSet::reti(CPU& cpu) {
-    // Placeholder for RETI functionality
-    // Example: cpu.reti();
+    uint8_t lsb = cpu.bus.read(cpu.registers.stack_pointer);
+    cpu.registers.stack_pointer++;
+    uint8_t msb = cpu.bus.read(cpu.registers.stack_pointer);
+    cpu.registers.stack_pointer++;
+    cpu.registers.program_counter = (msb << 8) | lsb;
+    cpu.IME_FLAG = true;
 }
 
 void JumpInstructionSet::jp_c_a16(CPU& cpu) {
@@ -212,7 +239,7 @@ void JumpInstructionSet::jp_c_a16(CPU& cpu) {
 }
 
 void JumpInstructionSet::call_c_a16(CPU& cpu) {
-        uint8_t nn_lsb = cpu.fetchPC();
+    uint8_t nn_lsb = cpu.fetchPC();
     uint8_t nn_msb = cpu.fetchPC();
     uint16_t nn = (nn_msb << 8) | nn_lsb;
     if ((cpu.registers.flag_register & FLAG_CARRY)) {
