@@ -5,6 +5,7 @@
 #include "../include/8bitShiftInstructionSet.h"
 #include "../include/16bitALUInstructionSet.h"
 #include "../include/16bitLoadInstructionSet.h"
+#include "../include/JumpInstructionSet.h"
 #include <iostream>
 
 ControlInstructionSet control_instruction_set;
@@ -13,6 +14,7 @@ EightBitLoadInstructionSet eight_bit_load_instruction_set;
 EightBitShiftInstructionSet eight_bit_shift_instruction_set;
 SixteenBitALUInstructionSet sixteen_bit_alu_instruction_set;
 SixteenBitLoadInstructionSet sixteen_bit_load_instruction_set;
+JumpInstructionSet jump_instruction_set;
 
 CPU::CPU(Bus& bus) : bus(bus) {
     IME_FLAG = false; // disable interrupts by default (until EI is called, then IME_FLAG is set to true)
@@ -73,6 +75,7 @@ void CPU::initializeInstructionTable() {
     eight_bit_shift_instruction_set.initializeInstructionTable(*this);
     sixteen_bit_alu_instruction_set.initializeInstructionTable(*this);
     sixteen_bit_load_instruction_set.initializeInstructionTable(*this);
+    jump_instruction_set.initializeInstructionTable(*this);
 }
 
 // Executes the instruction stored in the opcode

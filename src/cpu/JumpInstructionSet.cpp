@@ -40,34 +40,34 @@ void JumpInstructionSet::jr_e8(CPU& cpu) {
 
 void JumpInstructionSet::jr_nz_e8(CPU& cpu) {
     int8_t offset = cpu.fetchPC();
-    if (!(cpu.registers.flag_register & FLAG_ZERO)) {
+    if (!(cpu.registers.f & (1 << Z))) {
         cpu.registers.program_counter += offset;
     }
 }
 
 void JumpInstructionSet::jr_z_e8(CPU& cpu) {
     int8_t offset = cpu.fetchPC();
-    if ((cpu.registers.flag_register & FLAG_ZERO)) {
+    if ((cpu.registers.f & (1 << Z))) {
         cpu.registers.program_counter += offset;
     }
 }
 
 void JumpInstructionSet::jr_nc_e8(CPU& cpu) {
     int8_t offset = cpu.fetchPC();
-    if (!(cpu.registers.flag_register & FLAG_CARRY)) {
+    if (!(cpu.registers.f & (1 << C))) {
         cpu.registers.program_counter += offset;
     }
 }
 
 void JumpInstructionSet::jr_c_e8(CPU& cpu) {
     int8_t offset = cpu.fetchPC();
-    if ((cpu.registers.flag_register & FLAG_CARRY)) {
+    if ((cpu.registers.f & (1 << C))) {
         cpu.registers.program_counter += offset;
     }
 }
 
 void JumpInstructionSet::ret_nz(CPU& cpu) {
-    if (!(cpu.registers.flag_register & FLAG_ZERO)) {
+    if (!(cpu.registers.f & (1 << Z))) {
         uint8_t lsb = cpu.bus.read(cpu.registers.stack_pointer);
         cpu.registers.stack_pointer++;
         uint8_t msb = cpu.bus.read(cpu.registers.stack_pointer);
@@ -80,7 +80,7 @@ void JumpInstructionSet::jp_nz_a16(CPU& cpu) {
     uint8_t nn_lsb = cpu.fetchPC();
     uint8_t nn_msb = cpu.fetchPC();
     uint16_t nn = (nn_msb << 8) | nn_lsb;
-    if (!(cpu.registers.flag_register & FLAG_ZERO)) {
+    if (!(cpu.registers.f & (1 << Z))) {
         cpu.registers.program_counter = nn;
     }
 }
@@ -96,7 +96,7 @@ void JumpInstructionSet::call_nz_a16(CPU& cpu) {
     uint8_t nn_lsb = cpu.fetchPC();
     uint8_t nn_msb = cpu.fetchPC();
     uint16_t nn = (nn_msb << 8) | nn_lsb;
-    if (!(cpu.registers.flag_register & FLAG_ZERO)) {
+    if (!(cpu.registers.f & (1 << Z))) {
         uint16_t return_address = cpu.registers.program_counter;
         // allocating space for return address (writing to memory)
         cpu.registers.stack_pointer--;
@@ -116,7 +116,7 @@ void JumpInstructionSet::rst_00H(CPU& cpu) {
 }
 
 void JumpInstructionSet::ret_z(CPU& cpu) {
-    if ((cpu.registers.flag_register & FLAG_ZERO)) {
+    if ((cpu.registers.f & (1 << Z))) {
         uint8_t lsb = cpu.bus.read(cpu.registers.stack_pointer);
         cpu.registers.stack_pointer++;
         uint8_t msb = cpu.bus.read(cpu.registers.stack_pointer);
@@ -137,7 +137,7 @@ void JumpInstructionSet::jp_z_a16(CPU& cpu) {
     uint8_t nn_lsb = cpu.fetchPC();
     uint8_t nn_msb = cpu.fetchPC();
     uint16_t nn = (nn_msb << 8) | nn_lsb;
-    if ((cpu.registers.flag_register & FLAG_ZERO)) {
+    if ((cpu.registers.f & (1 << Z))) {
         cpu.registers.program_counter = nn;
     }
 }
@@ -146,7 +146,7 @@ void JumpInstructionSet::call_z_a16(CPU& cpu) {
     uint8_t nn_lsb = cpu.fetchPC();
     uint8_t nn_msb = cpu.fetchPC();
     uint16_t nn = (nn_msb << 8) | nn_lsb;
-    if ((cpu.registers.flag_register & FLAG_ZERO)) {
+    if ((cpu.registers.f & (1 << Z))) {
         uint16_t return_address = cpu.registers.program_counter;
         // allocating space for return address (writing to memory)
         cpu.registers.stack_pointer--;
@@ -178,7 +178,7 @@ void JumpInstructionSet::rst_08H(CPU& cpu) {
 }
 
 void JumpInstructionSet::ret_nc(CPU& cpu) {
-    if (!(cpu.registers.flag_register & FLAG_CARRY)) {
+    if (!(cpu.registers.f & (1 << C))) {
         uint8_t lsb = cpu.bus.read(cpu.registers.stack_pointer);
         cpu.registers.stack_pointer++;
         uint8_t msb = cpu.bus.read(cpu.registers.stack_pointer);
@@ -191,7 +191,7 @@ void JumpInstructionSet::jp_nc_a16(CPU& cpu) {
     uint8_t nn_lsb = cpu.fetchPC();
     uint8_t nn_msb = cpu.fetchPC();
     uint16_t nn = (nn_msb << 8) | nn_lsb;
-    if (!(cpu.registers.flag_register & FLAG_CARRY)) {
+    if (!(cpu.registers.f & (1 << C))) {
         cpu.registers.program_counter = nn;
     }
 }
@@ -200,7 +200,7 @@ void JumpInstructionSet::call_nc_a16(CPU& cpu) {
     uint8_t nn_lsb = cpu.fetchPC();
     uint8_t nn_msb = cpu.fetchPC();
     uint16_t nn = (nn_msb << 8) | nn_lsb;
-    if (!(cpu.registers.flag_register & FLAG_CARRY)) {
+    if (!(cpu.registers.f & (1 << C))) {
         uint16_t return_address = cpu.registers.program_counter;
         // allocating space for return address (writing to memory)
         cpu.registers.stack_pointer--;
@@ -220,7 +220,7 @@ void JumpInstructionSet::rst_10H(CPU& cpu) {
 }
 
 void JumpInstructionSet::ret_c(CPU& cpu) {
-    if ((cpu.registers.flag_register & FLAG_CARRY)) {
+    if ((cpu.registers.f & (1 << C))) {
         uint8_t lsb = cpu.bus.read(cpu.registers.stack_pointer);
         cpu.registers.stack_pointer++;
         uint8_t msb = cpu.bus.read(cpu.registers.stack_pointer);
@@ -242,7 +242,7 @@ void JumpInstructionSet::jp_c_a16(CPU& cpu) {
     uint8_t nn_lsb = cpu.fetchPC();
     uint8_t nn_msb = cpu.fetchPC();
     uint16_t nn = (nn_msb << 8) | nn_lsb;
-    if ((cpu.registers.flag_register & FLAG_CARRY)) {
+    if ((cpu.registers.f & (1 << C))) {
         cpu.registers.program_counter = nn;
     }
 }
@@ -251,7 +251,7 @@ void JumpInstructionSet::call_c_a16(CPU& cpu) {
     uint8_t nn_lsb = cpu.fetchPC();
     uint8_t nn_msb = cpu.fetchPC();
     uint16_t nn = (nn_msb << 8) | nn_lsb;
-    if ((cpu.registers.flag_register & FLAG_CARRY)) {
+    if ((cpu.registers.f & (1 << C))) {
         uint16_t return_address = cpu.registers.program_counter;
         // allocating space for return address (writing to memory)
         cpu.registers.stack_pointer--;
@@ -279,7 +279,7 @@ void JumpInstructionSet::rst_20H(CPU& cpu) {
 }
 
 void JumpInstructionSet::jp_hl(CPU& cpu) {
-    cpu.registers.program_counter = (cpu.registers.h_register << 8) | cpu.registers.l_register;
+    cpu.registers.program_counter = (cpu.registers.h << 8) | cpu.registers.l;
 }
 
 void JumpInstructionSet::rst_28H(CPU& cpu) {

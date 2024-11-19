@@ -34,6 +34,21 @@ int main() {
     cpu.execute(0xCB30); // SWAP B
     std::cout << "B register: " << std::hex << (int) cpu.registers.b << std::endl;
 
+
+    // // jr_e8 (0x18)
+    cpu.registers.program_counter = 0x0005;
+    std::cout << "PC:" << cpu.registers.program_counter << std::endl;
+    cpu.execute(0x18);
+    std::cout << "PC:" << cpu.registers.program_counter << std::endl;
+
+    // rst_10H (0xD7)
+    std::cout << "PC:" << cpu.registers.program_counter << std::endl;
+    cpu.execute(0xD7);
+    // should be 0x10
+    std::cout << "PC:" << cpu.registers.program_counter << std::endl;
+
+    // testing 
+
     cpu.registers.program_counter = 0x0000;
     cpu.HALT_FLAG = false;
 
