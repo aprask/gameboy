@@ -47,7 +47,22 @@ int main() {
     // should be 0x10
     std::cout << "PC:" << cpu.registers.program_counter << std::endl;
 
-    // testing 
+    // testing call_c_a16 (0xDC)
+    cpu.registers.program_counter = 0x0002;
+    std::cout << "PC:" << cpu.registers.program_counter << std::endl;
+    cpu.registers.f |= (1 << C); // setting the carry flag
+    cpu.execute(0xDC); // TODO finish testing
+    std::cout << "PC:" << cpu.registers.program_counter << std::endl;
+
+
+    cpu.registers.stack_pointer = 1;
+    
+    cpu.execute(0xC4);
+
+    cpu.registers.f |= (1 << Z);
+
+    cpu.execute(0xC8);
+
 
     cpu.registers.program_counter = 0x0000;
     cpu.HALT_FLAG = false;

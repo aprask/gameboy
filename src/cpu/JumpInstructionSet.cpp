@@ -1,4 +1,5 @@
 #include "../include/JumpInstructionSet.h"
+#include <iostream>
 
 void JumpInstructionSet::initializeInstructionTable(CPU& cpu) {
     cpu.addInstruction(0x18, [this, &cpu] { this->jr_e8(cpu); });
@@ -100,8 +101,10 @@ void JumpInstructionSet::call_nz_a16(CPU& cpu) {
         uint16_t return_address = cpu.registers.program_counter;
         // allocating space for return address (writing to memory)
         cpu.registers.stack_pointer--;
+        std::cout << "SP: " << cpu.registers.stack_pointer << std::endl;
         cpu.bus.write(cpu.registers.stack_pointer, (return_address >> 8) & 0xFF);
         cpu.registers.stack_pointer--;
+        std::cout << "SP: " << cpu.registers.stack_pointer << std::endl;
         cpu.bus.write(cpu.registers.stack_pointer, return_address & 0xFF);
         cpu.registers.program_counter = nn;
     }
@@ -118,9 +121,12 @@ void JumpInstructionSet::rst_00H(CPU& cpu) {
 void JumpInstructionSet::ret_z(CPU& cpu) {
     if ((cpu.registers.f & (1 << Z))) {
         uint8_t lsb = cpu.bus.read(cpu.registers.stack_pointer);
+        std::cout << "SP: " << cpu.registers.stack_pointer << std::endl;
         cpu.registers.stack_pointer++;
+        std::cout << "SP: " << cpu.registers.stack_pointer << std::endl;
         uint8_t msb = cpu.bus.read(cpu.registers.stack_pointer);
         cpu.registers.stack_pointer++;
+        std::cout << "SP: " << cpu.registers.stack_pointer << std::endl;
         cpu.registers.program_counter = (msb << 8) | lsb;
     }
 }
