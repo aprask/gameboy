@@ -69,9 +69,9 @@ void JumpInstructionSet::jr_c_e8(CPU& cpu) {
 
 void JumpInstructionSet::ret_nz(CPU& cpu) {
     if (!(cpu.registers.f & (1 << Z))) {
-        uint8_t lsb = cpu.bus.read(cpu.registers.stack_pointer);
+        uint8_t lsb = cpu.read(cpu.registers.stack_pointer);
         cpu.registers.stack_pointer++;
-        uint8_t msb = cpu.bus.read(cpu.registers.stack_pointer);
+        uint8_t msb = cpu.read(cpu.registers.stack_pointer);
         cpu.registers.stack_pointer++;
         cpu.registers.program_counter = (msb << 8) | lsb;
     }
@@ -102,29 +102,29 @@ void JumpInstructionSet::call_nz_a16(CPU& cpu) {
         // allocating space for return address (writing to memory)
         cpu.registers.stack_pointer--;
         std::cout << "SP: " << cpu.registers.stack_pointer << std::endl;
-        cpu.bus.write(cpu.registers.stack_pointer, (return_address >> 8) & 0xFF);
+        cpu.write(cpu.registers.stack_pointer, (return_address >> 8) & 0xFF);
         cpu.registers.stack_pointer--;
         std::cout << "SP: " << cpu.registers.stack_pointer << std::endl;
-        cpu.bus.write(cpu.registers.stack_pointer, return_address & 0xFF);
+        cpu.write(cpu.registers.stack_pointer, return_address & 0xFF);
         cpu.registers.program_counter = nn;
     }
 }
 
 void JumpInstructionSet::rst_00H(CPU& cpu) {
     cpu.registers.stack_pointer--;
-    cpu.bus.write(cpu.registers.stack_pointer, (cpu.registers.program_counter >> 8) & 0xFF);
+    cpu.write(cpu.registers.stack_pointer, (cpu.registers.program_counter >> 8) & 0xFF);
     cpu.registers.stack_pointer--;
-    cpu.bus.write(cpu.registers.stack_pointer, (cpu.registers.program_counter) & 0xFF);
+    cpu.write(cpu.registers.stack_pointer, (cpu.registers.program_counter) & 0xFF);
     cpu.registers.program_counter = 0x00;
 }
 
 void JumpInstructionSet::ret_z(CPU& cpu) {
     if ((cpu.registers.f & (1 << Z))) {
-        uint8_t lsb = cpu.bus.read(cpu.registers.stack_pointer);
+        uint8_t lsb = cpu.read(cpu.registers.stack_pointer);
         std::cout << "SP: " << cpu.registers.stack_pointer << std::endl;
         cpu.registers.stack_pointer++;
         std::cout << "SP: " << cpu.registers.stack_pointer << std::endl;
-        uint8_t msb = cpu.bus.read(cpu.registers.stack_pointer);
+        uint8_t msb = cpu.read(cpu.registers.stack_pointer);
         cpu.registers.stack_pointer++;
         std::cout << "SP: " << cpu.registers.stack_pointer << std::endl;
         cpu.registers.program_counter = (msb << 8) | lsb;
@@ -132,9 +132,9 @@ void JumpInstructionSet::ret_z(CPU& cpu) {
 }
 
 void JumpInstructionSet::ret(CPU& cpu) {
-    uint8_t lsb = cpu.bus.read(cpu.registers.stack_pointer);
+    uint8_t lsb = cpu.read(cpu.registers.stack_pointer);
     cpu.registers.stack_pointer++;
-    uint8_t msb = cpu.bus.read(cpu.registers.stack_pointer);
+    uint8_t msb = cpu.read(cpu.registers.stack_pointer);
     cpu.registers.stack_pointer++;
     cpu.registers.program_counter = (msb << 8) | lsb;
 }
@@ -156,9 +156,9 @@ void JumpInstructionSet::call_z_a16(CPU& cpu) {
         uint16_t return_address = cpu.registers.program_counter;
         // allocating space for return address (writing to memory)
         cpu.registers.stack_pointer--;
-        cpu.bus.write(cpu.registers.stack_pointer, (return_address >> 8) & 0xFF);
+        cpu.write(cpu.registers.stack_pointer, (return_address >> 8) & 0xFF);
         cpu.registers.stack_pointer--;
-        cpu.bus.write(cpu.registers.stack_pointer, return_address & 0xFF);
+        cpu.write(cpu.registers.stack_pointer, return_address & 0xFF);
         cpu.registers.program_counter = nn;
     }
 }
@@ -169,25 +169,25 @@ void JumpInstructionSet::call_a16(CPU& cpu) {
     uint16_t nn = (nn_msb << 8) | nn_lsb;
     uint16_t return_address = cpu.registers.program_counter;
     cpu.registers.stack_pointer--;
-    cpu.bus.write(cpu.registers.stack_pointer, (return_address >> 8) & 0xFF);
+    cpu.write(cpu.registers.stack_pointer, (return_address >> 8) & 0xFF);
     cpu.registers.stack_pointer--;
-    cpu.bus.write(cpu.registers.stack_pointer, return_address & 0xFF);
+    cpu.write(cpu.registers.stack_pointer, return_address & 0xFF);
     cpu.registers.program_counter = nn;
 }
 
 void JumpInstructionSet::rst_08H(CPU& cpu) {
     cpu.registers.stack_pointer--;
-    cpu.bus.write(cpu.registers.stack_pointer, (cpu.registers.program_counter >> 8) & 0xFF);
+    cpu.write(cpu.registers.stack_pointer, (cpu.registers.program_counter >> 8) & 0xFF);
     cpu.registers.stack_pointer--;
-    cpu.bus.write(cpu.registers.stack_pointer, (cpu.registers.program_counter) & 0xFF);
+    cpu.write(cpu.registers.stack_pointer, (cpu.registers.program_counter) & 0xFF);
     cpu.registers.program_counter = 0x08;
 }
 
 void JumpInstructionSet::ret_nc(CPU& cpu) {
     if (!(cpu.registers.f & (1 << C))) {
-        uint8_t lsb = cpu.bus.read(cpu.registers.stack_pointer);
+        uint8_t lsb = cpu.read(cpu.registers.stack_pointer);
         cpu.registers.stack_pointer++;
-        uint8_t msb = cpu.bus.read(cpu.registers.stack_pointer);
+        uint8_t msb = cpu.read(cpu.registers.stack_pointer);
         cpu.registers.stack_pointer++;
         cpu.registers.program_counter = (msb << 8) | lsb;
     }
@@ -210,35 +210,35 @@ void JumpInstructionSet::call_nc_a16(CPU& cpu) {
         uint16_t return_address = cpu.registers.program_counter;
         // allocating space for return address (writing to memory)
         cpu.registers.stack_pointer--;
-        cpu.bus.write(cpu.registers.stack_pointer, (return_address >> 8) & 0xFF);
+        cpu.write(cpu.registers.stack_pointer, (return_address >> 8) & 0xFF);
         cpu.registers.stack_pointer--;
-        cpu.bus.write(cpu.registers.stack_pointer, return_address & 0xFF);
+        cpu.write(cpu.registers.stack_pointer, return_address & 0xFF);
         cpu.registers.program_counter = nn;
     }
 }
 
 void JumpInstructionSet::rst_10H(CPU& cpu) {
     cpu.registers.stack_pointer--;
-    cpu.bus.write(cpu.registers.stack_pointer, (cpu.registers.program_counter >> 8) & 0xFF);
+    cpu.write(cpu.registers.stack_pointer, (cpu.registers.program_counter >> 8) & 0xFF);
     cpu.registers.stack_pointer--;
-    cpu.bus.write(cpu.registers.stack_pointer, (cpu.registers.program_counter) & 0xFF);
+    cpu.write(cpu.registers.stack_pointer, (cpu.registers.program_counter) & 0xFF);
     cpu.registers.program_counter = 0x10;
 }
 
 void JumpInstructionSet::ret_c(CPU& cpu) {
     if ((cpu.registers.f & (1 << C))) {
-        uint8_t lsb = cpu.bus.read(cpu.registers.stack_pointer);
+        uint8_t lsb = cpu.read(cpu.registers.stack_pointer);
         cpu.registers.stack_pointer++;
-        uint8_t msb = cpu.bus.read(cpu.registers.stack_pointer);
+        uint8_t msb = cpu.read(cpu.registers.stack_pointer);
         cpu.registers.stack_pointer++;
         cpu.registers.program_counter = (msb << 8) | lsb;
     }
 }
 
 void JumpInstructionSet::reti(CPU& cpu) {
-    uint8_t lsb = cpu.bus.read(cpu.registers.stack_pointer);
+    uint8_t lsb = cpu.read(cpu.registers.stack_pointer);
     cpu.registers.stack_pointer++;
-    uint8_t msb = cpu.bus.read(cpu.registers.stack_pointer);
+    uint8_t msb = cpu.read(cpu.registers.stack_pointer);
     cpu.registers.stack_pointer++;
     cpu.registers.program_counter = (msb << 8) | lsb;
     cpu.IME_FLAG = true;
@@ -261,26 +261,26 @@ void JumpInstructionSet::call_c_a16(CPU& cpu) {
         uint16_t return_address = cpu.registers.program_counter;
         // allocating space for return address (writing to memory)
         cpu.registers.stack_pointer--;
-        cpu.bus.write(cpu.registers.stack_pointer, (return_address >> 8) & 0xFF);
+        cpu.write(cpu.registers.stack_pointer, (return_address >> 8) & 0xFF);
         cpu.registers.stack_pointer--;
-        cpu.bus.write(cpu.registers.stack_pointer, return_address & 0xFF);
+        cpu.write(cpu.registers.stack_pointer, return_address & 0xFF);
         cpu.registers.program_counter = nn;
     }
 }
 
 void JumpInstructionSet::rst_18H(CPU& cpu) {
     cpu.registers.stack_pointer--;
-    cpu.bus.write(cpu.registers.stack_pointer, (cpu.registers.program_counter >> 8) & 0xFF);
+    cpu.write(cpu.registers.stack_pointer, (cpu.registers.program_counter >> 8) & 0xFF);
     cpu.registers.stack_pointer--;
-    cpu.bus.write(cpu.registers.stack_pointer, (cpu.registers.program_counter) & 0xFF);
+    cpu.write(cpu.registers.stack_pointer, (cpu.registers.program_counter) & 0xFF);
     cpu.registers.program_counter = 0x18;
 }
 
 void JumpInstructionSet::rst_20H(CPU& cpu) {
     cpu.registers.stack_pointer--;
-    cpu.bus.write(cpu.registers.stack_pointer, (cpu.registers.program_counter >> 8) & 0xFF);
+    cpu.write(cpu.registers.stack_pointer, (cpu.registers.program_counter >> 8) & 0xFF);
     cpu.registers.stack_pointer--;
-    cpu.bus.write(cpu.registers.stack_pointer, (cpu.registers.program_counter) & 0xFF);
+    cpu.write(cpu.registers.stack_pointer, (cpu.registers.program_counter) & 0xFF);
     cpu.registers.program_counter = 0x20;
 }
 
@@ -290,25 +290,25 @@ void JumpInstructionSet::jp_hl(CPU& cpu) {
 
 void JumpInstructionSet::rst_28H(CPU& cpu) {
     cpu.registers.stack_pointer--;
-    cpu.bus.write(cpu.registers.stack_pointer, (cpu.registers.program_counter >> 8) & 0xFF);
+    cpu.write(cpu.registers.stack_pointer, (cpu.registers.program_counter >> 8) & 0xFF);
     cpu.registers.stack_pointer--;
-    cpu.bus.write(cpu.registers.stack_pointer, (cpu.registers.program_counter) & 0xFF);
+    cpu.write(cpu.registers.stack_pointer, (cpu.registers.program_counter) & 0xFF);
     cpu.registers.program_counter = 0x28;
 }
 
 void JumpInstructionSet::rst_30H(CPU& cpu) {
     cpu.registers.stack_pointer--;
-    cpu.bus.write(cpu.registers.stack_pointer, (cpu.registers.program_counter >> 8) & 0xFF);
+    cpu.write(cpu.registers.stack_pointer, (cpu.registers.program_counter >> 8) & 0xFF);
     cpu.registers.stack_pointer--;
-    cpu.bus.write(cpu.registers.stack_pointer, (cpu.registers.program_counter) & 0xFF);
+    cpu.write(cpu.registers.stack_pointer, (cpu.registers.program_counter) & 0xFF);
     cpu.registers.program_counter = 0x30;
 }
 
 void JumpInstructionSet::rst_38H(CPU& cpu) {
     cpu.registers.stack_pointer--;
-    cpu.bus.write(cpu.registers.stack_pointer, (cpu.registers.program_counter >> 8) & 0xFF);
+    cpu.write(cpu.registers.stack_pointer, (cpu.registers.program_counter >> 8) & 0xFF);
     cpu.registers.stack_pointer--;
-    cpu.bus.write(cpu.registers.stack_pointer, (cpu.registers.program_counter) & 0xFF);
+    cpu.write(cpu.registers.stack_pointer, (cpu.registers.program_counter) & 0xFF);
     cpu.registers.program_counter = 0x38;
 }
 
