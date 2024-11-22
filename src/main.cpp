@@ -34,6 +34,36 @@ int main() {
     cpu.execute(0xCB30); // SWAP B
     std::cout << "B register: " << std::hex << (int) cpu.registers.b << std::endl;
 
+
+    // // jr_e8 (0x18)
+    cpu.registers.program_counter = 0x0005;
+    std::cout << "PC:" << cpu.registers.program_counter << std::endl;
+    cpu.execute(0x18);
+    std::cout << "PC:" << cpu.registers.program_counter << std::endl;
+
+    // rst_10H (0xD7)
+    std::cout << "PC:" << cpu.registers.program_counter << std::endl;
+    cpu.execute(0xD7);
+    // should be 0x10
+    std::cout << "PC:" << cpu.registers.program_counter << std::endl;
+
+    // testing call_c_a16 (0xDC)
+    cpu.registers.program_counter = 0x0002;
+    std::cout << "PC:" << cpu.registers.program_counter << std::endl;
+    cpu.registers.f |= (1 << C); // setting the carry flag
+    cpu.execute(0xDC); // TODO finish testing
+    std::cout << "PC:" << cpu.registers.program_counter << std::endl;
+
+
+    cpu.registers.stack_pointer = 1;
+    
+    cpu.execute(0xC4);
+
+    cpu.registers.f |= (1 << Z);
+
+    cpu.execute(0xC8);
+
+
     cpu.registers.program_counter = 0x0000;
     cpu.HALT_FLAG = false;
 

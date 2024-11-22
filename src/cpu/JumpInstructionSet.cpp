@@ -1,4 +1,5 @@
 #include "../include/JumpInstructionSet.h"
+#include <iostream>
 
 void JumpInstructionSet::initializeInstructionTable(CPU& cpu) {
     cpu.addInstruction(0x18, [this, &cpu] { this->jr_e8(cpu); });
@@ -34,152 +35,280 @@ void JumpInstructionSet::initializeInstructionTable(CPU& cpu) {
 }
 
 void JumpInstructionSet::jr_e8(CPU& cpu) {
-    // Placeholder for JR e8 functionality
-    // Example: cpu.jr_e8();
+    int8_t offset = cpu.fetchPC();
+    cpu.registers.program_counter += offset;
 }
 
 void JumpInstructionSet::jr_nz_e8(CPU& cpu) {
-    // Placeholder for JR NZ e8 functionality
-    // Example: cpu.jr_nz_e8();
+    int8_t offset = cpu.fetchPC();
+    if (!(cpu.registers.f & (1 << Z))) {
+        cpu.registers.program_counter += offset;
+    }
 }
 
 void JumpInstructionSet::jr_z_e8(CPU& cpu) {
-    // Placeholder for JR Z e8 functionality
-    // Example: cpu.jr_z_e8();
+    int8_t offset = cpu.fetchPC();
+    if ((cpu.registers.f & (1 << Z))) {
+        cpu.registers.program_counter += offset;
+    }
 }
 
 void JumpInstructionSet::jr_nc_e8(CPU& cpu) {
-    // Placeholder for JR NC e8 functionality
-    // Example: cpu.jr_nc_e8();
+    int8_t offset = cpu.fetchPC();
+    if (!(cpu.registers.f & (1 << C))) {
+        cpu.registers.program_counter += offset;
+    }
 }
 
 void JumpInstructionSet::jr_c_e8(CPU& cpu) {
-    // Placeholder for JR C e8 functionality
-    // Example: cpu.jr_c_e8();
+    int8_t offset = cpu.fetchPC();
+    if ((cpu.registers.f & (1 << C))) {
+        cpu.registers.program_counter += offset;
+    }
 }
 
 void JumpInstructionSet::ret_nz(CPU& cpu) {
-    // Placeholder for RET NZ functionality
-    // Example: cpu.ret_nz();
+    if (!(cpu.registers.f & (1 << Z))) {
+        uint8_t lsb = cpu.read(cpu.registers.stack_pointer);
+        cpu.registers.stack_pointer++;
+        uint8_t msb = cpu.read(cpu.registers.stack_pointer);
+        cpu.registers.stack_pointer++;
+        cpu.registers.program_counter = (msb << 8) | lsb;
+    }
 }
 
 void JumpInstructionSet::jp_nz_a16(CPU& cpu) {
-    // Placeholder for JP NZ a16 functionality
-    // Example: cpu.jp_nz_a16();
+    uint8_t nn_lsb = cpu.fetchPC();
+    uint8_t nn_msb = cpu.fetchPC();
+    uint16_t nn = (nn_msb << 8) | nn_lsb;
+    if (!(cpu.registers.f & (1 << Z))) {
+        cpu.registers.program_counter = nn;
+    }
 }
 
 void JumpInstructionSet::jp_a16(CPU& cpu) {
-    // Placeholder for JP a16 functionality
-    // Example: cpu.jp_a16();
+    uint8_t nn_lsb = cpu.fetchPC();
+    uint8_t nn_msb = cpu.fetchPC();
+    uint16_t nn = (nn_msb << 8) | nn_lsb;
+    cpu.registers.program_counter = nn;
 }
 
 void JumpInstructionSet::call_nz_a16(CPU& cpu) {
-    // Placeholder for CALL NZ a16 functionality
-    // Example: cpu.call_nz_a16();
+    uint8_t nn_lsb = cpu.fetchPC();
+    uint8_t nn_msb = cpu.fetchPC();
+    uint16_t nn = (nn_msb << 8) | nn_lsb;
+    if (!(cpu.registers.f & (1 << Z))) {
+        uint16_t return_address = cpu.registers.program_counter;
+        // allocating space for return address (writing to memory)
+        cpu.registers.stack_pointer--;
+        std::cout << "SP: " << cpu.registers.stack_pointer << std::endl;
+        cpu.write(cpu.registers.stack_pointer, (return_address >> 8) & 0xFF);
+        cpu.registers.stack_pointer--;
+        std::cout << "SP: " << cpu.registers.stack_pointer << std::endl;
+        cpu.write(cpu.registers.stack_pointer, return_address & 0xFF);
+        cpu.registers.program_counter = nn;
+    }
 }
 
 void JumpInstructionSet::rst_00H(CPU& cpu) {
-    // Placeholder for RST 00 functionality
-    // Example: cpu.rst_00();
+    cpu.registers.stack_pointer--;
+    cpu.write(cpu.registers.stack_pointer, (cpu.registers.program_counter >> 8) & 0xFF);
+    cpu.registers.stack_pointer--;
+    cpu.write(cpu.registers.stack_pointer, (cpu.registers.program_counter) & 0xFF);
+    cpu.registers.program_counter = 0x00;
 }
 
 void JumpInstructionSet::ret_z(CPU& cpu) {
-    // Placeholder for RET Z functionality
-    // Example: cpu.ret_z();
+    if ((cpu.registers.f & (1 << Z))) {
+        uint8_t lsb = cpu.read(cpu.registers.stack_pointer);
+        std::cout << "SP: " << cpu.registers.stack_pointer << std::endl;
+        cpu.registers.stack_pointer++;
+        std::cout << "SP: " << cpu.registers.stack_pointer << std::endl;
+        uint8_t msb = cpu.read(cpu.registers.stack_pointer);
+        cpu.registers.stack_pointer++;
+        std::cout << "SP: " << cpu.registers.stack_pointer << std::endl;
+        cpu.registers.program_counter = (msb << 8) | lsb;
+    }
 }
 
 void JumpInstructionSet::ret(CPU& cpu) {
-    // Placeholder for RET functionality
-    // Example: cpu.ret();
+    uint8_t lsb = cpu.read(cpu.registers.stack_pointer);
+    cpu.registers.stack_pointer++;
+    uint8_t msb = cpu.read(cpu.registers.stack_pointer);
+    cpu.registers.stack_pointer++;
+    cpu.registers.program_counter = (msb << 8) | lsb;
 }
 
 void JumpInstructionSet::jp_z_a16(CPU& cpu) {
-    // Placeholder for JP Z a16 functionality
-    // Example: cpu.jp_z_a16();
+    uint8_t nn_lsb = cpu.fetchPC();
+    uint8_t nn_msb = cpu.fetchPC();
+    uint16_t nn = (nn_msb << 8) | nn_lsb;
+    if ((cpu.registers.f & (1 << Z))) {
+        cpu.registers.program_counter = nn;
+    }
 }
 
 void JumpInstructionSet::call_z_a16(CPU& cpu) {
-    // Placeholder for CALL Z a16 functionality
-    // Example: cpu.call_z_a16();
+    uint8_t nn_lsb = cpu.fetchPC();
+    uint8_t nn_msb = cpu.fetchPC();
+    uint16_t nn = (nn_msb << 8) | nn_lsb;
+    if ((cpu.registers.f & (1 << Z))) {
+        uint16_t return_address = cpu.registers.program_counter;
+        // allocating space for return address (writing to memory)
+        cpu.registers.stack_pointer--;
+        cpu.write(cpu.registers.stack_pointer, (return_address >> 8) & 0xFF);
+        cpu.registers.stack_pointer--;
+        cpu.write(cpu.registers.stack_pointer, return_address & 0xFF);
+        cpu.registers.program_counter = nn;
+    }
 }
 
 void JumpInstructionSet::call_a16(CPU& cpu) {
-    // Placeholder for CALL a16 functionality
-    // Example: cpu.call_a16();
+    uint8_t nn_lsb = cpu.fetchPC();
+    uint8_t nn_msb = cpu.fetchPC();
+    uint16_t nn = (nn_msb << 8) | nn_lsb;
+    uint16_t return_address = cpu.registers.program_counter;
+    cpu.registers.stack_pointer--;
+    cpu.write(cpu.registers.stack_pointer, (return_address >> 8) & 0xFF);
+    cpu.registers.stack_pointer--;
+    cpu.write(cpu.registers.stack_pointer, return_address & 0xFF);
+    cpu.registers.program_counter = nn;
 }
 
 void JumpInstructionSet::rst_08H(CPU& cpu) {
-    // Placeholder for RST 08 functionality
-    // Example: cpu.rst_08();
+    cpu.registers.stack_pointer--;
+    cpu.write(cpu.registers.stack_pointer, (cpu.registers.program_counter >> 8) & 0xFF);
+    cpu.registers.stack_pointer--;
+    cpu.write(cpu.registers.stack_pointer, (cpu.registers.program_counter) & 0xFF);
+    cpu.registers.program_counter = 0x08;
 }
 
 void JumpInstructionSet::ret_nc(CPU& cpu) {
-    // Placeholder for RET NC functionality
-    // Example: cpu.ret_nc();
+    if (!(cpu.registers.f & (1 << C))) {
+        uint8_t lsb = cpu.read(cpu.registers.stack_pointer);
+        cpu.registers.stack_pointer++;
+        uint8_t msb = cpu.read(cpu.registers.stack_pointer);
+        cpu.registers.stack_pointer++;
+        cpu.registers.program_counter = (msb << 8) | lsb;
+    }
 }
 
 void JumpInstructionSet::jp_nc_a16(CPU& cpu) {
-    // Placeholder for JP NC a16 functionality
-    // Example: cpu.jp_nc_a16();
+    uint8_t nn_lsb = cpu.fetchPC();
+    uint8_t nn_msb = cpu.fetchPC();
+    uint16_t nn = (nn_msb << 8) | nn_lsb;
+    if (!(cpu.registers.f & (1 << C))) {
+        cpu.registers.program_counter = nn;
+    }
 }
 
 void JumpInstructionSet::call_nc_a16(CPU& cpu) {
-    // Placeholder for CALL NC a16 functionality
-    // Example: cpu.call_nc_a16();
+    uint8_t nn_lsb = cpu.fetchPC();
+    uint8_t nn_msb = cpu.fetchPC();
+    uint16_t nn = (nn_msb << 8) | nn_lsb;
+    if (!(cpu.registers.f & (1 << C))) {
+        uint16_t return_address = cpu.registers.program_counter;
+        // allocating space for return address (writing to memory)
+        cpu.registers.stack_pointer--;
+        cpu.write(cpu.registers.stack_pointer, (return_address >> 8) & 0xFF);
+        cpu.registers.stack_pointer--;
+        cpu.write(cpu.registers.stack_pointer, return_address & 0xFF);
+        cpu.registers.program_counter = nn;
+    }
 }
 
 void JumpInstructionSet::rst_10H(CPU& cpu) {
-    // Placeholder for RST 10 functionality
-    // Example: cpu.rst_10();
+    cpu.registers.stack_pointer--;
+    cpu.write(cpu.registers.stack_pointer, (cpu.registers.program_counter >> 8) & 0xFF);
+    cpu.registers.stack_pointer--;
+    cpu.write(cpu.registers.stack_pointer, (cpu.registers.program_counter) & 0xFF);
+    cpu.registers.program_counter = 0x10;
 }
 
 void JumpInstructionSet::ret_c(CPU& cpu) {
-    // Placeholder for RET C functionality
-    // Example: cpu.ret_c();
+    if ((cpu.registers.f & (1 << C))) {
+        uint8_t lsb = cpu.read(cpu.registers.stack_pointer);
+        cpu.registers.stack_pointer++;
+        uint8_t msb = cpu.read(cpu.registers.stack_pointer);
+        cpu.registers.stack_pointer++;
+        cpu.registers.program_counter = (msb << 8) | lsb;
+    }
 }
 
 void JumpInstructionSet::reti(CPU& cpu) {
-    // Placeholder for RETI functionality
-    // Example: cpu.reti();
+    uint8_t lsb = cpu.read(cpu.registers.stack_pointer);
+    cpu.registers.stack_pointer++;
+    uint8_t msb = cpu.read(cpu.registers.stack_pointer);
+    cpu.registers.stack_pointer++;
+    cpu.registers.program_counter = (msb << 8) | lsb;
+    cpu.IME_FLAG = true;
 }
 
 void JumpInstructionSet::jp_c_a16(CPU& cpu) {
-    // Placeholder for JP C a16 functionality
-    // Example: cpu.jp_c_a16();
+    uint8_t nn_lsb = cpu.fetchPC();
+    uint8_t nn_msb = cpu.fetchPC();
+    uint16_t nn = (nn_msb << 8) | nn_lsb;
+    if ((cpu.registers.f & (1 << C))) {
+        cpu.registers.program_counter = nn;
+    }
 }
 
 void JumpInstructionSet::call_c_a16(CPU& cpu) {
-    // Placeholder for CALL C a16 functionality
-    // Example: cpu.call_c_a16();
+    uint8_t nn_lsb = cpu.fetchPC();
+    uint8_t nn_msb = cpu.fetchPC();
+    uint16_t nn = (nn_msb << 8) | nn_lsb;
+    if ((cpu.registers.f & (1 << C))) {
+        uint16_t return_address = cpu.registers.program_counter;
+        // allocating space for return address (writing to memory)
+        cpu.registers.stack_pointer--;
+        cpu.write(cpu.registers.stack_pointer, (return_address >> 8) & 0xFF);
+        cpu.registers.stack_pointer--;
+        cpu.write(cpu.registers.stack_pointer, return_address & 0xFF);
+        cpu.registers.program_counter = nn;
+    }
 }
 
 void JumpInstructionSet::rst_18H(CPU& cpu) {
-    // Placeholder for RST 18 functionality
-    // Example: cpu.rst_18();
+    cpu.registers.stack_pointer--;
+    cpu.write(cpu.registers.stack_pointer, (cpu.registers.program_counter >> 8) & 0xFF);
+    cpu.registers.stack_pointer--;
+    cpu.write(cpu.registers.stack_pointer, (cpu.registers.program_counter) & 0xFF);
+    cpu.registers.program_counter = 0x18;
 }
 
 void JumpInstructionSet::rst_20H(CPU& cpu) {
-    // Placeholder for RST 20 functionality
-    // Example: cpu.rst_20();
+    cpu.registers.stack_pointer--;
+    cpu.write(cpu.registers.stack_pointer, (cpu.registers.program_counter >> 8) & 0xFF);
+    cpu.registers.stack_pointer--;
+    cpu.write(cpu.registers.stack_pointer, (cpu.registers.program_counter) & 0xFF);
+    cpu.registers.program_counter = 0x20;
 }
 
 void JumpInstructionSet::jp_hl(CPU& cpu) {
-    // Placeholder for JP HL functionality
-    // Example: cpu.jp_hl();
+    cpu.registers.program_counter = (cpu.registers.h << 8) | cpu.registers.l;
 }
 
 void JumpInstructionSet::rst_28H(CPU& cpu) {
-    // Placeholder for RST 28 functionality
-    // Example: cpu.rst_28();
+    cpu.registers.stack_pointer--;
+    cpu.write(cpu.registers.stack_pointer, (cpu.registers.program_counter >> 8) & 0xFF);
+    cpu.registers.stack_pointer--;
+    cpu.write(cpu.registers.stack_pointer, (cpu.registers.program_counter) & 0xFF);
+    cpu.registers.program_counter = 0x28;
 }
 
 void JumpInstructionSet::rst_30H(CPU& cpu) {
-    // Placeholder for RST 30 functionality
-    // Example: cpu.rst_30();
+    cpu.registers.stack_pointer--;
+    cpu.write(cpu.registers.stack_pointer, (cpu.registers.program_counter >> 8) & 0xFF);
+    cpu.registers.stack_pointer--;
+    cpu.write(cpu.registers.stack_pointer, (cpu.registers.program_counter) & 0xFF);
+    cpu.registers.program_counter = 0x30;
 }
 
 void JumpInstructionSet::rst_38H(CPU& cpu) {
-    // Placeholder for RST 38 functionality
-    // Example: cpu.rst_38();
+    cpu.registers.stack_pointer--;
+    cpu.write(cpu.registers.stack_pointer, (cpu.registers.program_counter >> 8) & 0xFF);
+    cpu.registers.stack_pointer--;
+    cpu.write(cpu.registers.stack_pointer, (cpu.registers.program_counter) & 0xFF);
+    cpu.registers.program_counter = 0x38;
 }
 

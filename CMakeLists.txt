@@ -19,6 +19,7 @@ src/cpu/8bitShiftInstructionSet.cpp
 src/cpu/8bitALUInstructionSet.cpp
 src/cpu/16bitALUInstructionSet.cpp
 src/cpu/8bitLoadInstructionSet.cpp
+src/cpu/JumpInstructionSet.cpp
 src/testing/Testing.cpp)
 
 # Include directories
