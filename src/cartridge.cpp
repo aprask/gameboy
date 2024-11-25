@@ -1,8 +1,6 @@
-#include <iostream>
-#include <fstream>
-#include "include/cpu.h"
+#include "include/cartridge.h"
 
-auto get_mbc_name(Byte cart_type) {
+auto Cartridge::get_mbc_name(Byte cart_type) {
     switch (cart_type) {
         case 0x00: return "ROM ONLY";
         case 0x01: return "MBC1";
@@ -33,11 +31,10 @@ auto get_mbc_name(Byte cart_type) {
 }
 
 
-auto parse_rom(char* cart_path) {
+void Cartridge::parse_rom(const char* cart_path) {
     std::ifstream rom_file(cart_path, std::ios::binary); // open ROM in binary mode
     if (!rom_file.is_open()) {
         std::cerr << "Error: Could not open ROM file." << std::endl;
-        return nullptr;
     }
     rom_file.seekg(0x0147); // jumping to memory location for cart type
     Byte cart_type;
@@ -50,5 +47,4 @@ auto parse_rom(char* cart_path) {
     auto mbc_name = get_mbc_name(cart_type);
     std::cout << "Cart Type: " << mbc_name << std::endl;
     rom_file.close();
-    return nullptr;
 }

@@ -14,6 +14,7 @@ src/cpu/ControlInstructionSet.cpp
 src/cpu/cpu.cpp 
 src/memory.cpp 
 src/bus.cpp
+src/cartridge.cpp
 src/cpu/16bitLoadInstructionSet.cpp
 src/cpu/8bitShiftInstructionSet.cpp
 src/cpu/8bitALUInstructionSet.cpp
