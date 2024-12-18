@@ -36,14 +36,23 @@ void Cartridge::parse_rom(const char* cart_path) {
     if (!rom_file.is_open()) {
         std::cerr << "Error: Could not open ROM file." << std::endl;
     }
+    rom_file.seekg(0, std::ios::end);
+    std::streampos file_size = rom_file.tellg();
+    std::cout << "File size: " << file_size << " bytes" << std::endl;
+    if (file_size < 0x0147 + 1) {
+        std::cerr << "Error: File is too small to contain cartridge type at 0x0147." << std::endl;
+        return;
+    }
     rom_file.seekg(0x0147); // jumping to memory location for cart type
-    Byte cart_type;
-    // this is complicated (not really -- but it looks odd)
-    // really all we're doing is reading the values from the binary as a char*
-    // char* are pointers to raw memory guaranteed to be 1 byte
-    // std::ifstream::read requires a char*
-    // we are basically saying "treat this location as a char* so we can read it but really its a Byte*"
-    rom_file.read(reinterpret_cast<char*>(&cart_type), sizeof(Byte)); // https://en.cppreference.com/w/cpp/language/reinterpret_cast
+    std::cout << "File position after seek: " << rom_file.tellg() << std::endl;
+    char temp_byte = 0;
+    rom_file.read(&temp_byte, 1);
+    Byte cart_type = static_cast<Byte>(static_cast<unsigned char>(temp_byte));
+    if (rom_file.fail()) {
+        std::cerr << "Error: Failed to read cartridge type." << std::endl;
+        return;
+    }
+    std::cout << "Raw Value at 0x0147: " << std::hex << static_cast<int>(cart_type) << std::dec << std::endl;
     auto mbc_name = get_mbc_name(cart_type);
     std::cout << "Cart Type: " << mbc_name << std::endl;
     rom_file.close();
