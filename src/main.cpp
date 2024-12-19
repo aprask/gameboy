@@ -2,6 +2,7 @@
 #include "include/cpu.h" 
 #include "include/memory.h"
 #include "include/bus.h"
+#include "include/cartridge.h"
 
 using Byte = uint8_t; // 8 bits
 using Word = uint16_t; // 16 bits
@@ -10,6 +11,7 @@ int main() {
     Memory memory;
     Bus bus(memory);
     CPU cpu(bus);
+    Cartridge cartridge;
 
     // CPU-rework tests
     cpu.registers.a = 0x01;
@@ -76,5 +78,8 @@ int main() {
         // temp exit cond
         if (cpu.registers.program_counter == 0x0005) break;
     }
+
+
+    cartridge.parse_rom("../roms/test_rom.gb");
     return 0;
 }
