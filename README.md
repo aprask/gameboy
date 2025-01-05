@@ -1,2 +1,2 @@
 # About
-DMG Gameboy Emulator
+CGB Gameboy Emulator
